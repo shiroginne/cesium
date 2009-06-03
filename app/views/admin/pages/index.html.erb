@@ -1,0 +1,7 @@
+<h1>Pages</h1>
+<%= recursive_tree_output @pages, :class => "pages_tree", :id => "pages_tree", :partial => 'page' %>
+<% if @pages.empty? %>
+<div class="add_entry">
+  <%= link_to 'new page', new_admin_page_path %>
+</div>
+<% end %>

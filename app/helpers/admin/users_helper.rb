@@ -1,0 +1,2 @@
+module Cesium::UsersHelper
+end

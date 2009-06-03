@@ -1,0 +1,16 @@
+<h1>Layouts</h1>
+<ul class="pages_tree">
+<% @layouts.each do |layout| %>
+  <li>
+    <div class="info">
+      <%= link_to layout.name, edit_admin_layout_url(layout) %>
+      <div class="actions">
+        <%= link_to 'destroy', admin_layout_url(layout), :method => :delete, :confirm => 'Are u shure?', :class => 'remove_entry' %>
+      </div>
+    </div>
+  </li>
+<% end %>
+</ul>
+<div class="add_entry">
+  <%= link_to 'new layout', new_admin_layout_url, :class => 'new_entry' %>
+</div>

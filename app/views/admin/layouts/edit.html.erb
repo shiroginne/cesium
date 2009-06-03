@@ -1,0 +1,4 @@
+<h1>Edit layout</h1>
+<% form_for @layout, :url => admin_layout_url(@layout) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+<% end %>

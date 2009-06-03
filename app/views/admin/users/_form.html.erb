@@ -1,0 +1,27 @@
+<%= f.error_messages %>
+
+<div>
+  <%= f.label :login %>
+  <%= f.text_field :login %>
+</div>
+<div>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+</div>
+<div>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+</div>
+<div>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</div>
+<div class="checkbox">
+  <%= f.check_box :admin %>
+  <%= f.label :admin %>
+</div>
+<div class="buttons">
+  <%= f.submit 'Save and exit' %>
+  <%= f.submit 'Save and continue' %>
+  <%= link_to 'cancel', admin_pages_url %>
+</div>

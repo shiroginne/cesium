@@ -1,0 +1,88 @@
+class LayoutError < StandardError
+end
+
+class Page < ActiveRecord::Base
+
+  attr_accessor :child_pages
+  
+  default_scope :order => :lft
+
+  has_many :page_parts, :dependent => :destroy
+  has_one :layout
+  
+  accepts_nested_attributes_for :page_parts, :allow_destroy => true
+
+  acts_as_nested_set
+
+  validates_presence_of :name, :title
+  validates_uniqueness_of :name, :scope => :parent_id
+
+  after_move :set_level_cache
+
+  attr_protected :path
+  
+  def rebuild_paths
+    if self.parent_id.nil?
+      self.update_attribute :name, '/'
+      self.update_attribute :path, '/'
+    else
+      saved_path = self.path
+      parent_path = self.parent.parent_id ? self.parent.path : ''
+      new_path = parent_path + '/' + self.name
+      self.update_attribute :path, new_path
+      Page.update_all "path = REPLACE(path, '#{saved_path}', '#{self.path}')", ["path like ?", saved_path + '%'] if saved_path
+    end
+  end
+
+  def set_level_cache
+    self.update_attribute(:level_cache, self.level)
+  end
+
+  def self.find_page path
+    if path == '/'
+      find_by_parent_id nil, :include => :page_parts
+    else
+      find_by_path path, :include => :page_parts
+    end
+  end
+
+  def additional_parts
+    ancestors_id = self.ancestors.map { |p| p.id }
+    exclude = self.page_parts.map { |p| "name <> '#{p.name}'" }.join(' and ')
+    PagePart.find_all_by_page_id(ancestors_id, :conditions => exclude, :order => 'page_id desc')
+  end
+
+  def get_layout
+    page = self.layout_id.nil? ? self.ancestors.reverse.detect { |i| i.layout_id != nil} : self
+    if page && page.layout_id
+      Layout.find(page.layout_id)
+    else
+      raise LayoutError.new('There is no layout at the root page')
+    end
+  end
+
+  def parser_init
+    unless @parser and @context
+      @context = PageContext.new(self)
+      @parser = Radius::Parser.new(@context, :tag_prefix => 'r')
+    end
+    @parser
+  end
+
+  def parse(text)
+    parser_init.parse(text)
+  end
+
+  def statuses
+    {:hidden => 2, :published => 1, :draft => 0}
+  end
+
+  def draft?
+    self.status == statuses[:draft]
+  end
+
+  def hidden?
+    self.status == statuses[:hidden]
+  end
+
+end

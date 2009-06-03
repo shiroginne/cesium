@@ -1,0 +1,15 @@
+<%= f.error_messages %>
+
+<div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div>
+  <%= f.label :body %>
+  <%= f.codemirror_textarea :body %>
+</div>
+<div class="buttons">
+  <%= f.submit 'Save and exit' %>
+  <%= f.submit 'Save and continue' %>
+  <%= link_to 'cancel', admin_layouts_url %>
+</div>

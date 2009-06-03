@@ -1,0 +1,4 @@
+<h1>Edit snippet</h1>
+<% form_for @snippet, :url => admin_snippet_url(@snippet) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+<% end %>

@@ -1,0 +1,4 @@
+<h1>Edit user</h1>
+<% form_for @user, :url => admin_user_url(@user) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+<% end %>

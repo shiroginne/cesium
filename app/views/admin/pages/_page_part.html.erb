@@ -1,0 +1,13 @@
+<% f.fields_for :page_parts, page_part, :child_index => !page_part.is_a?(Array) && page_part.new_record? ? 'new_index' : nil do |page_part| %>
+<div>
+  <div>
+    <%= page_part.label :name %>
+    <%= page_part.text_field :name %>
+  </div>
+  <div>
+    <%= page_part.label :body %>
+    <%= page_part.codemirror_textarea :body %>
+  </div>
+  <%= remove_page_part_link 'remove part', page_part %>
+</div>
+<% end %>

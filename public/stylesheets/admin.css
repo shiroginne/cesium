@@ -1,0 +1,228 @@
+.CodeMirror-line-numbers
+{
+    font-size: 10pt;
+    background: #eee;
+    line-height: 17px;
+    padding: 5px;
+    font-family: monospace;
+}
+
+.logo
+{
+    position: absolute;
+    top: 20px;
+    left: 60px;
+}
+
+.logo a
+{
+    text-decoration: none;
+    font-size: 46pt;
+}
+
+h1
+{
+    font-size: 24pt;
+    margin: 20px 0 10px 0;
+}
+
+label
+{
+    display: block;
+    padding: 15px 0 5px 0;
+}
+
+.buttons input
+{
+    width: auto;
+    margin: 15px 10px 15px 0;
+    font-size: 14pt;
+}
+
+textarea
+{
+    width: 100%;
+    height: 300px;
+    border: 1px solid #aaa;
+}
+
+.checkbox
+{
+    margin-top: 15px;
+}
+
+.checkbox label
+{
+    display: inline;
+}
+
+.logout
+{
+    position: absolute;
+    right: 90px;
+    bottom: 15px;
+    font-size: 10pt;
+}
+
+.logout a
+{
+    color: #fff;
+}
+
+input
+{
+    width: 100%;
+    font-size: 14pt;
+    border: 1px solid #aaa;
+}
+
+select
+{
+    font-size: 14pt;
+    border: 1px solid #aaa;
+}
+
+.errorExplanation
+{
+    background: #ff9999;
+    border: 2px solid red;
+    margin: 20px 0;
+    padding: 10px;
+    line-height: 130%;
+    border: 1px solid #ccc;
+    font-size: 14pt;
+}
+
+.errorExplanation li
+{
+    list-style: decimal;
+    list-style-position: inside;
+}
+
+.fieldWithErrors input
+{
+    border: 1px solid #ff9999;
+}
+
+.fieldWithErrors label
+{
+    color: #ff3333;
+}
+
+.parts
+{
+    border: 1px solid #b8d9fa;
+    padding: 10px;
+    margin: 15px 0 5px 0;
+}
+
+.part_link
+{
+    padding: 15px 0 5px 0;
+}
+
+.header
+{
+    height: 100px;
+    background: #777;
+    color: #fff;
+    position: relative;
+}
+
+.links
+{
+    position: absolute;
+    top: 20px;
+    right: 80px;
+}
+
+.links a
+{
+    color: #fff;
+    padding: 5px 10px;
+}
+
+.links a.selected
+{
+    
+    background: #aaa;
+    text-decoration: none;
+}
+
+.body
+{
+    margin: 0 80px 0 60px;
+}
+
+.notice
+{
+    border: 1px solid #ccc;
+    background: #99ff99;
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px 0;
+    font-size: 14pt;
+}
+
+.new_entry
+{
+    background: 20px center url(/images/admin/new_entry.png) no-repeat;
+}
+
+.view_entry
+{
+    background: 20px center url(/images/admin/view_entry.png) no-repeat;
+}
+
+.remove_entry
+{
+    background: 20px center url(/images/admin/remove_entry.png) no-repeat;
+}
+
+.pages_tree
+{
+    margin: 20px 0 20px -10px;
+}
+
+.pages_tree li
+{
+    list-style: none;
+    line-height: 35px;
+}
+
+.pages_tree li .info
+{
+    padding-left: 10px;
+    position: relative;
+}
+
+.pages_tree li .info:hover
+{
+    background: #E0EEEF;
+}
+
+.pages_tree li .actions
+{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+
+.pages_tree li .actions a, .pages_tree li .actions span, .add_entry a
+{
+    font-size: 10pt;
+    line-height: 35px;
+    padding: 3px 0 3px 40px;
+    text-decoration: none;
+}
+
+.add_entry a
+{
+    background: 0 center url(/images/admin/new_entry.png) no-repeat;
+    padding-left: 20px;
+}
+
+.pages_tree ul
+{
+    padding-left: 25px;
+}

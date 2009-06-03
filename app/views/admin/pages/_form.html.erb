@@ -1,0 +1,42 @@
+<%= f.error_messages %>
+
+<div>
+  <%= f.label :name %>
+  <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
+</div>
+<div>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</div>
+
+<%= add_page_part_link 'add part', f %>
+<div class="parts_tabs" id="parts_tabs">
+  
+</div>
+<div class="parts" id="parts">
+  <%= render :partial => 'page_part', :object => @page.page_parts, :locals => { :f => f } %>
+</div>
+
+<div>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+</div>
+<div>
+  <%= f.label :keywords %>
+  <%= f.text_field :keywords %>
+</div>
+<div>
+  <%= f.label :layout_id %>
+  <%= f.select :layout_id, layouts_for_select %>
+</div>
+
+<div>
+  <%= f.label :status %>
+  <%= f.select :status, @page.statuses %>
+</div>
+
+<div class="buttons">
+  <%= f.submit 'Save and exit' %>
+  <%= f.submit 'Save and continue' %>
+  <%= link_to 'cancel', admin_pages_url %>
+</div>
