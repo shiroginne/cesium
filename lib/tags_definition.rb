@@ -59,7 +59,7 @@ module TagsDefinition
         raise UndefinedSnippetError.new(tag.attr['name'])
       end
     end
-
+    
     context.define_tag 'function' do |tag|
       #(tag.attr['params'] ? PageFunctions.send(tag.attr['name'].to_sym, *tag.attr['params'].sub(' ', '').split(',')) : PageFunctions.send(tag.attr['name'].to_sym)).to_s
       PageFunctions.send(tag.attr['name'].to_sym, tag.locals.page).to_s
@@ -79,16 +79,16 @@ module TagsDefinition
         for_level = tag.attr.has_key?('level') && tag.attr['level'].to_i >= 0 ? tag.attr['level'] : nil
         
         if for_page
-          pages = Page.find(for_page.to_i).self_and_descendants
+          pages = Page.find(for_page.to_i).self_and_descendants.scoped(:include => :page_parts)
         elsif for_level
           case for_level.to_i
           when 0
-            pages = Page.root.self_and_descendants
+            pages = Page.root.self_and_descendants.scoped(:include => :page_parts)
           else
-            pages = tag.locals.page.self_and_ancestors[for_level.to_i].self_and_descendants
+            pages = tag.locals.page.self_and_ancestors[for_level.to_i].self_and_descendants.scoped(:include => :page_parts)
           end
         elsif tag.attr.blank?
-          pages = tag.locals.page.self_and_descendants
+          pages = tag.locals.page.self_and_descendants.scoped(:include => :page_parts)
         else
 
         end
@@ -145,7 +145,7 @@ module TagsDefinition
 
       tag.expand
 
-      pages = tag.locals.page.self_and_ancestors
+      pages = tag.locals.page.self_and_ancestors.scoped(:include => :page_parts)
 
       if tag.attr.has_key?('mode')
         pages[-1] = nil if tag.attr['mode'].include?('noleaf')
@@ -157,7 +157,7 @@ module TagsDefinition
         if page
           breadcrumps[:title] = page.title
           breadcrumps[:url] = page.path
-          tag.locals.current = page.id
+          tag.locals.current = page
 
           raise TagError.new("`breadcrumps' tag must include a `normal' tag") unless breadcrumps.has_key? :normal
 
@@ -189,6 +189,15 @@ module TagsDefinition
       context.define_tag "breadcrumps:#{symbol}" do |tag|
         breadcrumps = tag.locals.breadcrumps
         breadcrumps[symbol]
+      end
+    end
+
+    [:navigation, :breadcrumps].each do |symbol|
+      context.define_tag "#{symbol}:include" do |tag|
+        if tag.attr['name']
+          part = tag.locals.current.page_parts.detect{ |p| p.name == tag.attr['name'] }
+          part.body if part
+        end
       end
     end
     
