@@ -9,9 +9,13 @@
   <%= f.text_field :title %>
 </div>
 
-<%= add_page_part_link 'add part', f %>
-<div class="parts_tabs" id="parts_tabs">
-  
+<div class="parts_tabs_wrap">
+  <div class="part_add">
+    <%= add_page_part_link image_tag('admin/part_add.png'), f %>
+  </div>
+  <ul class="parts_tabs" id="parts_tabs">
+
+  </ul>
 </div>
 <div class="parts" id="parts">
   <%= render :partial => 'page_part', :object => @page.page_parts, :locals => { :f => f } %>

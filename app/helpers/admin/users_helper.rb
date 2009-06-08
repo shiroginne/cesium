@@ -1,2 +1,3 @@
-module Cesium::UsersHelper
+module Admin::UsersHelper
+  
 end

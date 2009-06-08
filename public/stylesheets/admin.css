@@ -109,18 +109,6 @@ select
     color: #ff3333;
 }
 
-.parts
-{
-    border: 1px solid #b8d9fa;
-    padding: 10px;
-    margin: 15px 0 5px 0;
-}
-
-.part_link
-{
-    padding: 15px 0 5px 0;
-}
-
 .header
 {
     height: 100px;
@@ -225,4 +213,83 @@ select
 .pages_tree ul
 {
     padding-left: 25px;
+}
+
+.editor_border
+{
+    width: 100%;
+    border: 1px solid #aaa;
+}
+
+.parts
+{
+    margin-top: -1px;
+}
+
+.parts_tabs
+{
+    margin: 0 0 0 28px;
+    height: 28px;
+    width: 5000px;
+}
+
+.parts_tabs li
+{
+    position: relative;
+    padding: 0 36px 0 10px;
+    float: left;
+    border: 1px solid #eee;
+    border-bottom: 0;
+    height: 27px;
+    line-height: 27px;
+    background: #fff;
+}
+
+.parts_tabs li input {
+    font-size: 12pt;
+    width: 100px;
+}
+
+.parts_tabs li.selected
+{
+    border: 1px solid #aaa;
+    border-bottom: 0;
+    height: 28px;
+    line-height: 28px;
+}
+
+.parts_tabs_wrap
+{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 15px;
+    z-index: 100;
+}
+
+.parts_tabs li .part_remove, .parts_tabs li .part_commit_name
+{
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    top: 6px;
+    right: 10px;
+    background: url(/images/admin/part_remove.png) no-repeat;
+    cursor: pointer;
+}
+
+.parts_tabs li .part_commit_name
+{
+    background: url(/images/admin/part_commit_name.png) no-repeat;
+}
+
+.parts_tabs li.selected .part_remove, .parts_tabs li.selected .part_commit_name
+{
+    top: 7px;
+}
+
+.part_add
+{
+    float: left;
+    margin: 7px 0 0 6px;
 }

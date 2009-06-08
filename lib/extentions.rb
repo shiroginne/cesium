@@ -43,7 +43,7 @@ module ActionView
           });
         </script>
 script
-        text_area(method, options = {}) + script
+        '<div class="editor_border">' + text_area(method, options = {}) + script + '</div>'
       end
       
     end
