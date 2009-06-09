@@ -158,6 +158,7 @@ module TagsDefinition
         if page
           breadcrumps[:title] = page.title
           breadcrumps[:url] = page.path
+          breadcrumps[:name] = page.name
           tag.locals.current = page
 
           raise TagError.new("`breadcrumps' tag must include a `normal' tag") unless breadcrumps.has_key? :normal
@@ -186,7 +187,7 @@ module TagsDefinition
       end
     end
 
-    [:url, :title].each do |symbol|
+    [:url, :title, :name].each do |symbol|
       context.define_tag "breadcrumps:#{symbol}" do |tag|
         breadcrumps = tag.locals.breadcrumps
         breadcrumps[symbol]
