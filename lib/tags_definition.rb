@@ -100,6 +100,7 @@ module TagsDefinition
         unless page.hidden? || page.draft?
           navigation[:title] = page.title
           navigation[:url] = page.path
+          navigation[:name] = page.name
           tag.locals.current = page
 
           tag.expand
@@ -132,7 +133,7 @@ module TagsDefinition
       end
     end
     
-    [:url, :title].each do |symbol|
+    [:url, :title, :name].each do |symbol|
       context.define_tag "navigation:#{symbol}" do |tag|
         navigation = tag.locals.navigation
         navigation[symbol]
