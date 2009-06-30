@@ -2,8 +2,9 @@ class AddLocalizationToLayouts < ActiveRecord::Migration
   def self.up
     remove_column :layouts, :body
     create_table :layout_translations do |t|
+      t.string :locale
+      t.integer :layout_id
       t.text :body
-
       t.timestamps
     end
   end

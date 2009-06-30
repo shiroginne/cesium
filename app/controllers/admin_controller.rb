@@ -30,7 +30,6 @@ class AdminController < ApplicationController
   end
 
   def edit
-    model.locale = (params[:edit_locale] || I18n.locale || I18n.default_locale).to_sym
     @record = model.find params[:id]
 
     render_action :edit
@@ -48,8 +47,6 @@ class AdminController < ApplicationController
   end
 
   def update
-    model.locale = (params[:edit_locale] || I18n.locale || I18n.default_locale).to_sym
-
     @record = model.find params[:id]
 
     if @record.update_attributes params[model_name]

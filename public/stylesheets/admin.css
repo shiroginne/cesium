@@ -81,6 +81,12 @@ textarea
     color: #fff;
 }
 
+.logout a.selected
+{
+    background: #aaa;
+    text-decoration: none;
+}
+
 input
 {
     width: 100%;

@@ -1,9 +1,4 @@
-<h1>
-  Edit <%= controller.model_name.humanize.downcase %>
-  (<% I18n.available_locales.each do |locale| %>
-    <%= I18n.locale == locale ? locale.to_s : link_to(locale.to_s, edit_polymorphic_path([:admin, @record], :locale => locale)) %>
-  <% end %>)
-</h1>
+<h1>Edit <%= controller.model_name.humanize.downcase %></h1>
 <% form_for @record, :url => [:admin, @record], :html => {:multipart => true} do |f| %>
   <%= hidden_field_tag :edit_locale, params[:edit_locale] if params[:edit_locale] %>
 

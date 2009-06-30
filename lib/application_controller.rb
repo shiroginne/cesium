@@ -1,13 +1,21 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user, :admined_controllers
+  helper_method :current_user_session, :current_user, :admined_controllers, :admined_locales
   filter_parameter_logging :password, :password_confirmation
 
 private
 
+  def admined_locales &block
+    I18n.available_locales.each do |locale|
+      url = "/#{locale}#{request.env['REQUEST_URI'].gsub(/^\/#{I18n.locale}/, '')}"
+      block.call(locale.to_s, url, I18n.locale == locale)
+    end
+  end
+
   def admined_controllers &block
     (RAILS_ENV == 'development' ? admined_controllers_list : AdminController.subclasses).each do |c|
-      block.call(c.constantize.controller_name.humanize, polymorphic_path([:admin, c.constantize.controller_name.classify.constantize.new]))
+      url = polymorphic_path([:admin, c.constantize.controller_name.classify.constantize.new])
+      block.call(c.constantize.controller_name.humanize, url, request.path.include?(url))
     end
   end
 

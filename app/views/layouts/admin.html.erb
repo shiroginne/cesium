@@ -19,13 +19,16 @@
         <%= link_to 'Layouts', admin_layouts_path, :class => request.path.include?(admin_layouts_path) ? "selected" : "" %>
         <%= link_to 'Snippets', admin_snippets_path, :class => request.path.include?(admin_snippets_path) ? "selected" : "" %>
         <%= link_to 'Users', admin_users_path, :class => request.path.include?(admin_users_path) ? "selected" : "" %>
-        <% admined_controllers do |title, url| %>
-          <%= link_to title, url, :class => request.path.include?(url) ? "selected" : "" %>
+        <% admined_controllers do |title, url, current| %>
+          <%= link_to title, url, :class => current ? "selected" : "" %>
         <% end %>
       </div>
       <% end %>
       <% if current_user_session %>
       <div class="logout">
+        (<% admined_locales do |title, url, current| %>
+          <%= link_to title, url, :class => current ? "selected" : "" %>
+        <% end %>)
         <%= link_to 'logout', logout_url, :method => :delete %>
       </div>
       <% end %>
