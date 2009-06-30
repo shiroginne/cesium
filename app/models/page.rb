@@ -2,6 +2,7 @@ class LayoutError < StandardError
 end
 
 class Page < ActiveRecord::Base
+  translates :title, :description, :keywords
 
   attr_accessor :child_pages
   
