@@ -1,0 +1,38 @@
+<h1><%= controller.controller_name.humanize %></h1>
+<% if @records.empty? %>
+  <p>Sorry, but there is no records in <%= controller.controller_name.humanize %></p>
+<% else %>
+<% form_tag [:admin, controller.model.new], :class => 'filter', :method => :get do %>
+  <%= text_field_tag :filter, params[:filter] %>
+<% end %>
+<table class="list_table">
+<thead>
+  <tr>
+  <% controller.index_fields.each do |field| -%>
+    <th><%= field.to_s.humanize %></th>
+  <% end -%>
+    <th class="actions">Actions</th>
+  </tr>
+</thead>
+<tbody>
+<% @records.each do |record| -%>
+  <tr>
+  <% controller.index_fields.each do |field| -%>
+    <td><%= controller.helpers.respond_to?("index_#{field}") ? controller.helpers.send("index_#{field}", record.send(field)) : h(record.send(field)) %></td>
+  <% end -%>
+    <td class="actions">
+      <%= link_to 'show', [:admin, record], :class => 'view_entry' %>
+      <%= link_to 'edit', edit_polymorphic_path([:admin, record]), :class => 'edit_entry' %>
+      <%= link_to 'destroy', [:admin, record], :confirm => "Are you sure?", :method => :delete, :class => 'remove_entry' %>
+    </td>
+  </tr>
+<% end -%>
+</tbody>
+</table>
+<% end %>
+<% if respond_to? :will_paginate %>
+  <%= will_paginate @records %>
+<% end %>
+<div class="add_entry">
+  <%= link_to "new #{controller.model_name.humanize.downcase}", new_polymorphic_path([:admin, controller.model.new]) %>
+</div>

@@ -1,0 +1,4 @@
+<h1>New <%= controller.model_name.humanize.downcase %></h1>
+<% form_for @record, :url => [:admin, @record], :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'admin_views/form', :locals => { :f => f } %>
+<% end %>

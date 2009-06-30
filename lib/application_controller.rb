@@ -1,9 +1,25 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :admined_controllers
   filter_parameter_logging :password, :password_confirmation
 
 private
+
+  def admined_controllers &block
+    (RAILS_ENV == 'development' ? admined_controllers_list : AdminController.subclasses).each do |c|
+      block.call(c.constantize.controller_name.humanize, polymorphic_path([:admin, c.constantize.controller_name.classify.constantize.new]))
+    end
+  end
+
+  def admined_controllers_list
+    controllers = []
+    glob = RAILS_ROOT + '/app/controllers/admin/*_controller.rb'
+    Dir.glob(glob).each do |f|
+      file = File.basename(f).gsub( /^(.+).rb/, '\1')
+      controllers << "admin/#{file}".camelize
+    end
+    controllers
+  end
 
   def current_user_session
     return @current_user_session if defined?(@current_user_session)

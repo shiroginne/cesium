@@ -113,7 +113,9 @@ var CesiumTabs = Class.create({
         } else {
             this.current_tab = tab
         }
-        this.current_tab.addClassName('selected');
-        this.current_tab.target.show();
+        if (this.current_tab) {
+            this.current_tab.addClassName('selected');
+            this.current_tab.target.show();
+        }
     }
 });

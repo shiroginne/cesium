@@ -1,0 +1,17 @@
+<h1>Show <%= controller.model_name.humanize.downcase %>
+<div class="actions">
+  <%= link_to 'edit', edit_polymorphic_path([:admin, @record]), :class => 'edit_entry' %>
+  <%= link_to 'destroy', [:admin, @record], :confirm => "Are you sure?", :method => :delete, :class => 'remove_entry' %>
+</div>
+</h1>
+<ul class="show_entry">
+<% controller.show_fields.each do |field| -%>
+  <li>
+    <h2><%= field.to_s.humanize %></h2>
+    <div>
+      <%= controller.helpers.respond_to?("show_#{field}") ? controller.helpers.send("show_#{field}", @record.send(field)) : h(@record.send(field)) %>
+    </div>
+  </li>
+<% end -%>
+</ul>
+<%= link_to 'cancel', [:admin, controller.model.new] %>

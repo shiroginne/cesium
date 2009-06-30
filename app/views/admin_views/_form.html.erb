@@ -1,0 +1,10 @@
+<%= f.error_messages %>
+
+<% controller.form_fields.each do |field| -%>
+  <%= f.abstract_field field %>
+<% end -%>
+
+<div class="buttons">
+  <%= f.submit 'Save' %>
+  <%= link_to 'cancel', [:admin, controller.model.new] %>
+</div>
