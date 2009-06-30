@@ -24,6 +24,13 @@ h1
 {
     font-size: 24pt;
     margin: 20px 0 10px 0;
+    position: relative;
+}
+
+h2
+{
+    font-size: 16pt;
+    margin: 15px 0 10px 0;
 }
 
 label
@@ -44,6 +51,11 @@ textarea
     width: 100%;
     height: 300px;
     border: 1px solid #aaa;
+}
+
+.calendar input
+{
+    width: 350px;
 }
 
 .checkbox
@@ -152,6 +164,59 @@ select
     font-size: 14pt;
 }
 
+.list_table
+{
+    width: 100%;
+    margin: 15px 0;
+    line-height: 140%;
+    margin-left: -10px;
+}
+
+.list_table th.actions
+{
+    padding-left: 30px;
+    position: static;
+}
+
+.list_table td.actions
+{
+    position: static;
+    white-space: nowrap;
+    width: 100px;
+}
+
+.list_table td.actions a
+{
+    line-height: 140%;
+}
+
+.list_table th
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+.list_table td, .list_table th
+{
+    padding: 6px 10px;
+}
+
+.list_table tbody tr:hover
+{
+    background: #E0EEEF;
+}
+
+.show_entry
+{
+   margin-bottom: 30px;
+}
+
+.show_entry li
+{
+    margin-bottom: 10px;
+    line-height: 140%;
+}
+
 .new_entry
 {
     background: 20px center url(/images/admin/new_entry.png) no-repeat;
@@ -160,6 +225,11 @@ select
 .view_entry
 {
     background: 20px center url(/images/admin/view_entry.png) no-repeat;
+}
+
+.edit_entry
+{
+    background: 20px center url(/images/admin/edit_entry.png) no-repeat;
 }
 
 .remove_entry
@@ -189,14 +259,14 @@ select
     background: #E0EEEF;
 }
 
-.pages_tree li .actions
+.actions
 {
     position: absolute;
     right: 10px;
     top: 0px;
 }
 
-.pages_tree li .actions a, .pages_tree li .actions span, .add_entry a
+.actions a, .actions span, .add_entry a
 {
     font-size: 10pt;
     line-height: 35px;

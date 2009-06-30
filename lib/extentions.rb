@@ -43,7 +43,7 @@ module ActionView
           });
         </script>
 script
-        '<div class="editor_border">' + text_area(method, options = {}) + script + '</div>'
+        '<div class="editor_border">' + text_area(method, options) + script + '</div>'
       end
       
     end
@@ -54,9 +54,11 @@ module CollectiveIdea
   module Acts
     module NestedSet
       module InstanceMethods
+
         def self_and_children
           [self] + children
         end
+        
       end
     end
   end
