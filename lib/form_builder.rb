@@ -3,8 +3,12 @@ module ActionView
     class FormBuilder
 
       def abstract_field field
-        column = @object.class.columns.detect {|c| c.name == field.to_s}
-        case column.type
+        if @template.controller.respond_to? :column_types
+          type = @template.controller.column_types[0][field] || @object.class.columns.detect {|c| c.name == field.to_s}.type
+        else
+          type = @object.class.columns.detect {|c| c.name == field.to_s}.type
+        end
+        case type
 #          when :integer   then
 #          when :float     then
 #          when :decimal   then
