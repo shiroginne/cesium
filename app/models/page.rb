@@ -6,7 +6,7 @@ class Page < ActiveRecord::Base
 
   attr_accessor :child_pages
   
-  default_scope :order => :lft
+  default_scope :order => :lft, :include => :globalize_translations
 
   has_many :page_parts, :dependent => :destroy
   has_one :layout
@@ -33,6 +33,10 @@ class Page < ActiveRecord::Base
       self.update_attribute :path, new_path
       Page.update_all "path = REPLACE(path, '#{saved_path}', '#{self.path}')", ["path like ?", saved_path + '%'] if saved_path
     end
+  end
+
+  def current_path
+    I18n.locale == I18n.default_locale ? self.path : "/#{I18n.locale}#{self.path}"
   end
 
   def set_level_cache

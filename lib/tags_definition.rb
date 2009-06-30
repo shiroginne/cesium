@@ -99,7 +99,7 @@ module TagsDefinition
       tree.child_pages.each do |page|
         unless page.hidden? || page.draft?
           navigation[:title] = page.title
-          navigation[:url] = page.path
+          navigation[:url] = page.current_path
           navigation[:name] = page.name
           tag.locals.current = page
 
@@ -107,9 +107,9 @@ module TagsDefinition
 
           raise TagError.new("`navigation' tag must include a `normal' tag") unless navigation.has_key? :normal
 
-          if tag.locals.page.path == navigation[:url]
+          if tag.locals.page.current_path == navigation[:url]
             result << (navigation[:here] || navigation[:normal]).call
-          elsif tag.locals.page.path.include?(navigation[:url])
+          elsif tag.locals.page.current_path.include?(navigation[:url])
             result << (navigation[:nested] || navigation[:here] || navigation[:normal]).call
           else
             result << navigation[:normal].call
@@ -157,13 +157,13 @@ module TagsDefinition
       pages.each do |page|
         if page
           breadcrumps[:title] = page.title
-          breadcrumps[:url] = page.path
+          breadcrumps[:url] = page.current_path
           breadcrumps[:name] = page.name
           tag.locals.current = page
 
           raise TagError.new("`breadcrumps' tag must include a `normal' tag") unless breadcrumps.has_key? :normal
 
-          if tag.locals.page.path == breadcrumps[:url]
+          if tag.locals.page.current_path == breadcrumps[:url]
             result << (breadcrumps[:here] || breadcrumps[:normal]).call
           else
             result << breadcrumps[:normal].call
