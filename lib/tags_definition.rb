@@ -75,9 +75,10 @@ module TagsDefinition
       if tag.nesting.include?('navigation') && tag.locals.current
         tree = tag.locals.current
       else
+        with_root = tag.attr.has_key?('with_root') ? tag.attr['with_root'] : nil
         for_page = tag.attr.has_key?('for') ? tag.attr['for'] : nil
         for_level = tag.attr.has_key?('level') && tag.attr['level'].to_i >= 0 ? tag.attr['level'] : nil
-        
+
         if for_page
           pages = Page.find(for_page.to_i).self_and_descendants.scoped(:include => :page_parts)
         elsif for_level
@@ -92,7 +93,7 @@ module TagsDefinition
         else
 
         end
-        tree = pages.to_a.build_tree_from_nested_set
+        tree = pages.to_a.build_tree_from_nested_set :with_root => !!with_root
       end
 
       result = []

@@ -1,6 +1,6 @@
 class Array
 
-  def build_tree_from_nested_set
+  def build_tree_from_nested_set options = {}
     stack = Array.new
     stack.push first
     each do |item|
@@ -21,6 +21,8 @@ class Array
           stack.push item
           stack[-2].child_pages.push item
         end
+      elsif options[:with_root]
+        item.child_pages.push first.dup
       end
     end
     first
