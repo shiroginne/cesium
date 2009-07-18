@@ -110,7 +110,7 @@ module TagsDefinition
 
           if tag.locals.page.current_path == navigation[:url]
             result << (navigation[:here] || navigation[:normal]).call
-          elsif tag.locals.page.current_path.include?(navigation[:url])
+          elsif tag.locals.page.current_path.include?(navigation[:url]) && navigation[:url] != '/'
             result << (navigation[:nested] || navigation[:here] || navigation[:normal]).call
           else
             result << navigation[:normal].call
