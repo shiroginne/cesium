@@ -63,14 +63,14 @@ class Page < ActiveRecord::Base
 
   def parser_init
     unless @parser and @context
-      @context = PageContext.new(self)
+      @context = PageContext.new self
       @parser = Radius::Parser.new(@context, :tag_prefix => 'r')
     end
     @parser
   end
 
-  def parse(text)
-    parser_init.parse(text)
+  def parse text
+    parser_init.parse text
   end
 
   def statuses

@@ -60,9 +60,9 @@ module TagsDefinition
       end
     end
     
-    context.define_tag 'function' do |tag|
+    context.define_tag 'partial' do |tag|
       #(tag.attr['params'] ? PageFunctions.send(tag.attr['name'].to_sym, *tag.attr['params'].sub(' ', '').split(',')) : PageFunctions.send(tag.attr['name'].to_sym)).to_s
-      PageFunctions.send(tag.attr['name'].to_sym, tag.locals.page).to_s
+      "<%= render :partial => \"#{tag.attr['name']}\" %>"
     end
     
     context.define_tag 'comment' do |tag|
