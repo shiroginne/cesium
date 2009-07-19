@@ -9,7 +9,7 @@ class PagesController < ApplicationController
     page = Page.find_page path
     if page && !page.draft?
       page_layout = page.get_layout
-      render :text => page.parse(page_layout.body), :layout => false
+      render :inline => page.parse(page_layout.body), :locals => { :page => page }, :layout => false
     else
       if path == '/'
         redirect_to admin_pages_url
