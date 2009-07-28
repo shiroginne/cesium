@@ -110,7 +110,11 @@ module TagsDefinition
 
           if tag.locals.page.path == navigation[:url]
             result << (navigation[:here] || navigation[:normal]).call
+<<<<<<< HEAD:lib/tags_definition.rb
           elsif tag.locals.page.path.include?(navigation[:url])
+=======
+          elsif tag.locals.page.current_path.include?(navigation[:url]) && navigation[:url] != '/'
+>>>>>>> 3b0d8fa... Solved '/' url problem with with_root attribute:lib/tags_definition.rb
             result << (navigation[:nested] || navigation[:here] || navigation[:normal]).call
           else
             result << navigation[:normal].call
