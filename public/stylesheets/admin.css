@@ -170,7 +170,11 @@ select
     margin: 15px 0;
     line-height: 140%;
     margin-left: -10px;
-    vertical-align: top;
+}
+
+.list_table tr
+{
+   vertical-align: top; 
 }
 
 .list_table th.actions
