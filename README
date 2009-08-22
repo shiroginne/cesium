@@ -20,7 +20,7 @@ And:
  rake db:migrate
 
 Now you can add first user in rails console like that:
- User.new({:login => 'admin', :password => 'admin', :password_confirmation => 'admin', :admin => true, :email => 'admin@localhost.com'}).save!
+ Admin.new({:login => 'admin', :password => 'admin', :password_confirmation => 'admin', :email => 'admin@localhost.com'}).save!
 
 Next step - http://localhost:3000/admin
 
