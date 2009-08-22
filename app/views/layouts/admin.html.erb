@@ -13,20 +13,20 @@
   <body>
     <div class="header">
       <div class="logo"><a href="/admin">Ъ</a></div>
-      <% if current_user && current_user.admin %>
+      <% if current_admin %>
       <div class="links">
         <%= link_to 'Pages', admin_pages_path, :class => request.path.include?(admin_pages_path) || request.path == '/admin' || request.path == '/admin/' ? "selected" : "" %>
         <%= link_to 'Layouts', admin_layouts_path, :class => request.path.include?(admin_layouts_path) ? "selected" : "" %>
         <%= link_to 'Snippets', admin_snippets_path, :class => request.path.include?(admin_snippets_path) ? "selected" : "" %>
-        <%= link_to 'Users', admin_users_path, :class => request.path.include?(admin_users_path) ? "selected" : "" %>
+        <%= link_to 'Admins', admin_admins_path, :class => request.path.include?(admin_admins_path) ? "selected" : "" %>
         <% admined_controllers do |title, url| %>
           <%= link_to title, url, :class => request.path.include?(url) ? "selected" : "" %>
         <% end %>
       </div>
       <% end %>
-      <% if current_user_session %>
+      <% if current_admin_session %>
       <div class="logout">
-        <%= link_to 'logout', logout_url, :method => :delete %>
+        <%= link_to 'logout', admin_logout_url, :method => :delete %>
       </div>
       <% end %>
     </div>

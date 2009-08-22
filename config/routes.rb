@@ -7,11 +7,10 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :layouts
     admin.resources :snippets
-    admin.resources :users
+    admin.resources :admins
+    admin.resource :admin_session, :as => :session
+    admin.login 'login', :controller => 'admin_sessions', :action => 'new'
+    admin.logout 'logout', :controller => 'admin_sessions', :action => 'destroy'
   end
-
-  map.resource :user_session, :as => :session
-  map.login 'login', :controller => 'user_sessions', :action => 'new'
-  map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 
 end
