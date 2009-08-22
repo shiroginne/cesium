@@ -13,7 +13,7 @@
   <body>
     <div class="header">
       <div class="logo"><a href="/admin">Ъ</a></div>
-      <% if current_admin %>
+      <% if cesium_admin %>
       <div class="links">
         <%= link_to 'Pages', admin_pages_path, :class => request.path.include?(admin_pages_path) || request.path == '/admin' || request.path == '/admin/' ? "selected" : "" %>
         <%= link_to 'Layouts', admin_layouts_path, :class => request.path.include?(admin_layouts_path) ? "selected" : "" %>
@@ -24,7 +24,7 @@
         <% end %>
       </div>
       <% end %>
-      <% if current_admin_session %>
+      <% if cesium_admin_session %>
       <div class="logout">
         <%= link_to 'logout', admin_logout_url, :method => :delete %>
       </div>

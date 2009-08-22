@@ -5,7 +5,7 @@ module Cesium
       base.class_eval do
         include InstanceMethods
 
-        helper_method :current_admin_session, :current_admin, :admined_controllers
+        helper_method :cesium_admin_session, :cesium_admin, :admined_controllers
         filter_parameter_logging :password, :password_confirmation
       end
     end
@@ -28,16 +28,16 @@ module Cesium
         controllers
       end
 
-      def current_admin_session
-        @current_admin_session ||= AdminSession.find
+      def cesium_admin_session
+        @cesium_admin_session ||= AdminSession.find
       end
 
-      def current_admin
-        @current_admin ||= current_admin_session && current_admin_session.admin
+      def cesium_admin
+        @cesium_admin ||= cesium_admin_session && cesium_admin_session.admin
       end
 
-      def require_admin
-        unless current_admin
+      def require_cesium_admin
+        unless cesium_admin
           store_location
           flash[:notice] = "You must be logged in to access this page"
           redirect_to admin_login_url
@@ -45,8 +45,8 @@ module Cesium
         end
       end
 
-      def require_no_admin
-        if current_admin
+      def require_cesium_no_admin
+        if cesium_admin
           store_location
           flash[:notice] = "You must be logged out to access this page"
           redirect_to '/'

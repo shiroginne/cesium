@@ -1,7 +1,7 @@
 class AdminController < ApplicationController  
   layout 'admin'
 
-  before_filter :require_admin
+  before_filter :require_cesium_admin
 
   transmit_options :index_fields, :show_fields, :form_fields, :filter_fields, :file_fields, :column_types
 

@@ -1,5 +1,5 @@
 class Admin::AdminsController < ApplicationController
-  before_filter :require_admin
+  before_filter :require_cesium_admin
   
   layout 'admin'
 
