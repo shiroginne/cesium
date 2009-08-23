@@ -1,5 +1,19 @@
-class Array
+class Object
+  def self.transmit_options *options
+    options.each do |symbol|
+      raise TypeError.new("method name is not symbol") unless symbol.is_a?(Symbol)
+      class_eval <<-EOS
+        def self.#{symbol} *fields
+          define_method :#{symbol} do
+            fields
+          end
+        end
+      EOS
+    end
+  end
+end
 
+class Array
   def build_tree_from_nested_set options = {}
     stack = Array.new
     stack.push first
@@ -27,13 +41,11 @@ class Array
     end
     first
   end
-
 end
 
 module ActionView
   module Helpers
     class FormBuilder
-
       def codemirror_textarea method, options = {}
         script = <<-script
         <script type="text/javascript">
@@ -47,7 +59,6 @@ module ActionView
 script
         '<div class="editor_border">' + text_area(method, options) + script + '</div>'
       end
-      
     end
   end
 end
@@ -56,11 +67,9 @@ module CollectiveIdea
   module Acts
     module NestedSet
       module InstanceMethods
-
         def self_and_children
           [self] + children
         end
-        
       end
     end
   end
