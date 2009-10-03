@@ -65,7 +65,7 @@ class AdminController < ApplicationController
   end
 
   def helpers
-    @helpers ||= controller_class_name.constantize.helpers
+    @helpers ||= "Admin::#{controller_class_name}".constantize.helpers
   end
 
   def model

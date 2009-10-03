@@ -42,8 +42,8 @@ module ActionView
       end
 
       def terbium_text_field field
-        if @object.class.respond_to?(field)
-          input = select(field, @object.class.send(field))
+        if @object.class.respond_to?("#{field}_select")
+          input = select(field, @object.class.send("#{field}_select"))
         elsif @template.controller.respond_to?(:file_fields) && @template.controller.file_fields.include?(field)
           input = file_field(field)
         else
