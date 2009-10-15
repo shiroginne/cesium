@@ -20,6 +20,9 @@ class Page < ActiveRecord::Base
   after_move :set_level_cache
 
   attr_protected :path
+
+  after_update :clear_cesium_cache
+  after_destroy :clear_cesium_cache
   
   def rebuild_paths
     if self.parent_id.nil?
@@ -69,8 +72,13 @@ class Page < ActiveRecord::Base
     @parser
   end
 
-  def parse text
-    parser_init.parse text
+  def build_page
+    @cache ||= Cesium::Cache.new
+    if @cache.exists? self.path
+      @cache.read self.path
+    else
+      @cache.write self.path, parser_init.parse(self.get_layout.body) 
+    end
   end
 
   def statuses

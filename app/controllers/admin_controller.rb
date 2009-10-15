@@ -1,4 +1,4 @@
-class AdminController < ApplicationController  
+class AdminController < ApplicationController
   layout 'admin'
 
   before_filter :require_cesium_admin
@@ -37,7 +37,7 @@ class AdminController < ApplicationController
 
   def create
     @record = model.new params[model_name]
-    
+
     if @record.save
       flash[:notice] = "#{model_name.humanize} was successfully created."
       redirect_to :action => 'index'
