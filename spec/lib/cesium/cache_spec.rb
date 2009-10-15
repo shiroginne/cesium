@@ -11,12 +11,12 @@ module Cesium
 
     it "cache path should be equal Cesium::Config.cache_path" do
       @cache.path.should equal Cesium::Config.cache_path
-      File.exists?(Cesium::Config.cache_path).should be true
+      File.should be_exists(Cesium::Config.cache_path)
     end
 
     it "should create cache file for page" do
       @cache.write('/contacts/hello', 'content').should == 'content'
-      File.exists?(Cesium::Config.cache_path + '/contacts/hello.html.erb').should be true
+      File.should be_exists(Cesium::Config.cache_path + '/contacts/hello.html.erb')
     end
 
     it "should read cache file for page" do
@@ -26,13 +26,13 @@ module Cesium
     it "should clear cache" do
       @cache.write('/contacts/hello', 'content')
       @cache.clear
-      Dir[Cesium::Config.cache_path + '/**'].empty?.should be true
+      Dir[Cesium::Config.cache_path + '/**'].should be_empty
     end
 
     it "should remove one file" do
       @cache.write('/contacts/hello', 'content')
       @cache.remove('/contacts/hello')
-      File.exists?(Cesium::Config.cache_path + '/contacts/hello.html.erb').should be false
+      File.should_not be_exists(Cesium::Config.cache_path + '/contacts/hello.html.erb')
     end
 
   end
