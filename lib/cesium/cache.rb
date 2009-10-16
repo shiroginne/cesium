@@ -45,7 +45,7 @@ module Cesium
     private
 
     def file_path path
-      File.join(@path, "#{path}.html.erb")
+      File.join(@path, path, 'index.html.erb')
     end
 
   end

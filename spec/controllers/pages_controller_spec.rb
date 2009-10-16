@@ -26,10 +26,10 @@ describe PagesController do
     it "should render 404 if page not found or draft and url is not /" do
       Page.stub!(:find_page).and_return(nil)
       get :show, :url => @url
-      response.status.should match /404/  #render :file => "#{RAILS_ROOT}/public/404.html"
+      response.status.should match /404/
     end
 
-    it "should render content if page found ant not draft" do
+    it "should render content if page found and not draft" do
       Page.stub!(:find_page).and_return(@page)
       get :show, :url => @url
       response.should be_success

@@ -65,20 +65,22 @@ class Page < ActiveRecord::Base
   end
 
   def parser_init
-    unless @parser and @context
-      @context = PageContext.new self
-      @parser = Radius::Parser.new(@context, :tag_prefix => 'r')
-    end
-    @parser
+    @context ||= PageContext.new self
+    @parser ||= Radius::Parser.new(@context, :tag_prefix => 'r')
   end
 
   def build_page
     @cache ||= Cesium::Cache.new
     if @cache.exists? self.path
+      logger.info("Render from cache: #{self.path}")
       @cache.read self.path
     else
-      @cache.write self.path, parser_init.parse(self.get_layout.body) 
+      @cache.write self.path, parser_init.parse(self.get_layout.body)
     end
+  end
+
+  def parse text
+    parser_init.parse text
   end
 
   def statuses
