@@ -1,12 +1,8 @@
 class PagesController < ApplicationController
 
   def show
-    if params[:url].is_a? Array
-      path = '/' + params[:url].join('/')
-    else
-      path = '/' + params[:url].to_s
-    end
-    page = Page.find_page path
+    path = "/#{params[:url].join('/')}"
+    page = Page.find_page(path)
     if page && !page.draft?
       render :inline => page.build_page, :locals => { :page => page }, :layout => false
     else
