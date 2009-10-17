@@ -6,16 +6,19 @@ It provides some functionality to create tree-based structure for your app and
 generate navigation menus.
 
 To install it use
- ruby script/plugin install
+  ruby script/plugin install
 
 Cesium requires authlogic gem and awesome_nested_set plugin.
 So, install it.
 
+Then at the end of your routes.rb add:
+  map.cesium '*url', :controller => 'pages', :action => 'show'
+
 After do:
- rake cesium:sync
+  rake cesium:sync
 it'll copy migration and some public files into ypur rails app directory.
 And:
- rake db:migrate
+  rake db:migrate
 
 Next step - http://localhost:3000/admin
 By default user is 'admin' and password is 'admin' too

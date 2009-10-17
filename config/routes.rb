@@ -14,5 +14,3 @@ ActionController::Routing::Routes.draw do |map|
   end
 
 end
-
-ActionController::Routing::Routes.add_configuration_file(File.join(File.dirname(__FILE__), 'last_route.rb'))
