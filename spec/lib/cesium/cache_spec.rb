@@ -5,6 +5,7 @@ module Cesium
 
     before do
       Cesium::Config.cache_path = "#{RAILS_ROOT}/tmp/cesium_test_cache"
+      Cesium::Config.cache_on = true
       @cache = Cesium::Cache.new
     end
 
