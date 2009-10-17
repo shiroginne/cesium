@@ -59,19 +59,18 @@ module TagsDefinition
         raise UndefinedSnippetError.new(tag.attr['name'])
       end
     end
-    
+
     context.define_tag 'partial' do |tag|
-      #(tag.attr['params'] ? PageFunctions.send(tag.attr['name'].to_sym, *tag.attr['params'].sub(' ', '').split(',')) : PageFunctions.send(tag.attr['name'].to_sym)).to_s
       "<%= render :partial => \"#{tag.attr['name']}\" %>"
     end
-    
+
     context.define_tag 'comment' do |tag|
     end
 
     context.define_tag 'navigation' do |tag|
       tag.locals.navigation = {}
       navigation = tag.locals.navigation
-      
+
       if tag.nesting.include?('navigation') && tag.locals.current
         tree = tag.locals.current
       else
@@ -100,7 +99,7 @@ module TagsDefinition
       tree.child_pages.each do |page|
         unless page.hidden? || page.draft?
           navigation[:title] = page.title
-          navigation[:url] = page.path
+          navigation[:url] = "<%= cesium_path #{page.path.to_path_params} %>"
           navigation[:name] = page.name
           tag.locals.current = page
 
@@ -133,7 +132,7 @@ module TagsDefinition
         navigation[symbol] = tag.block
       end
     end
-    
+
     [:url, :title, :name].each do |symbol|
       context.define_tag "navigation:#{symbol}" do |tag|
         navigation = tag.locals.navigation
@@ -158,7 +157,7 @@ module TagsDefinition
       pages.each do |page|
         if page
           breadcrumps[:title] = page.title
-          breadcrumps[:url] = page.path
+          breadcrumps[:url] = "<%= cesium_path #{page.path.to_path_params} %>"
           breadcrumps[:name] = page.name
           tag.locals.current = page
 
@@ -203,7 +202,7 @@ module TagsDefinition
         end
       end
     end
-    
+
   end
-    
+
 end

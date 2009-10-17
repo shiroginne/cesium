@@ -4,7 +4,9 @@ class PagesController < ApplicationController
     path = "/#{params[:url].join('/')}"
     page = Page.find_page(path)
     if page && !page.draft?
-      render :inline => page.build_page, :locals => { :page => page }, :layout => false
+      text = page.build_page
+      p text
+      render :inline => text, :locals => { :page => page }, :layout => false
     else
       if path == '/'
         redirect_to admin_pages_url

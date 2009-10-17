@@ -14,5 +14,5 @@ class PageContext < Radius::Context
     @page = page
     globals.page = @page
   end
-  
+
 end

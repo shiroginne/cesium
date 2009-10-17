@@ -39,7 +39,7 @@ module Cesium
     end
 
     def exists? path
-      File.file? file_path(path)
+      Cesium::Config.cache_on && File.file?(file_path(path))
     end
 
     private

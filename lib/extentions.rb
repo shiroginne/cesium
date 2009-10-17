@@ -13,6 +13,12 @@ class Object
   end
 end
 
+class String
+  def to_path_params
+    "[#{self.split('/').delete_if { |x| x == "" }.map { |x| "\"#{x}\"" }.join(', ')}]"
+  end
+end
+
 class Array
   def build_tree_from_nested_set options = {}
     stack = Array.new
