@@ -10,8 +10,6 @@ To install it use
 
 Cesium requires authlogic gem and awesome_nested_set plugin.
 So, install it.
-Then at the end of your routes.rb add:
- map.cesium '*url', :controller => 'pages', :action => 'show'
 
 After do:
  rake cesium:sync
