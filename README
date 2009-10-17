@@ -17,10 +17,8 @@ it'll copy migration and some public files into ypur rails app directory.
 And:
  rake db:migrate
 
-Now you can add first user in rails console like that:
- Admin.new({:login => 'admin', :password => 'admin', :password_confirmation => 'admin', :email => 'admin@localhost.com'}).save!
-
 Next step - http://localhost:3000/admin
+By default user is 'admin' and password is 'admin' too
 
 Wellcome!
 

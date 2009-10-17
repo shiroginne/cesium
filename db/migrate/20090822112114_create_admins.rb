@@ -9,6 +9,7 @@ class CreateAdmins < ActiveRecord::Migration
 
       t.timestamps
     end
+    Admin.new({:login => 'admin', :password => 'admin', :password_confirmation => 'admin', :email => 'admin@localhost.com'}).save!
   end
 
   def self.down
