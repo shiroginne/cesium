@@ -75,7 +75,9 @@ class Page < ActiveRecord::Base
       logger.info("Render from cache: #{self.path}")
       @cache.read self.path
     else
-      @cache.write self.path, parser_init.parse(self.get_layout.body)
+      text = parser_init.parse(self.get_layout.body)
+      text = @context.tag_tracker.parse(text)
+      @cache.write self.path, text
     end
   end
 

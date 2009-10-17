@@ -61,7 +61,7 @@ module TagsDefinition
     end
 
     context.define_tag 'partial' do |tag|
-      "<%= render :partial => \"#{tag.attr['name']}\" %>"
+      tag.locals.tag_tracker.wrap "<%= render :partial => \"#{tag.attr['name']}\" %>"
     end
 
     context.define_tag 'textile' do |tag|
@@ -104,7 +104,7 @@ module TagsDefinition
       tree.child_pages.each do |page|
         unless page.hidden? || page.draft?
           navigation[:title] = page.title
-          navigation[:url] = "<%= cesium_path #{page.path.to_path_params} %>"
+          navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_path_params} %>"
           navigation[:name] = page.name
           tag.locals.current = page
 
@@ -162,7 +162,7 @@ module TagsDefinition
       pages.each do |page|
         if page
           breadcrumps[:title] = page.title
-          breadcrumps[:url] = "<%= cesium_path #{page.path.to_path_params} %>"
+          breadcrumps[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_path_params} %>"
           breadcrumps[:name] = page.name
           tag.locals.current = page
 
