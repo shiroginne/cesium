@@ -64,6 +64,11 @@ module TagsDefinition
       "<%= render :partial => \"#{tag.attr['name']}\" %>"
     end
 
+    context.define_tag 'textile' do |tag|
+      contents = tag.expand
+      ::RedCloth.new(contents).to_html
+    end
+
     context.define_tag 'comment' do |tag|
     end
 
