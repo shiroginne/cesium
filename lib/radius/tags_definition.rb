@@ -79,6 +79,7 @@ module Radius
 
         if tag.nesting.include?('navigation') && tag.locals.current
           tree = tag.locals.current
+          tree.child_pages = [] if tree.parent_id == nil
         else
           with_root = tag.attr.has_key?('with_root') ? tag.attr['with_root'] : nil
           for_page = tag.attr.has_key?('for') ? tag.attr['for'] : nil
