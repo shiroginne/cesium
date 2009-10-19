@@ -12,7 +12,8 @@ module Cesium
     def parse text
       ids = @ids.join('|')
       @ids = []
-      text.gsub(/<%/, "&lt;%").gsub(/%>/, "%&gt;").gsub(/<(#{ids})%/, "<%").gsub(/%(#{ids})>/, "%>")
+      text.gsub!(/<%/, "&lt;%").gsub!(/%>/, "%&gt;") if Cesium::Config.filter_erb
+      text.gsub(/<(#{ids})%/, "<%").gsub(/%(#{ids})>/, "%>")
     end
 
     private
