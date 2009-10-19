@@ -15,7 +15,11 @@ end
 
 class String
   def to_path_params
-    "[#{self.split('/').delete_if { |x| x == "" }.map { |x| "\"#{x}\"" }.join(', ')}]"
+    self.split('/').delete_if { |x| x == "" }
+  end
+
+  def to_string_path_params
+    "[#{self.to_path_params.map { |x| "\"#{x}\"" }.join(',')}]"
   end
 end
 

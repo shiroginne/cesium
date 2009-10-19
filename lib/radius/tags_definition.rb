@@ -105,7 +105,7 @@ module Radius
         tree.child_pages.each do |page|
           unless page.hidden? || page.draft?
             navigation[:title] = page.title
-            navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_path_params} %>"
+            navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
             navigation[:name] = page.name
             tag.locals.current = page
 
@@ -163,7 +163,7 @@ module Radius
         pages.each do |page|
           if page
             breadcrumps[:title] = page.title
-            breadcrumps[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_path_params} %>"
+            breadcrumps[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
             breadcrumps[:name] = page.name
             tag.locals.current = page
 

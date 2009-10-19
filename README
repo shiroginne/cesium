@@ -1,9 +1,8 @@
 Cesium
 ======
 
-Cesium is a small cms-like plugin for rails applications.
-It provides some functionality to create tree-based structure for your app and
-generate navigation menus.
+Cesium is simple and flexible content management system.
+Unlike RadiantCMS, Cesium can be easily integrated to existing rails application.
 
 To install it use
   ruby script/plugin install git://github.com/pyromaniac/cesium.git
