@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  unloadable
 
   def show
     path = "/#{params[:url].join('/')}"

@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  unloadable
+
   layout 'admin'
 
   before_filter :require_cesium_admin
