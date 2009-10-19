@@ -2,7 +2,7 @@
   <%= link_to page.title, edit_admin_page_path(page) %>
   <div class="actions">
     <span><%= page.statuses.select{ |k, v| v == page.status }.flatten[0] %></span>
-    <%= link_to 'view page', cesium_path page.path.to_path_params, :class => 'view_entry' %>
+    <%= link_to 'view page', cesium_path(page.path.to_path_params), :class => 'view_entry' %>
     <%= link_to 'new child', new_sub_admin_page_path(page), :class => 'new_entry' %>
     <%= link_to_remote 'destroy', { :url => admin_page_path(page), :method => :delete, :confirm => 'Are u shure?' }, :class => 'remove_entry' %>
   </div>
