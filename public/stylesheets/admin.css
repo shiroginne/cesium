@@ -144,7 +144,6 @@ select
 
 .links a.selected
 {
-    
     background: #aaa;
     text-decoration: none;
 }
@@ -174,7 +173,7 @@ select
 
 .list_table tr
 {
-   vertical-align: top; 
+   vertical-align: top;
 }
 
 .list_table th.actions
@@ -288,6 +287,12 @@ select
 .pages_tree ul
 {
     padding-left: 25px;
+    min-height: 30px;
+}
+
+.empty
+{
+    border: 1px dashed gray;
 }
 
 .editor_border
