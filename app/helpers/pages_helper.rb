@@ -1,9 +1,7 @@
 module PagesHelper
 
   def render_snippet name
-    path = request.path_info
-    p path
-    Snippet.find_snippet path, name
+    render :inline => Snippet.find_snippet(request.path_info, name)
   end
 
 end

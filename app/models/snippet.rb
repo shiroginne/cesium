@@ -7,12 +7,12 @@ class Snippet < ActiveRecord::Base
   def self.find_snippet path, name
     @snippets_cache ||= Cesium::Cache::Snippets.new
     if @snippets_cache.exists? path, name
-      logger.info("Render snippet from cache: #{name} for #{path}")
+      logger.info("Render snippet '#{name}' for page '#{path}' from cache")
       @snippets_cache.read path, name
     else
       page = Page.find_page path
       snippet = Snippet.find_by_name name
-      @snippets_cache.write path, name, page.parse(snippet.body)
+      @snippets_cache.write path, name, page.parse(snippet.body, true)
     end
   end
 end

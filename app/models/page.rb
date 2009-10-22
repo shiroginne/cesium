@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
   def build_page
     @pages_cache ||= Cesium::Cache::Pages.new
     if @pages_cache.exists? self.path
-      logger.info("Render page from cache: #{self.path}")
+      logger.info("Render page '#{self.path}' from cache")
       @pages_cache.read self.path
     else
       text = parser_init.parse(self.get_layout.body)
@@ -81,8 +81,9 @@ class Page < ActiveRecord::Base
     end
   end
 
-  def parse text
-    parser_init.parse text
+  def parse text, filter_erb = false
+    text = parser_init.parse text
+    filter_erb ? @context.tag_tracker.parse(text) : text
   end
 
   def statuses

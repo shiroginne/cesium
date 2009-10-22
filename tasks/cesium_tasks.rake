@@ -9,9 +9,11 @@ namespace :cesium do
     system "rsync -ruv vendor/plugins/cesium/db/migrate db"
   end
 
-  desc "Clears cesium cache"
-  task :cache_clear do
-    Cesium::Cache::Pages.new.clear
-    Cesium::Cache::Snippets.new.clear
+  namespace :cache do
+    desc "Clears cesium cache"
+    task :clear do
+      Cesium::Cache::Pages.new.clear
+      Cesium::Cache::Snippets.new.clear
+    end
   end
 end
