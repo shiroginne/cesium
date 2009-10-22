@@ -12,7 +12,11 @@ module Cesium
     cattr_accessor :cache_on
     @@cache_on = true
 
-    cattr_accessor :filter_erb
-    @@filter_erb = true
+    def self.filter_erb= value
+      raise "Cesium::Config.filter_erb is deprecated. Please use allow_erb instead."
+    end
+
+    cattr_accessor :allow_erb
+    @@allow_erb = false
   end
 end
