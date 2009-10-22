@@ -7,7 +7,7 @@ module Cesium
     @@pages_cache_path = File.join(@@cache_path, 'pages')
 
     cattr_accessor :snippets_cache_path
-    @@snippets_cache_path = File.join(@@cache_path, 'pages')
+    @@snippets_cache_path = File.join(@@cache_path, 'snippets')
 
     cattr_accessor :cache_on
     @@cache_on = true

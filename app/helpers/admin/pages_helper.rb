@@ -1,5 +1,5 @@
 module Admin::PagesHelper
-  
+
   def add_page_part_link(name, form)
     link_to_function name do |page|
       task = render :partial => 'page_part', :object => PagePart.new({:name => 'new_part'}), :locals => { :f => form }
@@ -34,5 +34,5 @@ module Admin::PagesHelper
     layouts = Layout.all.collect { |l| [l.name, l.id] }
     @parent_id || @page.parent_id ? [['<inherited>', nil]] + layouts : layouts
   end
-  
+
 end

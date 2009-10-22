@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
   def build_page
     @pages_cache ||= Cesium::Cache::Pages.new
     if @pages_cache.exists? self.path
-      logger.info("Render from cache: #{self.path}")
+      logger.info("Render page from cache: #{self.path}")
       @pages_cache.read self.path
     else
       text = parser_init.parse(self.get_layout.body)
