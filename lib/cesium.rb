@@ -11,8 +11,13 @@ ActionController::Base.class_eval do
 end
 
 ActiveRecord::Base.class_eval do
-  def clear_cesium_cache
-    @cache ||= Cesium::Cache.new
-    @cache.clear
+  def clear_cesium_pages_cache
+    @pages_cache ||= Cesium::Cache::Pages.new
+    @pages_cache.clear
+  end
+
+  def clear_cesium_snippets_cache
+    @snippets_cache ||= Cesium::Cache::Snippets.new
+    @snippets_cache.clear
   end
 end

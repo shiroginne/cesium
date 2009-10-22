@@ -1,6 +1,6 @@
 module Admin::SnippetsHelper
 
-  def snippet name
+  def render_snippet name
     uri = URI::parse(request.url)
     path = uri.path.gsub(/\/$/, '')
     page = Page.find_page path

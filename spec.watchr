@@ -2,14 +2,15 @@ require 'shell'
 
 spec_path = 'spec'
 
-def notificate text
-  system "notify-send -t 30000 \"Spec result\" \"#{text}\n\n---\""
-end
-
 @dir = File.dirname(@path)
 
 @shell ||= Shell.new
 Shell.def_system_command :spec, spec_path unless @shell.respond_to? :spec
+Shell.def_system_command :notify, "notify-send" unless @shell.respond_to? :notify
+
+def notificate text
+  system "notify-send -t 30000 \"Spec result\" \"#{text.gsub('`', '\'')}\n\n---\""
+end
 
 def run_specs *specs
   specs.flatten!

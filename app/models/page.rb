@@ -21,8 +21,8 @@ class Page < ActiveRecord::Base
 
   attr_protected :path
 
-  after_update :clear_cesium_cache
-  after_destroy :clear_cesium_cache
+  after_update :clear_cesium_pages_cache
+  after_destroy :clear_cesium_pages_cache
   
   def rebuild_paths
     if self.parent_id.nil?
@@ -70,14 +70,14 @@ class Page < ActiveRecord::Base
   end
 
   def build_page
-    @cache ||= Cesium::Cache.new
-    if @cache.exists? self.path
+    @pages_cache ||= Cesium::Cache::Pages.new
+    if @pages_cache.exists? self.path
       logger.info("Render from cache: #{self.path}")
-      @cache.read self.path
+      @pages_cache.read self.path
     else
       text = parser_init.parse(self.get_layout.body)
       text = @context.tag_tracker.parse(text)
-      @cache.write self.path, text
+      @pages_cache.write self.path, text
     end
   end
 

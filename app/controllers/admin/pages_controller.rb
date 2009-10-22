@@ -39,7 +39,7 @@ class Admin::PagesController < ApplicationController
       end
     else
       if @parent_id
-        render :action => "new_sub" 
+        render :action => "new_sub"
       else
         render :action => "new"
       end

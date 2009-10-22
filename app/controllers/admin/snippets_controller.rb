@@ -1,6 +1,6 @@
 class Admin::SnippetsController < ApplicationController
   before_filter :require_cesium_admin
-  
+
   layout 'admin'
 
   def index

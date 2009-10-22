@@ -4,6 +4,6 @@ class PagePart < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :page_id
   validates_presence_of :name
 
-  after_update :clear_cesium_cache
-  after_destroy :clear_cesium_cache
+  after_update :clear_cesium_pages_cache
+  after_destroy :clear_cesium_pages_cache
 end
