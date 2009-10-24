@@ -3,11 +3,11 @@ h1. Cesium
 Cesium is simple and flexible content management system.
 Unlike RadiantCMS, Cesium can be easily integrated to existing rails application.
 
-To install it use:
+h2. To install it use:
 
 @ruby script/plugin install git://github.com/pyromaniac/cesium.git@
 
-Cesium requires some libs:
+h2. Cesium requires some libs:
 
 * awesome_nested_set plugin
 
@@ -21,7 +21,7 @@ Cesium requires some libs:
 
 @config.gem "radius", :lib => false@
 
-Also you can install:
+h2. Also you can install:
 
 * RedCloth gem
 
@@ -35,13 +35,10 @@ to enable support textile mark-up inside of special tag
 
 to enable pagination support in admin interface
 
-Then add at the end of your routes.rb:
+h2. Then add at the end of your routes.rb:
 
-@map.cesium '*url', :controller => 'pages', :action => 'show'@
-
-After do:
-
-@rake cesium:sync@
+bc. map.cesium '*url', :controller => 'pages', :action => 'show'
+rake cesium:sync
 
 it'll copy migrations into your rails app directory.
 
@@ -49,7 +46,7 @@ And:
 
 @rake db:migrate@
 
-Next step - http://localhost:3000/admin
+Next step - "http://localhost:3000/admin":http://localhost:3000/admin
 Use admin:admin to login.
 
 Wellcome!
