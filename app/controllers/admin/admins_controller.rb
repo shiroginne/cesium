@@ -1,6 +1,6 @@
 class Admin::AdminsController < ApplicationController
   before_filter :require_cesium_admin
-  
+
   layout 'admin'
 
   def index
@@ -16,7 +16,7 @@ class Admin::AdminsController < ApplicationController
   end
 
   def create
-    @admin = Admin.new params[:user]
+    @admin = Admin.new params[:admin]
     if @admin.save
       flash[:notice] = 'Account was successfully created.'
       if params[:commit] == 'Save and exit'
@@ -31,7 +31,7 @@ class Admin::AdminsController < ApplicationController
 
   def update
     @admin = Admin.find params[:id]
-    if @admin.update_attributes params[:user]
+    if @admin.update_attributes params[:admin]
       flash[:notice] = 'Account was successfully updated.'
       if params[:commit] == 'Save and exit'
         redirect_to admin_admins_url
