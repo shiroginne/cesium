@@ -106,6 +106,7 @@ module Radius
         tree.child_pages.each do |page|
           unless page.hidden? || page.draft?
             navigation[:title] = page.title
+            navigation[:path] = page.path
             navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
             navigation[:name] = page.name
             tag.locals.current = page
@@ -114,9 +115,9 @@ module Radius
 
             raise TagError.new("`navigation' tag must include a `normal' tag") unless navigation.has_key? :normal
 
-            if tag.locals.page.path == navigation[:url]
+            if tag.locals.page.path == navigation[:path]
               result << (navigation[:here] || navigation[:normal]).call
-            elsif tag.locals.page.path.include?(navigation[:url]) && navigation[:url] != '/'
+            elsif tag.locals.page.path.include?(navigation[:path]) && navigation[:path] != '/'
               result << (navigation[:nested] || navigation[:here] || navigation[:normal]).call
             else
               result << navigation[:normal].call
@@ -164,13 +165,14 @@ module Radius
         pages.each do |page|
           if page
             breadcrumps[:title] = page.title
+            breadcrumps[:path] = page.path
             breadcrumps[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
             breadcrumps[:name] = page.name
             tag.locals.current = page
 
             raise TagError.new("`breadcrumps' tag must include a `normal' tag") unless breadcrumps.has_key? :normal
 
-            if tag.locals.page.path == breadcrumps[:url]
+            if tag.locals.page.path == breadcrumps[:path]
               result << (breadcrumps[:here] || breadcrumps[:normal]).call
             else
               result << breadcrumps[:normal].call
