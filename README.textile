@@ -37,8 +37,11 @@ to enable pagination support in admin interface
 
 h2. Then add at the end of your routes.rb:
 
-bc. map.cesium '*url', :controller => 'pages', :action => 'show'
-rake cesium:sync
+@map.cesium '*url', :controller => 'pages', :action => 'show'@
+
+Then:
+
+@rake cesium:sync@
 
 it'll copy migrations into your rails app directory.
 

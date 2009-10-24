@@ -30,11 +30,11 @@ module Radius
     def define_tags context
 
       context.define_tag 'description' do |tag|
-        tag.locals.page.description ? "<meta name=\"description\" content=\"#{CGI.escapeHTML(tag.locals.page.description)}\">" : ''
+        tag.locals.page.description ? "<meta name=\"description\" content=\"#{CGI.escapeHTML(tag.locals.page.description)}\" />" : ''
       end
 
       context.define_tag 'keywords' do |tag|
-        tag.locals.page.keywords ? "<meta name=\"keywords\" content=\"#{CGI.escapeHTML(tag.locals.page.keywords)}\">" : ''
+        tag.locals.page.keywords ? "<meta name=\"keywords\" content=\"#{CGI.escapeHTML(tag.locals.page.keywords)}\" />" : ''
       end
 
       context.define_tag 'title' do |tag|
