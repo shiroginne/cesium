@@ -29,6 +29,12 @@ h2. Also you can install:
 
 to enable support textile mark-up inside of special tag
 
+* bluecloth gem
+
+@config.gem "bluecloth", :lib => "bluecloth", :source => 'http://gemcutter.org'@
+
+to enable support markdown mark-up inside of special tag
+
 * WillPaginate gem
 
 @config.gem 'will_paginate', :lib => 'will_paginate', :source => 'http://gemcutter.org'@

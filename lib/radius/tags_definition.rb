@@ -70,6 +70,11 @@ module Radius
         ::RedCloth.new(contents).to_html
       end
 
+      context.define_tag 'markdown' do |tag|
+        contents = tag.expand
+        ::BlueCloth::new(contents).to_html
+      end
+
       context.define_tag 'comment' do |tag|
       end
 
