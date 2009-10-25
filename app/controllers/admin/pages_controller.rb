@@ -27,7 +27,7 @@ class Admin::PagesController < ApplicationController
 
   def create
     @page = Page.new(params[:page])
-    @parent_id = params[:parent_id]
+    @parent_id = params[:page][:parent_id]
     if @page.save
       @page.move_to_child_of @parent_id if @parent_id
       @page.rebuild_paths
