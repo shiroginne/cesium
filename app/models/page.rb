@@ -86,6 +86,10 @@ class Page < ActiveRecord::Base
     filter_erb ? @context.tag_tracker.parse(text) : text
   end
 
+  def content_type
+    Rack::Mime.mime_type(File.extname(self.name), 'text/html')
+  end
+
   def statuses
     {:hidden => 2, :published => 1, :draft => 0}
   end
