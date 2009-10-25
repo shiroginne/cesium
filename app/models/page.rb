@@ -4,16 +4,17 @@ end
 class Page < ActiveRecord::Base
 
   attr_accessor :child_pages
-  
+
   default_scope :order => :lft
 
   has_many :page_parts, :dependent => :destroy
   has_one :layout
-  
+
   accepts_nested_attributes_for :page_parts, :allow_destroy => true
 
   acts_as_nested_set
 
+  validates_presence_of :title
   validates_uniqueness_of :name, :scope => :parent_id
   validates_format_of :name, :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/, :message => "can looks like 'about' or 'style.css'"
 
@@ -23,7 +24,7 @@ class Page < ActiveRecord::Base
 
   after_update :clear_cesium_pages_cache
   after_destroy :clear_cesium_pages_cache
-  
+
   def rebuild_paths
     if self.parent_id.nil?
       self.update_attribute :name, '/'
@@ -32,8 +33,7 @@ class Page < ActiveRecord::Base
       saved_path = self.path
       parent_path = self.parent.parent_id ? self.parent.path : ''
       new_path = parent_path + '/' + self.name
-      self.update_attribute :path, new_path
-      Page.update_all "path = REPLACE(path, '#{saved_path}', '#{self.path}')", ["path like ?", saved_path + '%'] if saved_path
+      Page.update_all "path = REPLACE(path, '#{saved_path}', '#{new_path}')", ["path like ?", saved_path + '%'] if saved_path
     end
   end
 
