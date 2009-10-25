@@ -16,6 +16,7 @@ class Page < ActiveRecord::Base
 
   validates_presence_of :name, :title
   validates_uniqueness_of :name, :scope => :parent_id
+  validates_format_of :name, :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/, :message => "can looks like 'about' or 'style.css'"
 
   after_move :set_level_cache
 
