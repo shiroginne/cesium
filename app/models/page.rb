@@ -34,6 +34,7 @@ class Page < ActiveRecord::Base
       parent_path = self.parent.parent_id ? self.parent.path : ''
       new_path = parent_path + '/' + self.name
       Page.update_all "path = REPLACE(path, '#{saved_path}', '#{new_path}')", ["path like ?", saved_path + '%'] if saved_path
+      self.update_attribute :path, new_path if self.path == nil
     end
   end
 
