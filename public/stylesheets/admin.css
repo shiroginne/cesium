@@ -252,6 +252,12 @@ select
     line-height: 35px;
 }
 
+.pages_tree li .handle
+{
+    cursor: move;
+    background: 20px center url(/images/admin/move_entry.png) no-repeat;
+}
+
 .pages_tree li .info
 {
     padding-left: 10px;
@@ -287,7 +293,8 @@ select
 .pages_tree ul
 {
     padding-left: 25px;
-    min-height: 30px;
+    min-height: 35px;
+    _height: 35px;
 }
 
 .empty

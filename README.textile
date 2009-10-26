@@ -9,9 +9,9 @@ h2. To install it use:
 
 h2. Cesium requires some libs:
 
-* awesome_nested_set plugin
+* awesome_nested_set gem
 
-@script/plugin install git://github.com/collectiveidea/awesome_nested_set.git@
+@config.gem "awesome_nested_set", :lib => false, :source => 'http://gemcutter.org'@
 
 * authlogic gem
 

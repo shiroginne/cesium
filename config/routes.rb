@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace :admin do |admin|
     admin.root :controller => :pages
-    admin.resources :pages, :member => { :new_sub => :get } do |pages|
+    admin.resources :pages, :member => { :new_sub => :get, :move => :get } do |pages|
       pages.resources :page_parts
     end
     admin.resources :layouts

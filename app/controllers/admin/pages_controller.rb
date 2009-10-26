@@ -12,6 +12,15 @@ class Admin::PagesController < ApplicationController
     render :action => :index
   end
 
+  def move
+    @page = Page.find(params[:id])
+    case params[:mode]
+      when 'left' then @page.move_to_left_of params[:where]
+      when 'right' then @page.move_to_right_of params[:where]
+      else @page.move_to_child_of params[:where]
+    end
+  end
+
   def new
     @page = Page.new unless Page.exists? :parent_id => nil
   end
@@ -30,7 +39,6 @@ class Admin::PagesController < ApplicationController
     @parent_id = params[:page][:parent_id]
     if @page.save
       @page.move_to_child_of @parent_id if @parent_id
-      @page.rebuild_paths
       flash[:notice] = 'Page was successfully saved.'
       if params[:commit] == 'Save and exit'
         redirect_to admin_pages_url

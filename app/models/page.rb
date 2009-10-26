@@ -18,9 +18,9 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :parent_id
   validates_format_of :name, :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/, :message => "can looks like 'about' or 'style.css'"
 
-  after_move :set_level_cache
+  after_move :set_level_cache, :rebuild_paths
 
-  attr_protected :path
+  attr_protected :path, :parent_id
 
   after_update :clear_cesium_pages_cache
   after_destroy :clear_cesium_pages_cache
@@ -34,7 +34,7 @@ class Page < ActiveRecord::Base
       parent_path = self.parent.parent_id ? self.parent.path : ''
       new_path = parent_path + '/' + self.name
       Page.update_all "path = REPLACE(path, '#{saved_path}', '#{new_path}')", ["path like ?", saved_path + '%'] if saved_path
-      self.update_attribute :path, new_path if self.path == nil
+      self.update_attribute :path, new_path unless self.path
     end
   end
 

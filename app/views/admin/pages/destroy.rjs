@@ -1,4 +1,5 @@
 page["page_#{@page.id}"].remove
+page << "clearEmptyContainers();"
 #page['notice'].update "Page was successfully destroyed"
 #page['notice'].show
 #page['notice'].fade :duration => 3
