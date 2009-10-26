@@ -19,6 +19,7 @@ class Admin::PagesController < ApplicationController
       when 'right' then @page.move_to_right_of params[:where]
       else @page.move_to_child_of params[:where]
     end
+    @page.rebuild_paths
   end
 
   def new
@@ -39,6 +40,7 @@ class Admin::PagesController < ApplicationController
     @parent_id = params[:page][:parent_id]
     if @page.save
       @page.move_to_child_of @parent_id if @parent_id
+      @page.rebuild_paths
       flash[:notice] = 'Page was successfully saved.'
       if params[:commit] == 'Save and exit'
         redirect_to admin_pages_url

@@ -16,9 +16,12 @@ class Page < ActiveRecord::Base
 
   validates_presence_of :title
   validates_uniqueness_of :name, :scope => :parent_id
-  validates_format_of :name, :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/, :message => "can looks like 'about' or 'style.css'"
+  validates_format_of :name,
+    :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/,
+    :message => "can looks like 'about' or 'style.css'",
+    :unless => Proc.new { |page| page.name == '/' }
 
-  after_move :set_level_cache, :rebuild_paths
+  after_move :rebuild_level_cache
 
   attr_protected :path, :parent_id
 
@@ -38,8 +41,10 @@ class Page < ActiveRecord::Base
     end
   end
 
-  def set_level_cache
+  def rebuild_level_cache
+    level_cache = self.level_cache
     self.update_attribute(:level_cache, self.level)
+    Page.update_all "level_cache = level_cache + #{self.level_cache - level_cache}", "id in (#{self.descendants.map(&:id).join(',')})" if level_cache != 0
   end
 
   def self.find_page path
