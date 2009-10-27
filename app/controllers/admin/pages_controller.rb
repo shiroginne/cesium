@@ -4,7 +4,7 @@ class Admin::PagesController < ApplicationController
   layout 'admin'
 
   def index
-    @pages = Page.find :all
+    @pages = Page.all
   end
 
   def show
@@ -20,6 +20,7 @@ class Admin::PagesController < ApplicationController
       else @page.move_to_child_of params[:where]
     end
     @page.rebuild_paths
+    @pages = Page.find :all, :select => :path
   end
 
   def new

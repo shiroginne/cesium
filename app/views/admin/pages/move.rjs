@@ -1,0 +1,8 @@
+page << <<-SCRIPT
+  var pages = [#{@pages.map{ |page| "\"#{page.path}\"" }.join(',')}]
+  var i = 0;
+  $$('#pages_tree .view_entry').each(function(element) {
+    element.href = pages[i]
+    i++;
+  });
+SCRIPT
