@@ -21,7 +21,7 @@ class Page < ActiveRecord::Base
     :message => "can looks like 'about' or 'style.css'",
     :unless => Proc.new { |page| page.name == '/' }
 
-  after_move :rebuild_level_cache
+  after_move :rebuild_level_cache, :clear_cesium_pages_cache
 
   attr_protected :path, :parent_id
 

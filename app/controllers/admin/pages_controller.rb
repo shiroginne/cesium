@@ -20,7 +20,7 @@ class Admin::PagesController < ApplicationController
       else @page.move_to_child_of params[:where]
     end
     @page.rebuild_paths
-    @pages = Page.find :all, :select => :path
+    @pages = @page.self_and_descendants.scoped(:select => "id, path")
   end
 
   def new

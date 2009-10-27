@@ -1,8 +1,6 @@
 page << <<-SCRIPT
-  var pages = [#{@pages.map{ |page| "\"#{page.path}\"" }.join(',')}]
-  var i = 0;
-  $$('#pages_tree .view_entry').each(function(element) {
-    element.href = pages[i]
-    i++;
+  var pages = {#{@pages.map{ |page| "#{page.id}: \"#{page.path}\"" }.join(',')}}
+  $H(pages).each(function(pair) {
+    $$('#page_' + pair.key + ' .view_entry')[0].href = pair.value
   });
 SCRIPT
