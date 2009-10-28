@@ -23,7 +23,7 @@ class Page < ActiveRecord::Base
 
   after_move :rebuild_level_cache, :clear_cesium_pages_cache
 
-  attr_protected :path, :parent_id
+  attr_protected :path
 
   after_update :clear_cesium_pages_cache
   after_destroy :clear_cesium_pages_cache
