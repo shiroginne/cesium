@@ -26,8 +26,13 @@ function getId(from) {
 }
 
 Draggables.activate = Draggables.activate.wrap(function(proceed, draggable) {
-  proceed(draggable)
-  Draggables.dragged_element = draggable.element
+  proceed(draggable);
+  Draggables.dragged_element = draggable.element;
+});
+
+Draggables.deactivate = Draggables.deactivate.wrap(function(proceed, draggable) {
+  proceed(draggable);
+  clearEmptyContainers();
 });
 
 Sortable.onHover = Sortable.onHover.wrap(function(proceed, element, dropon, overlap) {
@@ -48,7 +53,6 @@ Event.observe(window, 'load', function(){
     if ($('pages_tree')) {
       $('pages_tree').select('ul')[0].id = 'sortable_tree'
       Sortable.create('sortable_tree', {tree: true, scroll: window, hoverclass: 'empty', handle: 'handle', onUpdate: function(element) {
-        clearEmptyContainers();
         elem = Draggables.dragged_element
         url = '/admin/pages/' + getId(elem.id) + '/move';
         if (elem.previous('li')) {
