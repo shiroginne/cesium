@@ -44,7 +44,10 @@ class Page < ActiveRecord::Base
   def rebuild_level_cache
     level_cache = self.level_cache
     self.update_attribute(:level_cache, self.level)
-    Page.update_all "level_cache = level_cache + #{self.level_cache - level_cache}", "id in (#{self.descendants.map(&:id).join(',')})" if level_cache != 0
+    descendants = self.descendants
+    p descendants
+    Page.update_all "level_cache = level_cache + #{self.level_cache - level_cache}",
+      "id in (#{descendants.map(&:id).join(',')})" unless level_cache == 0 || descendants.empty?
   end
 
   def self.find_page path
