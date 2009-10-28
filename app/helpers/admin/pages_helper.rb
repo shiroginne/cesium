@@ -31,8 +31,9 @@ module Admin::PagesHelper
   end
 
   def layouts_for_select
-    layouts = Layout.all.collect { |l| [l.name, l.id] }
-    @parent_id || @page.parent_id ? [['<inherited>', nil]] + layouts : layouts
+    layouts = Layout.find(:all, :select => "id, name").collect { |l| [l.name, l.id] }
+    @parent_id || @page.parent_id ?
+      [["<inherited (#{@page.ancestors.scoped(:select => 'layouts.name', :joins => :layout).last.name})>", nil]] + layouts : layouts
   end
 
 end

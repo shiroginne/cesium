@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
   default_scope :order => :lft
 
   has_many :page_parts, :dependent => :destroy
-  has_one :layout
+  belongs_to :layout
 
   accepts_nested_attributes_for :page_parts, :allow_destroy => true
 

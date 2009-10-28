@@ -3,4 +3,6 @@ class Layout < ActiveRecord::Base
 
   after_update :clear_cesium_pages_cache
   after_destroy :clear_cesium_pages_cache
+
+  has_many :pages
 end
