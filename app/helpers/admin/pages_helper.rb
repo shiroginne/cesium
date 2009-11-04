@@ -11,14 +11,16 @@ module Admin::PagesHelper
     end
   end
 
-  def recursive_tree_output1(set, options = {})
-    prev_level = 0
+  def recursive_tree_output(set, options = {})
+    prev_level = -1
     result = "<ul class=\"#{options[:class]}\" id=\"#{options[:id]}\">\n"
 
     set.each do |node|
       level = node.level_cache
-      result += level == prev_level ? "</li>\n" : (level > prev_level ? "<ul>\n" : '')
-      (prev_level-level).times { result += "</li>\n</ul>\n" } if level < prev_level
+      result += "<ul>\n" if level > prev_level && prev_level != -1
+      result += "</li>\n" if level == prev_level
+      (prev_level-level).times { |i| result += "</li>\n</ul>\n" } if level < prev_level
+      result += "</li>\n" if level < prev_level
       result += "<li id=\"page_#{node.id}\">\n"
 
       result += render :partial => options[:partial], :object => node
@@ -26,29 +28,7 @@ module Admin::PagesHelper
       prev_level = level
     end
 
-    (prev_level + 1).times { result += "</li>\n</ul>\n" }
-    result
-  end
-
-  def recursive_tree_output(set, options = {})
-    prev_level = -1
-    result = "<ul class=\"#{options[:class]}\" id=\"#{options[:id]}\">\n"
-
-    set.each do |node|
-      level = node.level_cache
-      whitespace = '  ' * level
-      result += "#{whitespace}<ul>\n" if level > prev_level && prev_level != -1
-      result += "#{whitespace}</li>\n" if level == prev_level
-      (prev_level-level).times { |i| result += "#{'  ' * (prev_level - i)}</li>\n#{'  ' * (prev_level - i)}</ul>\n" } if level < prev_level
-      result += "#{whitespace}</li>\n" if level < prev_level
-      result += "#{whitespace}<li id=\"page_#{node.id}\">\n"
-
-      result += render :partial => options[:partial], :object => node
-
-      prev_level = level
-    end
-
-    (prev_level + 1).times { |i| result += "#{'  ' * (prev_level - i)}</li>\n#{'  ' * (prev_level - i)}</ul>\n" }
+    (prev_level + 1).times { |i| result += "</li>\n</ul>\n" }
     result
   end
 

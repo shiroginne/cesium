@@ -1,8 +1,7 @@
-class Admin::LayoutsController < ApplicationController
-  before_filter :require_cesium_admin
-  
-  layout 'admin'
-  
+class Admin::LayoutsController < AdminController
+
+  menu_position 2
+
   def index
     @layouts = Layout.find :all
   end

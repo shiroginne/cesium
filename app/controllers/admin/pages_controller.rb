@@ -1,15 +1,9 @@
-class Admin::PagesController < ApplicationController
-  before_filter :require_cesium_admin
+class Admin::PagesController < AdminController
 
-  layout 'admin'
+  menu_position 1
 
   def index
     @pages = Page.all
-  end
-
-  def show
-    @pages = Page.find(params[:id]).descendants
-    render :action => :index
   end
 
   def move

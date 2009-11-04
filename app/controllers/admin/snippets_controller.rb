@@ -1,7 +1,6 @@
-class Admin::SnippetsController < ApplicationController
-  before_filter :require_cesium_admin
+class Admin::SnippetsController < AdminController
 
-  layout 'admin'
+  menu_position 3
 
   def index
     @snippets = Snippet.find :all

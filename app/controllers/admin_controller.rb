@@ -7,6 +7,13 @@ class AdminController < ApplicationController
 
   transmit_options :index_fields, :show_fields, :form_fields, :filter_fields, :file_fields, :column_types
 
+  class_inheritable_accessor :menu_position
+  write_inheritable_attribute :menu_position, 1000
+
+  def self.menu_position value = nil
+    value ? write_inheritable_attribute(:menu_position, value) : read_inheritable_attribute(:menu_position)
+  end
+
   def index
     conditions = nil
     if params[:filter] && respond_to?(:filter_fields)
@@ -33,7 +40,6 @@ class AdminController < ApplicationController
 
   def edit
     @record = model.find params[:id]
-
     render_action :edit
   end
 
@@ -49,7 +55,6 @@ class AdminController < ApplicationController
   end
 
   def update
-
     @record = model.find params[:id]
 
     if @record.update_attributes params[model_name]
