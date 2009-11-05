@@ -130,13 +130,25 @@ input
 
 .additional_navigation
 {
-    line-height: 28px;
+    line-height: 30px;
     height: 30px;
-    padding-left: 15px;
+    padding-left: 16px;
     background: #e5d5b0;
     border-bottom: 1px solid #fff9ea;
     -moz-box-shadow: -10px 0 10px #ccc;
     -webkit-box-shadow: -10px 0 10px #ccc;
+}
+
+.additional_navigation a
+{
+    padding-right: 25px;
+    text-decoration: none;
+    color: #333;
+}
+
+.additional_navigation a:hover
+{
+    color: #777;
 }
 
 .navigation
@@ -178,9 +190,14 @@ input
     height: 27px;
 }
 
+.navigation li.selected:hover
+{
+    background: #e5d5b0;
+}
+
 .navigation li:hover
 {
-    background: #444;
+    background: #484848;
 }
 
 .navigation li.selected a
