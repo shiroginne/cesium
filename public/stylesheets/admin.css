@@ -18,7 +18,7 @@ body
 {
     position: absolute;
     top: 17px;
-    left: 15px;
+    left: 30px;
 }
 
 .logo a
@@ -130,9 +130,13 @@ input
 
 .additional_navigation
 {
+    line-height: 28px;
     height: 30px;
+    padding-left: 15px;
     background: #e5d5b0;
     border-bottom: 1px solid #fff9ea;
+    -moz-box-shadow: -10px 0 10px #ccc;
+    -webkit-box-shadow: -10px 0 10px #ccc;
 }
 
 .navigation
@@ -166,7 +170,7 @@ input
     font-size: 10pt;
 }
 
-.navigation li.selected, .navigation li:hover
+.navigation li.selected
 {
     background: #e5d5b0;
     border: 1px solid #fff9ea;
@@ -174,7 +178,12 @@ input
     height: 27px;
 }
 
-.navigation li.selected a, .navigation li:hover a
+.navigation li:hover
+{
+    background: #444;
+}
+
+.navigation li.selected a
 {
     color: #2e2e2e;
 }
@@ -252,26 +261,6 @@ input
     line-height: 140%;
 }
 
-.new_entry
-{
-    background: 20px center url(/images/admin/new_entry.png) no-repeat;
-}
-
-.view_entry
-{
-    background: 20px center url(/images/admin/view_entry.png) no-repeat;
-}
-
-.edit_entry
-{
-    background: 20px center url(/images/admin/edit_entry.png) no-repeat;
-}
-
-.remove_entry
-{
-    background: 20px center url(/images/admin/remove_entry.png) no-repeat;
-}
-
 .pages_tree
 {
     margin: 20px 0 20px -10px;
@@ -314,18 +303,9 @@ input
     top: 0px;
 }
 
-.actions a, .actions span, .add_entry a
+.actions a
 {
-    font-size: 10pt;
-    line-height: 28px;
-    padding: 3px 0 3px 40px;
-    text-decoration: none;
-}
-
-.add_entry a
-{
-    background: 0 center url(/images/admin/new_entry.png) no-repeat;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 .pages_tree ul

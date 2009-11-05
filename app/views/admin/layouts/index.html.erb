@@ -11,6 +11,7 @@
   </li>
 <% end %>
 </ul>
-<div class="add_entry">
-  <%= link_to 'new layout', new_admin_layout_url, :class => 'new_entry' %>
-</div>
+
+<% content_for :additional_navigation do %>
+  <%= link_to 'new layout', new_admin_layout_url %>
+<% end %>
