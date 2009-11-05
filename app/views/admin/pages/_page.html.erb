@@ -1,10 +1,15 @@
 <div class="info">
+  <% if page.path != '/' %>
+    <div class="handle"></div>
+  <% end %>
   <%= link_to page.title, edit_admin_page_path(page) %>
   <div class="actions">
-    <span><%= page.statuses.select{ |k, v| v == page.status }.flatten[0] %></span>
-    <% if page.path != '/' %>
-      <span class="handle">drag</span>
-    <% end %>
+    <!--<span><%= page.statuses.select{ |k, v| v == page.status }.flatten[0] %></span>-->
+    <span>
+    <%= select_tag "page_status_#{page.id}",
+      options_for_select(page.statuses, page.status),
+      :onchange => "new Ajax.Request('/admin/pages/#{page.id}/status?status=' + $F('page_status_#{page.id}'), { method: 'get' })" %>
+    </span>
     <%= link_to 'view page', cesium_path(page.path.to_path_params), :class => 'view_entry' %>
     <%= link_to 'new child', new_sub_admin_page_path(page), :class => 'new_entry' %>
     <%= link_to_remote 'destroy', { :url => admin_page_path(page), :method => :delete, :confirm => 'Are u shure?' }, :class => 'remove_entry' %>

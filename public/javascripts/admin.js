@@ -6,8 +6,7 @@ function createEmptyContainer(where) {
       onHover:      Sortable.onEmptyHover,
       tree:         true,
       overlap:      'vertical',
-      containment:  $('sortable_tree'),
-      hoverclass:   'empty'
+      containment:  $('sortable_tree')
     });
   }
 }
@@ -52,7 +51,7 @@ Event.observe(window, 'load', function(){
 
     if ($('pages_tree')) {
       $('pages_tree').select('ul')[0].id = 'sortable_tree'
-      Sortable.create('sortable_tree', {tree: true, scroll: window, hoverclass: 'empty', handle: 'handle', onUpdate: function(element) {
+      Sortable.create('sortable_tree', {tree: true, scroll: window, handle: 'handle', onUpdate: function(element) {
         elem = Draggables.dragged_element
         url = '/admin/pages/' + getId(elem.id) + '/move';
         if (elem.previous('li')) {

@@ -17,6 +17,13 @@ class Admin::PagesController < AdminController
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
   end
 
+  def status
+    if params[:status]
+      @page = Page.find(params[:id])
+      @page.update_attribute(:status, params[:status])
+    end
+  end
+
   def new
     @page = Page.new unless Page.exists? :parent_id => nil
   end
