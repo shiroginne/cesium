@@ -30,10 +30,10 @@
       <%= yield :additional_navigation %>
     </div>
     <div class="body">
-      <% if flash[:notice] %>
-        <div class="notice" id="notice"><%= flash[:notice] %></div>
-      <% end %>
       <%= yield %>
     </div>
+    <% if flash[:notice] %>
+      <div class="notice" id="notice"><%= flash[:notice] %></div>
+    <% end %>
   </body>
 </html>

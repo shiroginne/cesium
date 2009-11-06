@@ -33,7 +33,7 @@ var CesiumTabs = Class.create({
         }.bind(this));
         tab.remove_btn.observe('click', function(event){
             Event.stop(event);
-            if (confirm('Are u shure?')) {
+            if (confirm('Are you sure?')) {
                 this.removeTab(tab);
             }
         }.bind(this));

@@ -212,12 +212,13 @@ input
 
 .notice
 {
+    white-space: nowrap;
     border: 1px solid #ccc;
-    background: #99ff99;
-    text-align: center;
-    margin: 20px 0;
-    padding: 20px 0;
-    font-size: 14pt;
+    background: #fff;
+    padding: 10px 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 .list_table

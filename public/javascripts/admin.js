@@ -55,7 +55,9 @@ function setStatus(path, id) {
 
 Event.observe(window, 'load', function(){
     if ($('notice')) {
-        $('notice').fade({ duration: 3.0 });
+        $('notice').observe('click', function() {
+          $('notice').fade();
+        });
     }
 
     if ($('pages_tree') && $("pages_tree").select("ul")[0]) {

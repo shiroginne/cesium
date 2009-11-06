@@ -1,12 +1,12 @@
 <%= f.error_messages %>
 
 <div>
-  <%= f.label :name %>
-  <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
-</div>
-<div>
   <%= f.label :title %>
   <%= f.text_field :title %>
+</div>
+<div>
+  <%= f.label :name %>
+  <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
 </div>
 
 <div class="parts_tabs_wrap">
