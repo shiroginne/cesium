@@ -1,0 +1,3 @@
+page << <<-SCRIPT
+  $$('#page_#{@page.id} .page_status')[0].update('#{ escape_javascript(status_select @page) }');
+SCRIPT

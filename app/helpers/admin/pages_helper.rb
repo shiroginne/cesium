@@ -32,6 +32,12 @@ module Admin::PagesHelper
     result
   end
 
+  def status_select page
+    select_tag "page_status_#{page.id}",
+      options_for_select(page.statuses, page.status),
+      :onchange => "setStatus('#{status_admin_page_path(page)}', #{page.id})"
+  end
+
   def layouts_for_select
     layouts = Layout.find(:all, :select => "id, name").collect { |l| [l.name, l.id] }
     @parent_id || @page.parent_id ?

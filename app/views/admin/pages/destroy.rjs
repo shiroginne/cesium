@@ -1,5 +1,7 @@
 page["page_#{@page.id}"].remove
-page << "clearEmptyContainers();"
-#page['notice'].update "Page was successfully destroyed"
-#page['notice'].show
-#page['notice'].fade :duration => 3
+page << <<-SCRIPT
+  clearEmptyContainers();
+  if ($('pages_tree').empty()) {
+    $('additional_navigation').innerHTML += '#{link_to('New page', new_admin_page_path)}';
+  }
+SCRIPT

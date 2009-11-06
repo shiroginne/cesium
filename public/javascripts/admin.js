@@ -12,12 +12,14 @@ function createEmptyContainer(where) {
 }
 
 function clearEmptyContainers(except) {
-  $('sortable_tree').select('ul').each(function(ul) {
-    if (ul != except && ul.empty()) {
-      Droppables.remove(ul);
-      ul.remove();
-    }
-  })
+  if ($('sortable_tree')) {
+    $('sortable_tree').select('ul').each(function(ul) {
+      if (ul != except && ul.empty()) {
+        Droppables.remove(ul);
+        ul.remove();
+      }
+    })
+  }
 }
 
 function getId(from) {
@@ -44,12 +46,19 @@ Sortable.onEmptyHover = Sortable.onEmptyHover.wrap(function(proceed, element, dr
   proceed(element, dropon, overlap);
 });
 
+function setStatus(path, id) {
+  new Ajax.Request(path + '?status=' + $F('page_status_' + id), {
+    method: 'get'
+  });
+  $('page_' + id).select('.page_status')[0].update('Setting status...');
+}
+
 Event.observe(window, 'load', function(){
     if ($('notice')) {
         $('notice').fade({ duration: 3.0 });
     }
 
-    if ($('pages_tree')) {
+    if ($('pages_tree') && $("pages_tree").select("ul")[0]) {
       $('pages_tree').select('ul')[0].id = 'sortable_tree'
       Sortable.create('sortable_tree', {tree: true, scroll: window, handle: 'handle', onUpdate: function(element) {
         elem = Draggables.dragged_element
@@ -64,8 +73,9 @@ Event.observe(window, 'load', function(){
         new Ajax.Request(url, {
           asynchronous: true,
           evalScripts: true,
-          method: 'get',
+          method: 'get'
         });
+        elem.select('.page_name')[0].update('Moving...');
       }});
     }
 
