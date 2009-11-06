@@ -14,8 +14,8 @@ module Cesium
       module InstanceMethods
 
         def admined_controllers &block
-          controllers = RAILS_ENV == 'development' ? admined_controllers_list : AdminController.subclasses
-          controllers.map! { |c| c.constantize }.sort! { |a,b| a.menu_position <=> b.menu_position }.each do |c|
+          #controllers = RAILS_ENV == 'development' ? admined_controllers_list : AdminController.subclasses
+          admined_controllers_list.map! { |c| c.constantize }.sort! { |a,b| a.menu_position <=> b.menu_position }.each do |c|
             c = c.controller_name
             block.call(c.humanize, polymorphic_path([:admin, c.classify.constantize.new]))
           end
