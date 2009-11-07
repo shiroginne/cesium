@@ -3,17 +3,16 @@
     <div class="handle"></div>
   <% end %>
   <span class="page_name"><%= link_to page.title, edit_admin_page_path(page) %></span>
+  <span>(
+    <% page.page_parts.each do |part| %>
+      <%= link_to part.name, edit_admin_page_page_part_path(page, part) %>
+    <% end %>
+  )</span>
   <div class="actions">
     <span class="page_status"><%= status_select page %></span>
     <%= link_to 'view page', cesium_path(page.path.to_path_params), :class => 'view_entry' %>
     <%= link_to 'new child', new_sub_admin_page_path(page) %>
     <%= link_to_remote 'destroy', { :url => admin_page_path(page), :method => :delete, :confirm => 'Are you sure?' } %>
-  </div>
-  <div class="parts">
-    <%= link_to "New part", new_admin_page_page_part_path(page) %>
-    <% page.page_parts.each do |part| %>
-      <%= link_to part.name, edit_admin_page_page_part_path(page, part) %>
-    <% end %>
   </div>
 </div>
 
