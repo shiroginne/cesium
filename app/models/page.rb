@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
 
   attr_accessor :child_pages
 
-  default_scope :order => :lft
+  default_scope :order => :lft, :include => :page_parts
 
   has_many :page_parts, :dependent => :destroy
   belongs_to :layout

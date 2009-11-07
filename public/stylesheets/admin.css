@@ -139,17 +139,18 @@ input
     -webkit-box-shadow: -10px 0 10px #ccc;
 }
 
-.additional_navigation a
+.additional_navigation a, .additional_navigation span
 {
     padding-right: 25px;
     text-decoration: none;
     color: #333;
 }
 
-.additional_navigation a:hover
+.additional_navigation a:hover, .additional_navigation a.selected
 {
     color: #777;
 }
+
 
 .navigation
 {
@@ -287,7 +288,8 @@ input
 .pages_tree li
 {
     list-style: none;
-    line-height: 28px;
+    line-height: 22px;
+    padding: 5px 0;
     padding-left: 10px;
 }
 
