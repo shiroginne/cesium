@@ -32,7 +32,6 @@ h1
 {
     font-size: 16pt;
     margin: 20px 0 10px 0;
-    position: relative;
 }
 
 h2
@@ -100,7 +99,6 @@ input
     padding: 10px;
     line-height: 130%;
     border: 1px solid #ccc;
-    font-size: 14pt;
 }
 
 .errorExplanation li
@@ -131,26 +129,94 @@ input
 .additional_navigation
 {
     line-height: 30px;
-    height: 30px;
-    padding-left: 16px;
+    min-height: 30px;
+    _height: 30px;
+    padding-left: 3px;
     background: #e5d5b0;
     border-bottom: 1px solid #fff9ea;
     -moz-box-shadow: -10px 0 10px #ccc;
     -webkit-box-shadow: -10px 0 10px #ccc;
 }
 
-.additional_navigation a, .additional_navigation span
+.additional_navigation li
 {
-    padding-right: 25px;
+    float: left;
+    padding: 0 5px;
+    margin: 0 8px;
+    position: relative;
+    cursor: default;
+}
+
+.additional_navigation li.underlined
+{
+    border-bottom: 1px solid #fff9ea;
+}
+
+.additional_navigation li.arrow
+{
+    margin: 0;
+    width: 15px;
+    text-align: center;
+}
+
+.additional_navigation li.arrow:hover, .additional_navigation li.dropdown:hover
+{
+    background: #d9caa7;
+}
+
+.additional_navigation li.arrow:before
+{
+    content: "→";
+}
+
+.additional_navigation li.arrow:hover:before
+{
+    content: "↓";
+}
+
+.additional_navigation li.dropdown:after
+{
+    content: "▴";
+}
+
+.additional_navigation li.dropdown:hover:after
+{
+    content: "▾";
+}
+
+.additional_navigation li a
+{
     text-decoration: none;
     color: #333;
 }
 
-.additional_navigation a:hover, .additional_navigation a.selected
+.additional_navigation li a:hover, .additional_navigation li a.selected
 {
     color: #777;
 }
 
+.additional_navigation ul
+{
+    display: none;
+    position: absolute;
+    left: -1px;
+    top: 30px;
+    background: #e5d5b0;
+    border: 1px solid #fff9ea;
+    border-top: none;
+}
+
+.additional_navigation li:hover ul
+{
+    display: block;
+}
+
+.additional_navigation ul li
+{
+    white-space: nowrap;
+    float: none;
+    text-align: left;
+}
 
 .navigation
 {
@@ -289,7 +355,6 @@ input
 {
     list-style: none;
     line-height: 28px;
-    padding: 5px 0;
     padding-left: 10px;
 }
 

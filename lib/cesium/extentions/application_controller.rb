@@ -60,14 +60,25 @@ module Cesium
           end
         end
 
-        def store_location
-          session[:return_to] = request.request_uri
+        def store_referer
+          session[:return_to] = request.referer
         end
 
-        def redirect_back_or_default(default)
+        def redirect_stored_or default
           redirect_to(session[:return_to] || default)
           session[:return_to] = nil
         end
+
+        def stored_path_or default
+          session[:return_to] || default
+        end
+
+        def redirect_back_or path
+          redirect_to :back
+          rescue ActionController::RedirectBackError
+          redirect_to path
+        end
+
 
       end
     end

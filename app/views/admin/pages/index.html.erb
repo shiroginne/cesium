@@ -2,6 +2,6 @@
 <%= recursive_tree_output @pages, :class => "pages_tree", :id => "pages_tree", :partial => 'page' %>
 <% if @pages.empty? %>
   <% content_for :additional_navigation do %>
-    <%= link_to 'New page', new_admin_page_path %>
+    <li><%= link_to 'New page', new_admin_page_path %></li>
   <% end %>
 <% end %>
