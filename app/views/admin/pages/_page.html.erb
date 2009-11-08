@@ -6,7 +6,6 @@
   <%= "<span>→" unless page.page_parts.empty? %>
     <% page.page_parts.each do |part| %>
       <%= link_to part.name, edit_admin_page_page_part_path(page, part) %>
-      <%= link_to image_tag('admin/remove.png'), admin_page_page_part_path(page, part), :method => :delete, :confirm => 'Are you sure?' %>
     <% end %>
   <%= "</span>" unless page.page_parts.empty? %>
   <div class="actions">
