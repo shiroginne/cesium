@@ -1,6 +1,0 @@
-<% f.fields_for :page_parts, page_part, :child_index => !page_part.is_a?(Array) && page_part.new_record? ? 'new_index' : nil do |page_part| %>
-<div class="page_part">
-  <%= page_part.hidden_field :name %>
-  <%= page_part.codemirror_textarea :body %>
-</div>
-<% end %>

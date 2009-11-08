@@ -9,34 +9,22 @@
   <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
 </div>
 
-<div class="parts_tabs_wrap">
-  <div class="part_add">
-    <%= add_page_part_link image_tag('admin/part_add.png'), f %>
-  </div>
-  <ul class="parts_tabs" id="parts_tabs">
-
-  </ul>
-</div>
-<div class="parts" id="parts">
-  <%= render :partial => 'page_part', :object => @page.page_parts, :locals => { :f => f } %>
-</div>
-
-<div>
-  <%= f.label :description %>
-  <%= f.text_field :description %>
-</div>
-<div>
-  <%= f.label :keywords %>
-  <%= f.text_field :keywords %>
-</div>
 <div>
   <%= f.label :layout_id %>
   <%= f.select :layout_id, layouts_for_select %>
 </div>
-
 <div>
   <%= f.label :status %>
   <%= f.select :status, @page.statuses %>
+</div>
+
+<div>
+  <%= f.label :description %>
+  <%= f.text_area :description, :rows => 3 %>
+</div>
+<div>
+  <%= f.label :keywords %>
+  <%= f.text_area :keywords, :rows => 3 %>
 </div>
 
 <div class="buttons">

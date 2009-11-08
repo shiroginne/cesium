@@ -10,8 +10,6 @@ class Page < ActiveRecord::Base
   has_many :page_parts, :dependent => :destroy
   belongs_to :layout
 
-  accepts_nested_attributes_for :page_parts, :allow_destroy => true
-
   acts_as_nested_set
 
   validates_presence_of :title
