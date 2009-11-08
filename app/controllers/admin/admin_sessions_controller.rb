@@ -11,7 +11,7 @@ class Admin::AdminSessionsController < ApplicationController
   def create
     @admin_session = AdminSession.new(params[:admin_session])
     if @admin_session.save
-      redirect_back_or_default '/'
+      redirect_back_or '/admin'
     else
       render :action => :new
     end
