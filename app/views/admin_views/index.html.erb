@@ -2,9 +2,9 @@
 <% if @records.empty? %>
   <p>Sorry, but there is no records in <%= controller.controller_name.humanize %></p>
 <% else %>
-<% form_tag [:admin, controller.model.new], :class => 'filter', :method => :get do %>
-  <%= text_field_tag :filter, params[:filter] %>
-<% end %>
+<!--<% form_tag [:admin, controller.model.new], :class => 'filter', :method => :get do %>-->
+  <!--<%= text_field_tag :filter, params[:filter] %>-->
+<!--<% end %>-->
 <table class="list_table">
 <thead>
   <tr>
@@ -33,6 +33,9 @@
 <% if respond_to? :will_paginate %>
   <%= will_paginate @records %>
 <% end %>
-<div class="add_entry">
-  <%= link_to "new #{controller.model_name.humanize.downcase}", new_polymorphic_path([:admin, controller.model.new]) %>
-</div>
+
+<% content_for :additional_navigation do %>
+  <li>
+  <%= link_to "New #{controller.model_name.humanize.downcase}", new_polymorphic_path([:admin, controller.model.new]) %>
+  </li>
+<% end %>

@@ -8,21 +8,7 @@
   <%= f.label :name %>
   <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
 </div>
-<div>
-  <%= f.label "Parts:" %>
-  <ul class="pages_tree">
-    <% @page.page_parts.each do |part| %>
-    <li>
-      <div class="info">
-        <%= link_to part.name, edit_admin_page_page_part_path(@page, part) %>
-        <div class="actions">
-          <%= link_to "destroy", admin_page_page_part_path(@page, part), :method => :delete, :confirm => 'Are you sure?' %>
-        </div>
-      </div>
-    </li>
-    <% end %>
-  </ul>
-</div>
+
 <div>
   <%= f.label :layout_id %>
   <%= f.select :layout_id, layouts_for_select %>

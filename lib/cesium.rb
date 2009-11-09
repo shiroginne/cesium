@@ -8,6 +8,7 @@ ActionController::Dispatcher.middleware.use Cesium::Rack::StaticOverlay, File.jo
 
 ActionController::Base.class_eval do
   include Cesium::Extentions::ApplicationController
+  include Cesium::Extentions::ActionController::Layout
 end
 
 ActiveRecord::Base.class_eval do

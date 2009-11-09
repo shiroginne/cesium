@@ -1,9 +1,4 @@
-<h1>Show <%= controller.model_name.humanize.downcase %>
-<div class="actions">
-  <%= link_to 'edit', edit_polymorphic_path([:admin, @record]), :class => 'edit_entry' %>
-  <%= link_to 'destroy', [:admin, @record], :confirm => "Are you sure?", :method => :delete, :class => 'remove_entry' %>
-</div>
-</h1>
+<h1>Show <%= controller.model_name.humanize.downcase %></h1>
 <ul class="show_entry">
 <% controller.show_fields.each do |field| -%>
   <li>
@@ -14,4 +9,4 @@
   </li>
 <% end -%>
 </ul>
-<%= link_to 'cancel', [:admin, controller.model.new] %>
+<%= link_to 'Back', [:admin, controller.model.new] %>

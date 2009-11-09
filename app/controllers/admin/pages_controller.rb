@@ -8,11 +8,10 @@ class Admin::PagesController < AdminController
 
   def move
     @page = Page.find(params[:id])
-    case params[:mode]
-      when 'left' then @page.move_to_left_of params[:where]
-      when 'right' then @page.move_to_right_of params[:where]
-      else @page.move_to_child_of params[:where]
-    end
+
+    params[:mode] = 'child' unless ['left', 'right'].include? params[:mode]
+    @page.send "move_to_#{params[:mode]}_of".to_sym, params[:where]
+
     @page.rebuild_paths
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
   end

@@ -77,8 +77,8 @@ module Cesium
           redirect_to path
         end
 
-
       end
+
     end
   end
 end
