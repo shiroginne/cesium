@@ -26,7 +26,7 @@ module Cesium
           controllers = []
           controllers_paths.each do |path|
             Dir.glob(File.join(path, 'admin', '*_controller.rb')).each do |f|
-              file = File.basename(f).gsub( /^(.+).rb/, '\1')
+              file = File.basename(f).gsub( /^(.+)\.rb/, '\1')
               controller_name = "admin/#{file}".camelize
               controllers << controller_name if controller_name.constantize.superclass.controller_name == 'admin'
             end

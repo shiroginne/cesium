@@ -61,7 +61,7 @@ Use admin:admin to login.
 Wellcome!
 
 
-Special thanx to nahy and ADie
+Special thanx to nahy, ADie and SSDany
 
 
 Copyright (c) 2009 pyromaniac, released under the MIT license

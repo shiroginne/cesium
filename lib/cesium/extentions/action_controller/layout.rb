@@ -3,24 +3,21 @@ module Cesium
     module ActionController
       module Layout
 
-        def self.included base
-          p base.respond_to? :find_layout
-          base.class_eval do
+        def self.append_features base
+          base.instance_eval do
             alias_method :orig_find_layout, :find_layout
-            extend ClassMethods
           end
+          super
         end
 
-        module ClassMethods
+      private
 
-          def find_layout(layout, format, html_fallback=false)
-            #if layout == "cesium_layout"
-              p layout
-            #else
-              orig_find_layout(layout, format, html_fallback)
-            #end
+        def find_layout(layout, format, html_fallback=false)
+          if layout == "cesium_layout"
+            ::ActionView::Template.new(::Page.build_layout(request.path_info))
+          else
+            orig_find_layout(layout, format, html_fallback)
           end
-
         end
 
       end

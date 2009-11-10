@@ -8,10 +8,8 @@ module Cesium
         FileUtils.mkdir_p(@path)
       end
 
-      protected
-
       def file_path path
-        File.join(@path, path, 'index.html.erb')
+        File.join(@path, path.gsub(/\*/, '.any'), 'index.html.erb')
       end
 
     end

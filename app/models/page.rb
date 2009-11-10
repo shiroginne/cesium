@@ -3,6 +3,8 @@ end
 
 class Page < ActiveRecord::Base
 
+  include Cesium::Layout
+
   attr_accessor :child_pages
 
   default_scope :order => :lft, :include => :page_parts
@@ -15,8 +17,8 @@ class Page < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :name, :scope => :parent_id
   validates_format_of :name,
-    :with => /\A[a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]{2,4})?\Z/,
-    :message => "can looks like 'about' or 'style.css'",
+    :with => /\A([a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]+)?|\*)\Z/,
+    :message => "can looks like 'about', 'style.css' or '*'",
     :unless => Proc.new { |page| page.name == '/' }
   validates_inclusion_of :status, :in => 0...2
 
@@ -50,11 +52,7 @@ class Page < ActiveRecord::Base
   end
 
   def self.find_page path
-    if path == '/'
-      find_by_parent_id nil, :include => :page_parts
-    else
-      find_by_path path, :include => :page_parts
-    end
+    find_by_path path
   end
 
   def additional_parts

@@ -38,14 +38,12 @@ module Cesium
       end
 
       def clear
-        FileUtils.rm_r Dir.glob(File.join(@path, '*'))
+        FileUtils.rm_rf Dir.glob(File.join(@path, '*'))
       end
 
       def exists? path
         Cesium::Config.cache_on && File.file?(file_path(path))
       end
-
-      protected
 
       def file_path path
         "#{File.join(@path, path)}.html.erb"

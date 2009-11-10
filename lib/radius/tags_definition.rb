@@ -16,6 +16,12 @@ class UndefinedSnippetError < StandardError
   end
 end
 
+class UnknownRenderOption < StandardError
+  def initialize
+    super("unknown render option")
+  end
+end
+
 module Radius
   module TagsDefinition
 
@@ -41,28 +47,31 @@ module Radius
         tag.locals.page.title
       end
 
-      context.define_tag 'include' do |tag|
-        if tag.locals.page.page_parts && tag.attr['name']
-          part = tag.locals.page.page_parts.detect{ |p| p.name == tag.attr['name'] } || tag.locals.page.additional_parts.detect{ |p| p.name == tag.attr['name'] }
-        end
-        if part
-          tag.locals.page.parse part.body
+      context.define_tag 'render' do |tag|
+        case
+        when tag.attr.key?('part') then
+          part = tag.locals.page.page_parts.detect{ |p| p.name == tag.attr['part'] } || tag.locals.page.additional_parts.detect{ |p| p.name == tag.attr['part'] }
+          if part
+            tag.locals.page.parse part.body
+          else
+            raise UndefinedPagePartError.new(tag.attr['name'])
+          end
+        when tag.attr.key?('partial') then
+          tag.locals.tag_tracker.wrap "<%= render :partial => \"#{tag.attr['partial']}\" %>"
+        when tag.attr.key?('snippet') then
+          snippet = lazy_find_snippet tag.attr['snippet']
+          if snippet
+            tag.locals.page.parse snippet.body
+          else
+            raise UndefinedSnippetError.new(tag.attr['snippet'])
+          end
         else
-          raise UndefinedPagePartError.new(tag.attr['name'])
+          raise UnknownRenderOption
         end
       end
 
-      context.define_tag 'snippet' do |tag|
-        snippet = lazy_find_snippet tag.attr['name']
-        if snippet
-          tag.locals.page.parse snippet.body
-        else
-          raise UndefinedSnippetError.new(tag.attr['name'])
-        end
-      end
-
-      context.define_tag 'partial' do |tag|
-        tag.locals.tag_tracker.wrap "<%= render :partial => \"#{tag.attr['name']}\" %>"
+      context.define_tag 'yield' do |tag|
+        tag.locals.tag_tracker.wrap "<%= yield #{":#{tag.attr['name']} " if tag.attr['name']}%>"
       end
 
       context.define_tag 'textile' do |tag|
@@ -153,9 +162,9 @@ module Radius
         end
       end
 
-      context.define_tag 'breadcrumps' do |tag|
-        tag.locals.breadcrumps = {}
-        breadcrumps = tag.locals.breadcrumps
+      context.define_tag 'breadcrumbs' do |tag|
+        tag.locals.breadcrumbs = {}
+        breadcrumbs = tag.locals.breadcrumbs
 
         tag.expand
 
@@ -169,46 +178,46 @@ module Radius
         result = []
         pages.each do |page|
           if page
-            breadcrumps[:title] = page.title
-            breadcrumps[:path] = page.path
-            breadcrumps[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
-            breadcrumps[:name] = page.name
+            breadcrumbs[:title] = page.title
+            breadcrumbs[:path] = page.path
+            breadcrumbs[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
+            breadcrumbs[:name] = page.name
             tag.locals.current = page
 
-            raise TagError.new("`breadcrumps' tag must include a `normal' tag") unless breadcrumps.has_key? :normal
+            raise TagError.new("`breadcrumbs' tag must include a `normal' tag") unless breadcrumbs.has_key? :normal
 
-            if tag.locals.page.path == breadcrumps[:path]
-              result << (breadcrumps[:here] || breadcrumps[:normal]).call
+            if tag.locals.page.path == breadcrumbs[:path]
+              result << (breadcrumbs[:here] || breadcrumbs[:normal]).call
             else
-              result << breadcrumps[:normal].call
+              result << breadcrumbs[:normal].call
             end
           end
         end
-        divider = breadcrumps.has_key?(:divider) ? breadcrumps[:divider].call : ' '
+        divider = breadcrumbs.has_key?(:divider) ? breadcrumbs[:divider].call : ' '
         result = result.join(divider)
         unless result.empty?
-          before = breadcrumps.has_key?(:before) ? breadcrumps[:before].call : ''
-          after = breadcrumps.has_key?(:after) ? breadcrumps[:after].call : ''
+          before = breadcrumbs.has_key?(:before) ? breadcrumbs[:before].call : ''
+          after = breadcrumbs.has_key?(:after) ? breadcrumbs[:after].call : ''
           result = before + result + after
         end
         result
       end
 
       [:normal, :here, :divider, :before, :after].each do |symbol|
-        context.define_tag "breadcrumps:#{symbol}" do |tag|
-          breadcrumps = tag.locals.breadcrumps
-          breadcrumps[symbol] = tag.block
+        context.define_tag "breadcrumbs:#{symbol}" do |tag|
+          breadcrumbs = tag.locals.breadcrumbs
+          breadcrumbs[symbol] = tag.block
         end
       end
 
       [:url, :title, :name].each do |symbol|
-        context.define_tag "breadcrumps:#{symbol}" do |tag|
-          breadcrumps = tag.locals.breadcrumps
-          breadcrumps[symbol]
+        context.define_tag "breadcrumbs:#{symbol}" do |tag|
+          breadcrumbs = tag.locals.breadcrumbs
+          breadcrumbs[symbol]
         end
       end
 
-      [:navigation, :breadcrumps].each do |symbol|
+      [:navigation, :breadcrumbs].each do |symbol|
         context.define_tag "#{symbol}:include" do |tag|
           if tag.attr['name']
             part = tag.locals.current.page_parts.detect{ |p| p.name == tag.attr['name'] }
