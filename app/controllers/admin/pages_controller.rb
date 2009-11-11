@@ -18,7 +18,7 @@ class Admin::PagesController < AdminController
 
   def status
     @page = Page.find(params[:id])
-    @page.update_attribute(:status, params[:status]) if params[:status]
+    @page.update_attributes(:status => params[:status]) if params[:status]
   end
 
   def new
