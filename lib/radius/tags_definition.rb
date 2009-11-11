@@ -65,6 +65,8 @@ module Radius
           else
             raise UndefinedSnippetError.new(tag.attr['snippet'])
           end
+        when tag.attr.key?('cell') then
+          tag.locals.tag_tracker.wrap "<%= render_cell :#{tag.attr['cell']}, :#{tag.attr['action']} %>" if tag.attr.has_key?('action')
         else
           raise UnknownRenderOption
         end

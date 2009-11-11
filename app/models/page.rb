@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
     :with => /\A([a-zA-Z0-9]+[\w-]*(\.[a-zA-Z0-9]+)?|\*)\Z/,
     :message => "can looks like 'about', 'style.css' or '*'",
     :unless => Proc.new { |page| page.name == '/' }
-  validates_inclusion_of :status, :in => 0...2
+  validates_inclusion_of :status, :in => 0..2
 
   after_move :rebuild_level_cache, :clear_cesium_pages_cache
 

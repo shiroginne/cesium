@@ -3,7 +3,7 @@
   <%= render :partial => 'form', :locals => { :f => f } %>
 <% end %>
 <% content_for :additional_navigation do %>
-  <li><%= @page.title %></li>
+  <li><%= h @page.title %></li>
   <li class="arrow">
     <ul>
       <li class="underlined"><%= link_to "New page part", new_admin_page_page_part_path(@page) %></li>
