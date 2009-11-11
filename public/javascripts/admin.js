@@ -80,8 +80,4 @@ Event.observe(window, 'load', function(){
         elem.select('.page_name')[0].update('Moving...');
       }});
     }
-
-    if ($('parts')) {
-      window.tabs = new CesiumTabs('parts', 'parts_tabs');
-    }
 });

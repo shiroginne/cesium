@@ -3,21 +3,12 @@
   <%= render :partial => 'form', :locals => { :f => f } %>
 <% end %>
 <% content_for :additional_navigation do %>
-  <li><%= link_to @page.title, edit_admin_page_path(@page) %></li>
-  <li class="arrow">
-    <ul>
-      <li class="underlined"><%= link_to "New page part", new_admin_page_page_part_path(@page) %></li>
-      <% @page.page_parts.each do |part| %>
-        <% unless part == @page_part %>
-        <li>
-          <%= link_to "Edit part \"#{part.name}\"", edit_admin_page_page_part_path(@page, part) %>
-          <%= link_to image_tag('admin/remove.png'), admin_page_page_part_path(@page, part), :method => :delete, :confirm => 'Are you sure?' %>
-        </li>
-        <% end %>
-      <% end %>
-    </ul>
+  <li><%= link_to h(@page.title), edit_admin_page_path(@page) %></li>
+  <% @page.page_parts.each do |part| %>
+  <li<%= ' class="selected"' if @page_part == part %>>
+    <%= link_to "Edit part \"#{part.name}\"", edit_admin_page_page_part_path(@page, part) %>
+    <%= link_to image_tag('admin/remove.png'), admin_page_page_part_path(@page, part), :method => :delete, :confirm => 'Are you sure?' %>
   </li>
-  <li>
-  <%= "part \"#{@page_part.name}\"" %>
-  </li>
+  <% end %>
+  <li><%= link_to "Add page part", new_admin_page_page_part_path(@page) %></li>
 <% end %>

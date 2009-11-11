@@ -128,9 +128,8 @@ input
 .additional_navigation
 {
     line-height: 30px;
-    min-height: 30px;
-    _height: 30px;
-    padding-left: 3px;
+    height: 30px;
+    padding-left: 15px;
     background: #e5d5b0;
     border-bottom: 1px solid #fff9ea;
     -moz-box-shadow: -10px 0 10px #ccc;
@@ -139,82 +138,26 @@ input
 
 .additional_navigation li
 {
+    line-height: 20px;
+    height: 20px;
     float: left;
     padding: 0 5px;
-    margin: 0 8px;
-    position: relative;
-    cursor: default;
-}
-
-.additional_navigation li.underlined
-{
-    border-bottom: 1px solid #fff9ea;
-}
-
-.additional_navigation li.arrow
-{
-    margin: 0;
-    width: 15px;
-    text-align: center;
-}
-
-.additional_navigation li.arrow:hover, .additional_navigation li.dropdown:hover
-{
-    background: #d9caa7;
-}
-
-.additional_navigation li.arrow:before
-{
-    content: "→";
-}
-
-.additional_navigation li.arrow:hover:before
-{
-    content: "↓";
-}
-
-.additional_navigation li.dropdown:after
-{
-    content: "▴";
-}
-
-.additional_navigation li.dropdown:hover:after
-{
-    content: "▾";
+    margin: 4px 10px 0 0;
+    border: 1px solid #fff9ea;
+    background: #dccaa1;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 
 .additional_navigation li a
 {
     text-decoration: none;
-    color: #333;
 }
 
-.additional_navigation li a:hover, .additional_navigation li a.selected
+.additional_navigation li:hover, .additional_navigation li.selected
 {
-    color: #777;
-}
-
-.additional_navigation ul
-{
-    display: none;
-    position: absolute;
-    left: -1px;
-    top: 30px;
-    background: #e5d5b0;
-    border: 1px solid #fff9ea;
-    border-top: none;
-}
-
-.additional_navigation li:hover ul
-{
-    display: block;
-}
-
-.additional_navigation ul li
-{
-    white-space: nowrap;
-    float: none;
-    text-align: left;
+    color: #222;
+    background: #fbf8f0;
 }
 
 .navigation
