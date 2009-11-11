@@ -70,8 +70,8 @@ class Page < ActiveRecord::Base
     end
   end
 
-  def parser_init
-    @context ||= Radius::PageContext.new self
+  def parser_init controller = nil
+    @context ||= Radius::PageContext.new self, controller
     @parser ||= Radius::Parser.new(@context, :tag_prefix => 'r')
   end
 
@@ -81,14 +81,14 @@ class Page < ActiveRecord::Base
       logger.info("Render page '#{self.path}' from cache")
       @pages_cache.read self.path
     else
-      text = parser_init.parse(self.get_layout.body)
+      text = parser_init('pages').parse(self.get_layout.body)
       text = @context.tag_tracker.parse(text)
       @pages_cache.write self.path, text
     end
   end
 
   def parse text, filter_erb = false
-    text = parser_init.parse text
+    text = parser_init('pages').parse text
     filter_erb ? @context.tag_tracker.parse(text) : text
   end
 

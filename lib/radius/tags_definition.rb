@@ -44,7 +44,7 @@ module Radius
       end
 
       context.define_tag 'title' do |tag|
-        tag.locals.page.title
+        tag.locals.page.parse tag.locals.page.title
       end
 
       context.define_tag 'render' do |tag|
@@ -74,14 +74,16 @@ module Radius
         tag.locals.tag_tracker.wrap "<%= yield #{":#{tag.attr['name']} " if tag.attr['name']}%>"
       end
 
+      context.define_tag 'field' do |tag|
+        tag.locals.tag_tracker.wrap "<%= @#{tag.attr['object'] || tag.locals.controller.singularize}.#{tag.attr['name']} %>" if tag.attr['name']
+      end
+
       context.define_tag 'textile' do |tag|
-        contents = tag.expand
-        ::RedCloth.new(contents).to_html
+        ::RedCloth.new(tag.expand).to_html
       end
 
       context.define_tag 'markdown' do |tag|
-        contents = tag.expand
-        ::BlueCloth::new(contents).to_html
+        ::BlueCloth::new(tag.expand).to_html
       end
 
       context.define_tag 'comment' do |tag|

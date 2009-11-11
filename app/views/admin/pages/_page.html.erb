@@ -2,7 +2,7 @@
   <% if page.path != '/' %>
     <div class="handle"></div>
   <% end %>
-  <span class="page_name"><%= link_to page.title, edit_admin_page_path(page) %></span>
+  <span class="page_name"><%= link_to h(page.title), edit_admin_page_path(page) %></span>
   <%= "<span>→" unless page.page_parts.empty? %>
     <% page.page_parts.each do |part| %>
       <%= link_to part.name, edit_admin_page_page_part_path(page, part) %>
