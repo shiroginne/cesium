@@ -127,34 +127,40 @@ input
 
 .additional_navigation
 {
-    line-height: 30px;
-    height: 30px;
-    padding-left: 15px;
+    min-height: 22px;
+    _height: 22px;
+    padding: 6px 15px;
     background: #e5d5b0;
     border-bottom: 1px solid #fff9ea;
     -moz-box-shadow: -10px 0 10px #ccc;
     -webkit-box-shadow: -10px 0 10px #ccc;
 }
 
-.additional_navigation li
+ul.buttons
 {
     line-height: 20px;
     height: 20px;
+}
+
+ul.buttons li
+{
     float: left;
-    padding: 0 5px;
-    margin: 4px 10px 0 0;
+    margin-right: 10px;
     border: 1px solid #fff9ea;
     background: #dccaa1;
+    white-space: nowrap;
+    font-size: 10pt;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
 
-.additional_navigation li a
+ul.buttons li a
 {
     text-decoration: none;
+    padding: 2px 7px;
 }
 
-.additional_navigation li:hover, .additional_navigation li.selected
+ul.buttons li a:hover, ul.buttons li a.selected
 {
     color: #222;
     background: #fbf8f0;

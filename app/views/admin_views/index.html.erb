@@ -35,7 +35,7 @@
 <% end %>
 
 <% content_for :additional_navigation do %>
-  <li>
-  <%= link_to "New #{controller.model_name.humanize.downcase}", new_polymorphic_path([:admin, controller.model.new]) %>
-  </li>
+  <ul class="buttons">
+    <li><%= link_to "New #{controller.model_name.humanize.downcase}", new_polymorphic_path([:admin, controller.model.new]) %></li>
+  </ul>
 <% end %>

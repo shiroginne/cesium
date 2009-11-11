@@ -3,12 +3,14 @@
   <%= render :partial => 'form', :locals => { :f => f } %>
 <% end %>
 <% content_for :additional_navigation do %>
+<ul class="buttons">
   <li><%= link_to h(@page.title), edit_admin_page_path(@page) %></li>
   <% @page.page_parts.each do |part| %>
-  <li<%= ' class="selected"' if @page_part == part %>>
-    <%= link_to "Edit part \"#{part.name}\"", edit_admin_page_page_part_path(@page, part) %>
-    <%= link_to image_tag('admin/remove.png'), admin_page_page_part_path(@page, part), :method => :delete, :confirm => 'Are you sure?' %>
+  <li>
+<%= link_to h(part.name), edit_admin_page_page_part_path(@page, part), :class => (@page_part == part ? 'selected' : nil) -%>
+<%= link_to image_tag('admin/remove.png'), admin_page_page_part_path(@page, part), :method => :delete, :confirm => 'Are you sure?' %>
   </li>
   <% end %>
   <li><%= link_to "Add page part", new_admin_page_page_part_path(@page) %></li>
+</ul>
 <% end %>

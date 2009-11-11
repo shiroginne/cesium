@@ -13,5 +13,7 @@
 </ul>
 
 <% content_for :additional_navigation do %>
-  <li><%= link_to 'New snippet', new_admin_snippet_url %></li>
+  <ul class="buttons">
+    <li><%= link_to 'New snippet', new_admin_snippet_url %></li>
+  </ul>
 <% end %>
