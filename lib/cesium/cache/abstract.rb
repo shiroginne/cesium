@@ -49,6 +49,10 @@ module Cesium
         "#{File.join(@path, path)}.html.erb"
       end
 
+      def mtime path
+        File.mtime(file_path(path))
+      end
+
     end
   end
 end
