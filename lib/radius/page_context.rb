@@ -6,15 +6,14 @@ module Radius
 
     include TagsDefinition
 
-    attr_reader :page, :tag_tracker, :controller
+    attr_reader :page, :tag_tracker
 
-    def initialize page, controller = nil
+    def initialize page
       super() do |c|
         define_tags c
       end
       globals.page = @page = page
       globals.tag_tracker = @tag_tracker = Cesium::TagTracker.new
-      globals.controller = @controller = controller
     end
 
   end

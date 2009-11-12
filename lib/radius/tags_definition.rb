@@ -77,9 +77,15 @@ module Radius
       end
 
       context.define_tag 'field' do |tag|
-        object = "@#{tag.attr['object'] || tag.locals.controller.singularize}"
+        object = tag.attr.has_key?('object') ? ":@#{tag.attr['object']}" : '"@#{params[:controller].to_s.singularize}".to_sym'
         name = tag.attr['name']
-        tag.locals.tag_tracker.wrap "<%= #{object}.#{name} if #{object}.class.cesium_allowed_methods.include?(:#{name}) %>" if name
+        field = <<-CODE
+          <%=
+            object = instance_variable_get(#{object})
+            object.#{name} if object.class.cesium_allowed_methods.include?(:#{name})
+          %>
+        CODE
+        tag.locals.tag_tracker.wrap field if name
       end
 
       context.define_tag 'textile' do |tag|
