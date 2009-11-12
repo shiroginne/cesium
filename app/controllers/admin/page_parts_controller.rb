@@ -4,6 +4,13 @@ class Admin::PagePartsController < AdminController
 
   before_filter :find_page
 
+  def duplicate
+    @page_part = PagePart.find(params[:id]).clone
+    @page_part.page_id = params[:page_id]
+    flash[:notice] = @page_part.save ? 'Page part was successfully duplicated.' : 'Page part duplication error.'
+    redirect_to edit_admin_page_page_part_url @page, @page_part
+  end
+
   def new
     store_referer
     @page_part = @page.page_parts.new
