@@ -50,11 +50,11 @@ module Radius
       context.define_tag 'render' do |tag|
         case
         when tag.attr.key?('part') then
-          part = tag.locals.page.page_parts.detect{ |p| p.name == tag.attr['part'] } || tag.locals.page.additional_parts.detect{ |p| p.name == tag.attr['part'] }
+          part = tag.locals.page.all_parts.detect{ |p| p.name == tag.attr['part'] }
           if part
             tag.locals.page.parse part.body
           else
-            raise UndefinedPagePartError.new(tag.attr['name'])
+            raise UndefinedPagePartError.new(tag.attr['part'])
           end
         when tag.attr.key?('partial') then
           tag.locals.tag_tracker.wrap "<%= render :partial => \"#{tag.attr['partial']}\" %>"

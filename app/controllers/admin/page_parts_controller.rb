@@ -11,7 +11,7 @@ class Admin::PagePartsController < AdminController
 
   def edit
     store_referer
-    @page_part = @page.page_parts.find params[:id]
+    @page_part = PagePart.find params[:id]
   end
 
   def create
@@ -29,7 +29,7 @@ class Admin::PagePartsController < AdminController
   end
 
   def update
-    @page_part = @page.page_parts.find params[:id]
+    @page_part = PagePart.find params[:id]
     if @page_part.update_attributes params[:page_part]
       flash[:notice] = 'Page part was successfully updated.'
       if params[:commit] == 'Save and exit'
@@ -43,7 +43,7 @@ class Admin::PagePartsController < AdminController
   end
 
   def destroy
-    @page_part = @page.page_parts.find params[:id]
+    @page_part = PagePart.find params[:id]
     @page_part.destroy
     redirect_back_or edit_admin_page_url @page
   end

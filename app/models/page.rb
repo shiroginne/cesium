@@ -55,10 +55,39 @@ class Page < ActiveRecord::Base
     find_by_path path
   end
 
+  def self.find_with_inherited_parts id
+    page = find id
+    parts_names = page.page_parts.map { |p| p.name }
+    ancestors = page.ancestors
+    ancestors.reverse.each do |a|
+      a.page_parts.each do |p|
+        unless parts_names.include? p.name
+          page.inherited_parts << p
+          parts_names << p.name
+        end
+      end
+    end
+    page
+  end
+
   def additional_parts
-    ancestors_id = self.ancestors.map { |p| p.id }
-    exclude = self.page_parts.map { |p| "name <> '#{p.name}'" }.join(' and ')
-    PagePart.find_all_by_page_id(ancestors_id, :conditions => exclude, :order => 'page_id desc')
+    parts_names = self.page_parts.map { |p| p.name }
+    ancestors = self.ancestors
+    additional = []
+    ancestors.reverse.each do |a|
+      a.page_parts.each do |p|
+        unless parts_names.include? p.name
+          p.additional = true
+          additional << p
+          parts_names << p.name
+        end
+      end
+    end
+    additional
+  end
+
+  def all_parts
+    (page_parts + additional_parts).sort { |a, b| a.name <=> b.name }
   end
 
   def get_layout
