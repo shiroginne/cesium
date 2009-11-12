@@ -80,10 +80,8 @@ module Radius
         object = tag.attr.has_key?('object') ? ":@#{tag.attr['object']}" : '"@#{params[:controller].to_s.singularize}".to_sym'
         name = tag.attr['name']
         field = <<-CODE
-          <%=
-            object = instance_variable_get(#{object})
-            object.#{name} if object.class.cesium_allowed_methods.include?(:#{name})
-          %>
+          <%= object = instance_variable_get(#{object})
+              object.#{name} if object.class.cesium_allowed_methods.include?(:#{name}) %>
         CODE
         tag.locals.tag_tracker.wrap field if name
       end
@@ -105,9 +103,7 @@ module Radius
 
         if tag.nesting.include?('navigation') && tag.locals.current
           tree = tag.locals.current
-          tree.child_pages = [] if tree.parent_id == nil
         else
-          with_root = tag.attr.has_key?('with_root') ? tag.attr['with_root'] : nil
           for_page = tag.attr.has_key?('for') ? tag.attr['for'] : nil
           for_level = tag.attr.has_key?('level') && tag.attr['level'].to_i >= 0 ? tag.attr['level'] : nil
 
@@ -125,7 +121,7 @@ module Radius
           else
 
           end
-          tree = pages.to_a.build_tree_from_nested_set :with_root => !!with_root
+          tree = pages.to_a.build_tree_from_nested_set
         end
 
         result = []

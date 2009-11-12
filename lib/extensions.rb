@@ -24,7 +24,7 @@ class String
 end
 
 class Array
-  def build_tree_from_nested_set options = {}
+  def build_tree_from_nested_set
     stack = Array.new
     stack.push first
     each do |item|
@@ -40,13 +40,11 @@ class Array
         elsif item.level_cache < stack.last.level_cache
           begin
             stack.pop
-          end until stack[-2].level_cache < stack.last.level_cache
+          end until stack[-2].level_cache < item.level_cache
           stack.pop
           stack.push item
           stack[-2].child_pages.push item
         end
-      elsif options[:with_root]
-        item.child_pages.push first.dup
       end
     end
     first

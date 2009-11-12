@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/extentions"
+require File.dirname(__FILE__) + "/extensions"
 require File.dirname(__FILE__) + "/form_builder"
 
 module Cesium
