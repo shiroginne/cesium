@@ -3,11 +3,11 @@
     <div class="handle"></div>
   <% end %>
   <span class="page_name"><%= link_to h(page.title), edit_admin_page_path(page) %></span>
-  <%= "<span>→" unless page.page_parts.empty? %>
+  <%= "<span>( parts: " unless page.page_parts.empty? %>
     <% page.page_parts.each do |part| %>
       <%= link_to part.name, edit_admin_page_page_part_path(page, part) %>
     <% end %>
-  <%= "</span>" unless page.page_parts.empty? %>
+  <%= " )</span>" unless page.page_parts.empty? %>
   <div class="actions">
     <span class="page_status"><%= status_select page %></span>
     <%= link_to 'view page', cesium_path(page.path.to_path_params), :class => 'view_entry' %>
