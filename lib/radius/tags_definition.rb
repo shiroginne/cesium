@@ -125,7 +125,7 @@ module Radius
         result = []
         tree.child_pages.each do |page|
           unless page.hidden? || page.draft?
-            navigation[:title] = page.title
+            navigation[:title] = tag.locals.page.parse page.title
             navigation[:path] = page.path
             navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
             navigation[:name] = page.name
