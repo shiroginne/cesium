@@ -1,14 +1,18 @@
 module Admin::PagesHelper
 
-  def add_page_part_link(name, form)
-    link_to_function name do |page|
-      task = render :partial => 'page_part', :object => PagePart.new({:name => 'new_part'}), :locals => { :f => form }
-      page << %{
-        var new_id = "new_" + new Date().getTime();
-        $('parts').insert({ bottom: "#{ escape_javascript task }".replace(/new_index/g, new_id) });
-        window.tabs.addTab($('parts').childElements().last());
-      }
+  def page_parts_links page, current_part = nil
+    result = ''
+    page.all_parts.each do |part|
+      result += '<li>'
+      result += link_to h(part.name), edit_admin_page_page_part_path(page, part), :class => (current_part && current_part == part ? 'selected' : nil)
+      if part.additional?
+        result += link_to image_tag('admin/duplicate.png'), duplicate_admin_page_page_part_path(page, part)
+      else
+        result += link_to image_tag('admin/remove.png'), admin_page_page_part_path(page, part), :method => :delete, :confirm => 'Are you sure?'
+      end
+      result += '</li>'
     end
+    result
   end
 
   def recursive_tree_output(set, options = {})

@@ -1,5 +1,7 @@
 class Admin::PagePartsController < AdminController
 
+  helper PagesHelper
+
   menu_position 0
 
   before_filter :find_page
