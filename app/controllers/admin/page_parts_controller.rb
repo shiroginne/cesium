@@ -55,7 +55,7 @@ class Admin::PagePartsController < AdminController
     @page_part = PagePart.find params[:id]
     name = @page_part.name
     @page_part.destroy
-    @page = Page.find params[:page_id]
+    @page.page_parts.reload
     part = @page.all_parts.detect { |p| p.name == name }
     redirect_to (part ? edit_admin_page_page_part_url(@page, part) : edit_admin_page_url(@page))
   end

@@ -44,7 +44,6 @@ module Cesium
 
         def require_cesium_admin
           unless cesium_admin
-            flash[:notice] = "You must be logged in to access this page"
             redirect_to admin_login_url
             return false
           end
@@ -52,7 +51,6 @@ module Cesium
 
         def require_cesium_no_admin
           if cesium_admin
-            flash[:notice] = "You must be logged out to access this page"
             redirect_to '/'
             return false
           end
