@@ -17,7 +17,8 @@ namespace :cesium do
     desc "Dump cesium pages, layouts and snippets into yaml file."
     task :dump => :environment do
       ActiveRecord::Base.establish_connection(RAILS_ENV)
-      filename = File.join(RAILS_ROOT, (ENV['FILE'] || "cesium_dump_#{Time.now.strftime("%Y%m%d%H%M%S")}") + '.yml')
+      FileUtils.mkdir_p(File.join(RAILS_ROOT, 'cesium_dumps'))
+      filename = File.join(RAILS_ROOT, "cesium_dumps/cesium_dump_#{Time.now.strftime("%Y%m%d%H%M%S")}" + '.yml')
       yaml_hash = {}
       [Page, PagePart, Layout, Snippet].each do |model|
         model_hash = {}
@@ -37,8 +38,9 @@ namespace :cesium do
     desc "Load cesium pages, layouts and snippets from yaml file. Destroys all previosly data."
     task :load => :environment do
       ActiveRecord::Base.establish_connection(RAILS_ENV)
-      filename = File.join(RAILS_ROOT, ENV['FILE']) if ENV['FILE']
-      filename ||= Dir.glob(File.join(RAILS_ROOT, 'cesium_dump_*.yml')).last
+      glob = Dir.glob(File.join(RAILS_ROOT, 'cesium_dumps/cesium_dump_*.yml'))
+      raise "No dumps found" if glob.empty?
+      filename = glob.last
       p "Reading dump from #{filename}"
       yaml_obj = YAML.load_file(filename)
       ActiveRecord::Base.transaction do
@@ -70,13 +72,17 @@ namespace :cesium do
 
     desc "Migrate cesium models"
     task :migrate => :environment do
-      ActiveRecord::Migrator.migrate(File.join(RAILS_ROOT, 'vendor/plugins/cesium/db/migrate'), ENV["PLUGIN_VERSION"] ? ENV["PLUGIN_VERSION"].to_i : nil)
+      ActiveRecord::Migrator.migrate(File.join(RAILS_ROOT, 'vendor/plugins/cesium/db/migrate'), nil)
     end
 
-    desc "Migrate all application models include cesium"
-    task 'migrate:application' => :environment do
-      Rake::Task["db:migrate"].invoke
-      Rake::Task["cesium:db:migrate"].invoke
+    desc "Runs the \"down\" for a given cesium migration VERSION."
+    task 'migrate:down' => :environment do
+      ActiveRecord::Migrator.down(File.join(RAILS_ROOT, 'vendor/plugins/cesium/db/migrate'), ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+    end
+
+    desc "Runs the \"up\" for a given cesium migration VERSION."
+    task 'migrate:up' => :environment do
+      ActiveRecord::Migrator.up(File.join(RAILS_ROOT, 'vendor/plugins/cesium/db/migrate'), ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
     end
 
   end
