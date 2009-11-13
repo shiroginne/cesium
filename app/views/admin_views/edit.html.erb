@@ -4,3 +4,8 @@
 
   <%= render :partial => 'admin_views/form', :locals => { :f => f } %>
 <% end %>
+<% content_for :additional_navigation do %>
+  <ul class="buttons">
+    <li><%= link_to "Show #{controller.model_name.humanize.downcase}", [:admin, @record] %></li>
+  </ul>
+<% end %>

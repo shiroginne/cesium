@@ -9,4 +9,9 @@
   </li>
 <% end -%>
 </ul>
-<%= link_to 'Back', [:admin, controller.model.new] %>
+<% content_for :additional_navigation do %>
+  <ul class="buttons">
+    <li><%= link_to "Edit #{controller.model_name.humanize.downcase}", edit_polymorphic_path([:admin, @record]) %></li>
+    <li><%= link_to "Destroy #{controller.model_name.humanize.downcase}", [:admin, @record], :method => :delete, :confirm => "Are you sure?" %></li>
+  </ul>
+<% end %>
