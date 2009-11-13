@@ -1,6 +1,6 @@
 class Admin::PagePartsController < AdminController
 
-  helper PagesHelper
+  helper Admin::PagesHelper
 
   menu_position 0
 
@@ -53,8 +53,11 @@ class Admin::PagePartsController < AdminController
 
   def destroy
     @page_part = PagePart.find params[:id]
+    name = @page_part.name
     @page_part.destroy
-    redirect_back_or edit_admin_page_url @page
+    @page = Page.find params[:page_id]
+    part = @page.all_parts.detect { |p| p.name == name }
+    redirect_to (part ? edit_admin_page_page_part_url(@page, part) : edit_admin_page_url(@page))
   end
 
   private
