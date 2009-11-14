@@ -9,7 +9,7 @@
 <thead>
   <tr>
   <% controller.index_fields.each do |field| -%>
-    <th><%= field.to_s.humanize %></th>
+    <th><%= pic_for field %><%= link_to field.to_s.humanize, "?order=#{field}" %></th>
   <% end -%>
     <th class="actions">Actions</th>
   </tr>

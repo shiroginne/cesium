@@ -276,9 +276,20 @@ ul.buttons li a:hover, ul.buttons li a.selected
     background: #eee;
 }
 
+.list_table th a
+{
+    text-decoration: none;
+    border-bottom: 1px dotted #333;
+}
+
+.list_table th a:hover
+{
+    border-bottom: none;
+}
+
 .list_table td, .list_table th
 {
-    padding: 6px 10px;
+    padding: 5px 10px;
 }
 
 .list_table td

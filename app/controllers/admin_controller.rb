@@ -3,7 +3,8 @@ class AdminController < ApplicationController
 
   layout 'admin'
 
-  before_filter :require_cesium_admin
+  before_filter :require_cesium_admin, :process_filters
+  helper_method :pic_for
 
   transmit_options :index_fields, :show_fields, :form_fields, :filter_fields, :file_fields, :column_types
 
@@ -15,15 +16,10 @@ class AdminController < ApplicationController
   end
 
   def index
-    conditions = nil
-    if params[:filter] && respond_to?(:filter_fields)
-      condition_string = filter_fields.map{|ff| "#{ff} like ?"}.join(' or ')
-      conditions = [condition_string, *filter_fields.count.times.collect{"%#{params[:filter]}%"}]
-    end
     if model.respond_to? :paginate
-      @records = model.paginate :page => params[:page], :conditions => conditions
+      @records = model.paginate(:page => params[:page])
     else
-      @records = model.find :all, :conditions => conditions
+      @records = model.find(:all, session[:filters][model_name.to_sym])
     end
     render_action :index
   end
@@ -89,6 +85,35 @@ class AdminController < ApplicationController
       result = File.join('admin', controller_name, "#{action}.html.erb") if File.exists?(File.join(path, 'admin', controller_name, "#{action}.html.erb"))
     end
     render result
+  end
+
+  def process_filters
+    session[:filters] = {} unless session.key?(:filters)
+    session[:filters][model_name.to_sym] = { :order => '', :conditions => {} } unless session[:filters].key?(model_name.to_sym)
+    session[:filters][model_name.to_sym][:order] = "created_at DESC" if session[:filters][model_name.to_sym][:order].empty?
+    if params[:order] && model.columns.detect {|c| c.name == params[:order]}
+      case session[:filters][model_name.to_sym][:order]
+      when params[:order] then
+        session[:filters][model_name.to_sym][:order] = "#{params[:order]} DESC"
+      when "#{params[:order]} DESC" then
+        session[:filters][model_name.to_sym][:order] = "created_at DESC"
+      else
+        session[:filters][model_name.to_sym][:order] = params[:order]
+      end
+    end
+    #if params[:filter] && respond_to?(:filter_fields)
+      #condition_string = filter_fields.map{|ff| "#{ff} like ?"}.join(' or ')
+      #conditions = [condition_string, *filter_fields.count.times.collect{"%#{params[:filter]}%"}]
+    #end
+    redirect_to request.path_info if params[:order] || params[:conditions]
+  end
+
+  def pic_for field
+    case session[:filters][model_name.to_sym][:order]
+    when field.to_s then '▾ '
+    when "#{field} DESC" then '▴ '
+    else ''
+    end
   end
 
 end
