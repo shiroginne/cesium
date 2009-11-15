@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + "/extensions"
-require File.dirname(__FILE__) + "/form_builder"
 
 module Cesium
 end
@@ -13,4 +12,8 @@ end
 
 ActiveRecord::Base.class_eval do
   include Cesium::Extentions::ActiveRecord
+end
+
+ActionView::Helpers::FormBuilder.class_eval do
+  include Terbium::FormBuilder
 end

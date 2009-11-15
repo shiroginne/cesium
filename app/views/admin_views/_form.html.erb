@@ -1,7 +1,9 @@
 <%= f.error_messages %>
 
+<%= p controller.form_fields %>
+
 <% controller.form_fields.each do |field| -%>
-  <%= f.abstract_field field %>
+  <%= f.terbium_field field %>
 <% end -%>
 
 <div class="buttons">

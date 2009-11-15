@@ -9,7 +9,7 @@
 <thead>
   <tr>
   <% controller.index_fields.each do |field| -%>
-    <th><%= pic_for field %><%= link_to field.to_s.humanize, "?order=#{field}" %></th>
+    <th><%= pic_for field %><%= link_to field[:label] || field.name.to_s.humanize, "?order=#{field}" %></th>
   <% end -%>
     <th class="actions">Actions</th>
   </tr>
@@ -18,7 +18,7 @@
 <% @records.each do |record| -%>
   <tr>
   <% controller.index_fields.each do |field| -%>
-    <td><%= controller.helpers.respond_to?("index_#{field}") ? controller.helpers.send("index_#{field}", record.send(field)) : h(record.send(field)) %></td>
+    <td><%= h(record.send(field.name)) %></td>
   <% end -%>
     <td class="actions">
       <%= link_to 'show', [:admin, record], :class => 'view_entry' %>

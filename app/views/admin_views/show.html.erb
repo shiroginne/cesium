@@ -2,9 +2,9 @@
 <ul class="show_entry">
 <% controller.show_fields.each do |field| -%>
   <li>
-    <h2><%= field.to_s.humanize %></h2>
+    <h2><%= field[:label] || field.to_s.humanize %></h2>
     <div>
-      <%= controller.helpers.respond_to?("show_#{field}") ? controller.helpers.send("show_#{field}", @record.send(field)) : h(@record.send(field)) %>
+      <%= h(@record.send(field.name)) %>
     </div>
   </li>
 <% end -%>
