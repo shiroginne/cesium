@@ -46,7 +46,7 @@ module Cesium
       end
 
       def file_path path
-        "#{File.join(@path, path)}.html.erb"
+        "#{File.join(@path, path.gsub(/\*/, '.any'))}.html.erb"
       end
 
       def mtime path

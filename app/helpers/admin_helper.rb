@@ -28,4 +28,12 @@ module AdminHelper
     end
   end
 
+  def filter_for field
+
+  end
+
+  def reset_all_filters_link
+
+  end
+
 end

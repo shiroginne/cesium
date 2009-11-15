@@ -73,7 +73,7 @@ class AdminController < ApplicationController
       #condition_string = filter_fields.map{|ff| "#{ff} like ?"}.join(' or ')
       #conditions = [condition_string, *filter_fields.count.times.collect{"%#{params[:filter]}%"}]
     #end
-    redirect_to request.path_info if params[:order] || params[:conditions]
+    redirect_to request.referer if params[:order] || params[:conditions]
   end
 
 end

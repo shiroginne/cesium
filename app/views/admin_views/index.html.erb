@@ -2,36 +2,39 @@
 <% if @records.empty? %>
   <p>Sorry, but there is no records in <%= controller.controller_name.humanize %></p>
 <% else %>
-<!--<% form_tag [:admin, controller.model.new], :class => 'filter', :method => :get do %>-->
-  <!--<%= text_field_tag :filter, params[:filter] %>-->
-<!--<% end %>-->
-<table class="list_table">
-<thead>
-  <tr>
-  <% controller.index_fields.each do |field| -%>
-    <th><%= pic_for field %><%= link_to field[:label] || field.name.to_s.humanize, "?order=#{field.order}" %></th>
+  <table class="list_table">
+  <thead>
+    <tr>
+    <% controller.index_fields.each do |field| -%>
+      <th><%= pic_for field %><%= link_to field[:label] || field.name.to_s.humanize, "?order=#{field.order}" %></th>
+    <% end -%>
+      <th class="actions">Actions</th>
+    </tr>
+    <tr>
+    <% controller.index_fields.each do |field| -%>
+      <th><%= filter_for field %></th>
+    <% end -%>
+      <th><%= reset_all_filters_link %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @records.each do |record| -%>
+    <tr>
+    <% controller.index_fields.each do |field| -%>
+      <td><%= h(record.send(field.name)) %></td>
+    <% end -%>
+      <td class="actions">
+        <%= link_to 'show', [:admin, record], :class => 'view_entry' %>
+        <%= link_to 'edit', edit_polymorphic_path([:admin, record]), :class => 'edit_entry' %>
+        <%= link_to 'destroy', [:admin, record], :confirm => "Are you sure?", :method => :delete, :class => 'remove_entry' %>
+      </td>
+    </tr>
   <% end -%>
-    <th class="actions">Actions</th>
-  </tr>
-</thead>
-<tbody>
-<% @records.each do |record| -%>
-  <tr>
-  <% controller.index_fields.each do |field| -%>
-    <td><%= h(record.send(field.name)) %></td>
-  <% end -%>
-    <td class="actions">
-      <%= link_to 'show', [:admin, record], :class => 'view_entry' %>
-      <%= link_to 'edit', edit_polymorphic_path([:admin, record]), :class => 'edit_entry' %>
-      <%= link_to 'destroy', [:admin, record], :confirm => "Are you sure?", :method => :delete, :class => 'remove_entry' %>
-    </td>
-  </tr>
-<% end -%>
-</tbody>
-</table>
-<% end %>
-<% if respond_to? :will_paginate %>
-  <%= will_paginate @records %>
+  </tbody>
+  </table>
+  <% end %>
+  <% if respond_to? :will_paginate %>
+    <%= will_paginate @records %>
 <% end %>
 
 <% content_for :additional_navigation do %>

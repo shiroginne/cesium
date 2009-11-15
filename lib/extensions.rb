@@ -36,26 +36,6 @@ class Array
   end
 end
 
-module ActionView
-  module Helpers
-    class FormBuilder
-      def codemirror_textarea method, options = {}
-        script = <<-script
-        <script type="text/javascript">
-          var editor = CodeMirror.fromTextArea('#{@object_name.gsub(/\]\[|[^-a-zA-Z0-9:.]/, "_").sub(/_$/, "")}_#{method.to_s.sub(/\?$/,"")}', {
-            parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-            stylesheet: ["/codemirror/css/xmlcolors.css", "/codemirror/css/jscolors.css", "/codemirror/css/csscolors.css"],
-            path: "/codemirror/js/",
-            lineNumbers: true
-          });
-        </script>
-script
-        '<div class="editor_border">' + text_area(method, options) + script + '</div>'
-      end
-    end
-  end
-end
-
 module CollectiveIdea
   module Acts
     module NestedSet

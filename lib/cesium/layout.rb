@@ -26,10 +26,14 @@ module Cesium
     module ClassMethods
 
       def cesium_layout_path path
+        fuzzy_find(path).cesium_layout_path
+      end
+
+      def fuzzy_find path
         path.gsub!(/\/$/, '')
         candidates = find(:all, :conditions => ['path like ?', path.scan(/^\/[\w-]*/)[0] + '%']).reverse
         for c in candidates do
-          return c.cesium_layout_path if path =~ /^#{c.path.gsub(/\*/, '.*')}/
+          return c if path =~ /^#{c.path.gsub(/\*/, '.*')}/
         end
         raise CesiumLayoutError.new("Can`t find cesium layout for #{path}")
       end
