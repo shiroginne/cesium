@@ -14,6 +14,10 @@ ActiveRecord::Base.class_eval do
   include Cesium::Extentions::ActiveRecord
 end
 
+ActionView::Base.class_eval do
+  include Cesium::Extentions::ActionView::Base
+end
+
 ActionView::Helpers::FormBuilder.class_eval do
   include Terbium::FormBuilder
 end

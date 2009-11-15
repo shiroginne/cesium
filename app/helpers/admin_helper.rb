@@ -22,8 +22,8 @@ module AdminHelper
 
   def pic_for field
     case session[:filters][controller.model_name.to_sym][:order]
-    when field.to_s then '▾ '
-    when "#{field} DESC" then '▴ '
+    when field.order then '▾ '
+    when "#{field.order} DESC" then '▴ '
     else ''
     end
   end

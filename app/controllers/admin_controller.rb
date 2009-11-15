@@ -59,13 +59,12 @@ class AdminController < ApplicationController
   def process_filters
     session[:filters] = {} unless session.key?(:filters)
     session[:filters][model_name.to_sym] = { :order => '', :conditions => {} } unless session[:filters].key?(model_name.to_sym)
-    session[:filters][model_name.to_sym][:order] = "created_at DESC" if session[:filters][model_name.to_sym][:order].empty?
     if params[:order] && model.columns.detect {|c| c.name == params[:order]}
       case session[:filters][model_name.to_sym][:order]
       when params[:order] then
         session[:filters][model_name.to_sym][:order] = "#{params[:order]} DESC"
       when "#{params[:order]} DESC" then
-        session[:filters][model_name.to_sym][:order] = "created_at DESC"
+        session[:filters][model_name.to_sym].delete(:order)
       else
         session[:filters][model_name.to_sym][:order] = params[:order]
       end
