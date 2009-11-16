@@ -9,16 +9,11 @@ module Terbium
     end
 
     def order
-      if options[:order]
-        options[:order].to_s
-      else
-        if @name.to_s.include? '.'
-          match = @name.to_s.scan(/\A(\w+)\.(\w+)\Z/)[0]
-          "#{match[0].tableize}.#{match[1]}"
-        else
-          @name.to_s
-        end
-      end
+      @order ||= table_column options[:order] || @name
+    end
+
+    def label
+      @label ||= options[:label] || @name.to_s.humanize
     end
 
     def [](key)
@@ -27,6 +22,17 @@ module Terbium
 
     def to_s
       @name.to_s
+    end
+
+  private
+
+    def table_column str
+      if str.to_s.include? '.'
+        match = str.to_s.scan(/\A(\w+)\.(\w+)\Z/)[0]
+        "#{match[0].tableize}.#{match[1]}"
+      else
+        str.to_s
+      end
     end
 
   end

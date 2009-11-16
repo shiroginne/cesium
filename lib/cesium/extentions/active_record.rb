@@ -20,7 +20,7 @@ module Cesium
       end
 
       def call_chain chain
-        eval(chain.to_s)
+        instance_eval(chain.to_s)
       end
 
       module ClassMethods

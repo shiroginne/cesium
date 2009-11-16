@@ -3,5 +3,5 @@ page << <<-SCRIPT
   $H(pages).each(function(pair) {
     $$('#page_' + pair.key + ' .view_entry')[0].href = pair.value
   });
-  $$('#page_#{@page.id} .page_name')[0].update('#{ link_to @page.title, edit_admin_page_path(@page) }');
+  $$('#page_#{@page.id} .page_name')[0].update('#{ link_to h(@page.title), edit_admin_page_path(@page) }');
 SCRIPT

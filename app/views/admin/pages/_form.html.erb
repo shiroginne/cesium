@@ -5,7 +5,7 @@
   <%= f.text_field :title %>
 </div>
 <div>
-  <%= f.label :name %>
+  <%= f.label :name, 'Slug' %>
   <%= @parent_id || @page.parent_id ? f.text_field(:name) : f.text_field(:name, :value => '/', :disabled => true) + f.hidden_field(:name, :value => '/') %>
 </div>
 

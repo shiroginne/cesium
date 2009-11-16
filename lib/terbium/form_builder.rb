@@ -28,7 +28,7 @@ module Terbium
     end
 
     def terbium_label field
-      field[:label] ? label(field, field[:label]) : label(field)
+      label field, field.label
     end
 
     def terbium_text_area field
