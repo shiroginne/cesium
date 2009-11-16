@@ -58,8 +58,8 @@ class AdminController < ApplicationController
 
   def process_filters
     session[:filters] = {} unless session.key?(:filters)
-    session[:filters][model_name.to_sym] = { :order => '', :conditions => {} } unless session[:filters].key?(model_name.to_sym)
-    if params[:order] && model.columns.detect {|c| c.name == params[:order]}
+    session[:filters][model_name.to_sym] = {} unless session[:filters].key?(model_name.to_sym)
+    if params[:order] && field_exists?(params[:order])
       case session[:filters][model_name.to_sym][:order]
       when params[:order] then
         session[:filters][model_name.to_sym][:order] = "#{params[:order]} DESC"
@@ -74,6 +74,18 @@ class AdminController < ApplicationController
       #conditions = [condition_string, *filter_fields.count.times.collect{"%#{params[:filter]}%"}]
     #end
     redirect_to request.referer if params[:order] || params[:conditions]
+  end
+
+  def field_exists? order
+    if order.include? '.'
+      match = order.scan(/\A(\w+)\.(\w+)\Z/)[0]
+      mod = match[0].classify.constantize
+      col = match[1]
+    else
+      mod = model
+      col = order
+    end
+    mod && mod.columns.detect { |c| c.name == col }
   end
 
 end

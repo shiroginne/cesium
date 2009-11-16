@@ -274,6 +274,7 @@ ul.buttons li a:hover, ul.buttons li a.selected
 {
     text-align: left;
     background: #eee;
+    white-space: nowrap;
 }
 
 .list_table th a

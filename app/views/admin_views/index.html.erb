@@ -21,7 +21,7 @@
   <% @records.each do |record| -%>
     <tr>
     <% controller.index_fields.each do |field| -%>
-      <td><%= h(record.send(field.name)) %></td>
+      <td><%= h(record.call_chain(field.name)) %></td>
     <% end -%>
       <td class="actions">
         <%= link_to 'show', [:admin, record], :class => 'view_entry' %>

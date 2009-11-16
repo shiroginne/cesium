@@ -19,6 +19,10 @@ module Cesium
         @snippets_cache.clear
       end
 
+      def call_chain chain
+        eval(chain.to_s)
+      end
+
       module ClassMethods
 
         def cesium_allowed_methods *value

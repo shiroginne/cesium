@@ -4,7 +4,7 @@
   <li>
     <h2><%= field[:label] || field.to_s.humanize %></h2>
     <div>
-      <%= h(@record.send(field.name)) %>
+      <%= h(@record.call_chain(field.name)) %>
     </div>
   </li>
 <% end -%>
