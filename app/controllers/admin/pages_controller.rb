@@ -2,18 +2,24 @@ class Admin::PagesController < AdminController
 
   menu_position 1
 
+  helper_method :expand, :leaves
+
   def index
-    @pages = Page.find :all, :conditions => "level_cache in (0, 1) or parent_id in (#{session[:expanded].join(',')})"
+    @pages = Page.find :all, :conditions => "level_cache in (0, 1)#{ "or parent_id in (#{expand.join(',')})" unless expand.empty?}"
   end
 
   def show
     @page = Page.find params[:id]
-    @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + session[:expanded] })
-    expand :save
+    @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + expand })
+    if @pages.empty?
+      leaves params[:id], :save
+    else
+      expand params[:id], :save
+    end
   end
 
   def hide
-    expand :remove
+    expand params[:id], :remove
   end
 
   def move
@@ -48,7 +54,11 @@ class Admin::PagesController < AdminController
     @page = Page.new(params[:page])
     @parent_id = params[:page][:parent_id]
     if @page.save
-      @page.move_to_child_of @parent_id if @parent_id
+      if @parent_id
+        @page.move_to_child_of @parent_id
+        expand @parent_id, :save
+        leaves @parent_id, :remove
+      end
       @page.rebuild_paths
       flash[:notice] = 'Page was successfully saved.'
       if params[:commit] == 'Save and exit'
@@ -84,6 +94,7 @@ class Admin::PagesController < AdminController
     @page = Page.find(params[:id])
     @page.destroy
 
+
     respond_to do |format|
       format.html { redirect_to admin_pages_url }
       format.js
@@ -92,16 +103,26 @@ class Admin::PagesController < AdminController
 
   private
 
-  def expand action
-    session[:expanded] = [] unless session.has_key?(:expanded)
+  def expand id = nil, action = nil
+    storage :expanded, id, action
+  end
+
+  def leaves id = nil, action = nil
+    storage :leaves, id, action
+  end
+
+  def storage key, id = nil, action = nil
+    id = id.to_i
+    session[key] = [] unless session.has_key?(key)
     case action
     when :save then
-      session[:expanded] << params[:id] unless @pages.empty?
+      session[key] << id
     when :remove then
-      session[:expanded].delete(params[:id])
+      session[key].delete(id)
+    else
+      return session[key]
     end
-    session[:expanded].uniq!
-    p session[:expanded]
+    session[key].uniq!
   end
 
 end
