@@ -54,21 +54,6 @@ class Page < ActiveRecord::Base
     find_by_path path
   end
 
-  def self.find_with_inherited_parts id
-    page = find id
-    parts_names = page.page_parts.map { |p| p.name }
-    ancestors = page.ancestors
-    ancestors.reverse.each do |a|
-      a.page_parts.each do |p|
-        unless parts_names.include? p.name
-          page.inherited_parts << p
-          parts_names << p.name
-        end
-      end
-    end
-    page
-  end
-
   def additional_parts
     parts_names = self.page_parts.map { |p| p.name }
     ancestors = self.ancestors

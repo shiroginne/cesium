@@ -8,6 +8,12 @@ class Admin::PagesController < AdminController
     @pages = Page.find :all, :conditions => "level_cache in (0, 1)#{ "or parent_id in (#{expand.join(',')})" unless expand.empty?}"
   end
 
+  def collapse
+    expand.clear
+    leaves.clear
+    redirect_to admin_pages_path
+  end
+
   def show
     @page = Page.find params[:id]
     @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + expand })
