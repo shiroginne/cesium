@@ -1,7 +1,10 @@
 page << <<-SCRIPT
   var pages = {#{@pages.map{ |page| "#{page.id}: \"#{page.path}\"" }.join(',')}}
   $H(pages).each(function(pair) {
-    $$('#page_' + pair.key + ' .view_entry')[0].href = pair.value
+    var v = $$('#page_' + pair.key + ' .view_entry')
+    if (v[0]) {
+      v[0].href = pair.value
+    }
   });
   $$('#page_#{@page.id} .page_name')[0].update('#{ link_to h(@page.title), edit_admin_page_path(@page) }');
 SCRIPT

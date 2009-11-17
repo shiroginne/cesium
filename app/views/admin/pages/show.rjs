@@ -7,7 +7,7 @@ unless @pages.empty?
   result = recursive_tree_output @pages, :partial => 'page', :without_root => true
   page << <<-SCRIPT
     $('page_#{params[:id]}').innerHTML += '#{escape_javascript(result)}';
-    $$('#page_#{params[:id]} .expand_collapse')[0].update('#{escape_javascript(link_to_remote '-', :url => hide_admin_page_path(params[:id]), :method => :get)}');
+    $$('#page_#{params[:id]} .expand_collapse')[0].update('#{escape_javascript(link_to_collapse(params[:id]))}');
   SCRIPT
 else
   page << <<-SCRIPT
