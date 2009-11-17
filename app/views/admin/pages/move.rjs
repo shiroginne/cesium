@@ -1,5 +1,26 @@
+if params[:mode] == 'child'
+  unless @siblings_to.empty?
+    result = recursive_tree_output @siblings_to, :partial => 'page', :without_root => true
+    page << <<-SCRIPT
+      var li = $$('#page_#{params[:where]} ul li')[0];
+      $$('#page_#{params[:where]} ul')[0].remove();
+      $('page_#{params[:where]}').innerHTML += '#{escape_javascript(result)}';
+      $$('#page_#{params[:where]} ul')[0].insert({bottom: li});
+    SCRIPT
+  end
+  page << <<-SCRIPT
+    $$('#page_#{params[:where]} .expand_collapse')[0].update('#{escape_javascript(link_to_collapse(params[:where]))}');
+  SCRIPT
+end
+
+if @siblings_from.empty?
+  page << <<-SCRIPT
+    $$('#page_#{@parent_id} .expand_collapse')[0].update('');
+  SCRIPT
+end
+
 page << <<-SCRIPT
-  var pages = {#{@pages.map{ |page| "#{page.id}: \"#{page.path}\"" }.join(',')}}
+  var pages = {#{@pages.map{ |p| "#{p.id}: \"#{p.path}\"" }.join(',')}}
   $H(pages).each(function(pair) {
     var v = $$('#page_' + pair.key + ' .view_entry')
     if (v[0]) {
@@ -7,4 +28,5 @@ page << <<-SCRIPT
     }
   });
   $$('#page_#{@page.id} .page_name')[0].update('#{ link_to h(@page.title), edit_admin_page_path(@page) }');
+  create_sortable();
 SCRIPT

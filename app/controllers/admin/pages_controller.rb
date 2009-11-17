@@ -31,11 +31,25 @@ class Admin::PagesController < AdminController
   def move
     @page = Page.find(params[:id])
 
+    @parent_id = @page.parent_id
+    @siblings_from = @page.siblings
+    if @siblings_from.empty?
+      expand @parent_id, :remove
+      leaves @parent_id, :save
+    end
+
     params[:mode] = 'child' unless ['left', 'right'].include? params[:mode]
+
     @page.send "move_to_#{params[:mode]}_of".to_sym, params[:where]
 
     @page.rebuild_paths
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
+
+    if params[:mode] == 'child' && !expand.include?(params[:where])
+      @siblings_to = @page.siblings
+      expand params[:where], :save
+      leaves params[:where], :remove
+    end
   end
 
   def status

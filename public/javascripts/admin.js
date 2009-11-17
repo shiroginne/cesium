@@ -53,6 +53,29 @@ function setStatus(path, id) {
   $('page_' + id).select('.page_status')[0].update('Setting status...');
 }
 
+function create_sortable() {
+  if ($('pages_tree') && $("pages_tree").select("ul")[0]) {
+    $('pages_tree').select('ul')[0].id = 'sortable_tree'
+    Sortable.create('sortable_tree', {tree: true, scroll: window, handle: 'handle', onUpdate: function(element) {
+      elem = Draggables.dragged_element
+      url = '/admin/pages/' + getId(elem.id) + '/move';
+      if (elem.previous('li')) {
+        url += '?where=' + getId(elem.previous('li').id) + '&mode=right';
+      } else if (elem.next('li')) {
+        url += '?where=' + getId(elem.next('li').id) + '&mode=left';
+      } else {
+        url += '?where=' + getId(elem.up('li').id);
+      }
+      new Ajax.Request(url, {
+        asynchronous: true,
+        evalScripts: true,
+        method: 'get'
+      });
+      elem.select('.page_name')[0].update('Moving...');
+    }});
+  }
+}
+
 Event.observe(window, 'load', function(){
     if ($('notice')) {
         $('notice').observe('click', function() {
@@ -60,24 +83,5 @@ Event.observe(window, 'load', function(){
         });
     }
 
-    if ($('pages_tree') && $("pages_tree").select("ul")[0]) {
-      $('pages_tree').select('ul')[0].id = 'sortable_tree'
-      Sortable.create('sortable_tree', {tree: true, scroll: window, handle: 'handle', onUpdate: function(element) {
-        elem = Draggables.dragged_element
-        url = '/admin/pages/' + getId(elem.id) + '/move';
-        if (elem.previous('li')) {
-          url += '?where=' + getId(elem.previous('li').id) + '&mode=right';
-        } else if (elem.next('li')) {
-          url += '?where=' + getId(elem.next('li').id) + '&mode=left';
-        } else {
-          url += '?where=' + getId(elem.up('li').id);
-        }
-        new Ajax.Request(url, {
-          asynchronous: true,
-          evalScripts: true,
-          method: 'get'
-        });
-        elem.select('.page_name')[0].update('Moving...');
-      }});
-    }
+    create_sortable();
 });

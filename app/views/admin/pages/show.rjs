@@ -1,13 +1,9 @@
 unless @pages.empty?
-  #result = '<ul>'
-  #@pages.each do |p|
-    #result << "<li id=\"page_#{p.id}\">" + render(:partial => 'page', :object => p) + '</li>'
-  #end
-  #result << '</ul>'
   result = recursive_tree_output @pages, :partial => 'page', :without_root => true
   page << <<-SCRIPT
     $('page_#{params[:id]}').innerHTML += '#{escape_javascript(result)}';
     $$('#page_#{params[:id]} .expand_collapse')[0].update('#{escape_javascript(link_to_collapse(params[:id]))}');
+    create_sortable();
   SCRIPT
 else
   page << <<-SCRIPT
