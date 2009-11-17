@@ -7,6 +7,9 @@ page << <<-SCRIPT
 SCRIPT
 if @siblings.empty?
   page << <<-SCRIPT
-    $$('#page_#{@page.parent_id} .expand_collapse')[0].update('');
+    var ec = $$('#page_#{@page.parent_id} .expand_collapse');
+    if (ec[0]) {
+      ec[0].update('');
+    }
   SCRIPT
 end
