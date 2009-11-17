@@ -92,8 +92,12 @@ class Admin::PagesController < AdminController
 
   def destroy
     @page = Page.find(params[:id])
+    @siblings = @page.siblings
+    if @siblings.empty?
+      expand @page.parent_id, :remove
+      leaves @page.parent_id, :save
+    end
     @page.destroy
-
 
     respond_to do |format|
       format.html { redirect_to admin_pages_url }
