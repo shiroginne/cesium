@@ -1,0 +1,4 @@
+page << <<-SCRIPT
+  $('page_#{params[:id]}').select('ul')[0].remove();
+  $$('#page_#{params[:id]} .expand_collapse')[0].update('#{escape_javascript(link_to_remote '+', :url => admin_page_path(params[:id]), :method => :get)}')
+SCRIPT

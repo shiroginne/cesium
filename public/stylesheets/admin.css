@@ -342,6 +342,18 @@ ul.buttons li a:hover, ul.buttons li a.selected
     background: center center url(/images/admin/move.gif) no-repeat;
 }
 
+.pages_tree li .expand_collapse
+{
+    position: absolute;
+    top: -2px;
+    left: -12px;
+}
+
+.pages_tree li .expand_collapse a
+{
+    text-decoration: none;
+}
+
 .pages_tree li .info
 {
     padding-left: 10px;

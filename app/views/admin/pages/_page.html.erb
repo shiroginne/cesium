@@ -1,5 +1,12 @@
 <div class="info">
   <% if page.path != '/' %>
+    <div class="expand_collapse">
+      <% if session[:expanded].include?(page.id.to_s) %>
+        <%= link_to_remote '-', :url => hide_admin_page_path(page), :method => :get %>
+      <% else %>
+        <%= link_to_remote '+', :url => admin_page_path(page), :method => :get %>
+      <% end %>
+    </div>
     <div class="handle"></div>
   <% end %>
   <span class="page_name"><%= link_to h(page.title), edit_admin_page_path(page) %></span>

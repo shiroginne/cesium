@@ -3,7 +3,17 @@ class Admin::PagesController < AdminController
   menu_position 1
 
   def index
-    @pages = Page.all
+    @pages = Page.find :all, :conditions => "level_cache in (0, 1) or parent_id in (#{session[:expanded].join(',')})"
+  end
+
+  def show
+    @page = Page.find params[:id]
+    @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + session[:expanded] })
+    expand :save
+  end
+
+  def hide
+    expand :remove
   end
 
   def move
@@ -79,4 +89,19 @@ class Admin::PagesController < AdminController
       format.js
     end
   end
+
+  private
+
+  def expand action
+    session[:expanded] = [] unless session.has_key?(:expanded)
+    case action
+    when :save then
+      session[:expanded] << params[:id] unless @pages.empty?
+    when :remove then
+      session[:expanded].delete(params[:id])
+    end
+    session[:expanded].uniq!
+    p session[:expanded]
+  end
+
 end
