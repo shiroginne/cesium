@@ -22,7 +22,11 @@ module AdminHelper
 
   def render_field record, field
     if field[:render]
-      send(field[:render], record)
+      case field[:render]
+      when Symbol then send(field[:render], record)
+      when Proc then field[:render].bind(self).call(record)
+      else ''
+      end
     else
       h(record.call_chain(field.name))
     end
@@ -30,10 +34,10 @@ module AdminHelper
 
   def head_for field
     res = case session[:filters][controller.model_name.to_sym][:order]
-    when field.order then '▾ '
-    when "#{field.order} DESC" then '▴ '
-    else ''
-    end
+          when field.order then '▾ '
+          when "#{field.order} DESC" then '▴ '
+          else ''
+          end
     res + link_to(field.label, "?order=#{field.order}")
   end
 
