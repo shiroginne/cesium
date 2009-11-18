@@ -6,7 +6,7 @@
   <thead>
     <tr>
     <% controller.index_fields.each do |field| -%>
-      <th><%= pic_for field %><%= link_to field.label, "?order=#{field.order}" %></th>
+      <th><%= head_for field %></th>
     <% end -%>
       <th class="actions">Actions</th>
     </tr>
@@ -21,7 +21,7 @@
   <% @records.each do |record| -%>
     <tr>
     <% controller.index_fields.each do |field| -%>
-      <td><%= h(record.call_chain(field.name)) %></td>
+      <td><%= render_field record, field %></td>
     <% end -%>
       <td class="actions">
         <%= link_to 'show', [:admin, record], :class => 'view_entry' %>

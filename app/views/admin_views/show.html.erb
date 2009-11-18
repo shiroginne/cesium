@@ -4,7 +4,7 @@
   <li>
     <h2><%= field.label %></h2>
     <div>
-      <%= h(@record.call_chain(field.name)) %>
+      <%= render_field @record, field %>
     </div>
   </li>
 <% end -%>
