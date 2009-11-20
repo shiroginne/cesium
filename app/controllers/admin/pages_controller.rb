@@ -10,18 +10,13 @@ class Admin::PagesController < AdminController
 
   def collapse
     expand.clear
-    leaves.clear
     redirect_to admin_pages_path
   end
 
   def show
     @page = Page.find params[:id]
     @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + expand })
-    if @pages.empty?
-      leaves params[:id], :save
-    else
-      expand params[:id], :save
-    end
+    expand params[:id], :save unless @pages.empty?
   end
 
   def hide
@@ -30,13 +25,7 @@ class Admin::PagesController < AdminController
 
   def move
     @page = Page.find(params[:id])
-
-    @parent_id = @page.parent_id
-    @siblings_from = @page.siblings
-    if @siblings_from.empty?
-      expand @parent_id, :remove
-      leaves @parent_id, :save
-    end
+    parent_id = @page.parent_id
 
     params[:mode] = 'child' unless ['left', 'right'].include? params[:mode]
 
@@ -45,10 +34,12 @@ class Admin::PagesController < AdminController
     @page.rebuild_paths
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
 
+    @parent = Page.find parent_id
+    expand @parent.id, :remove if @parent.leaf?
+
     if params[:mode] == 'child' && !expand.include?(params[:where])
       @siblings_to = @page.siblings
       expand params[:where], :save
-      leaves params[:where], :remove
     end
   end
 
@@ -77,7 +68,6 @@ class Admin::PagesController < AdminController
       if @parent_id
         @page.move_to_child_of @parent_id
         expand @parent_id, :save
-        leaves @parent_id, :remove
       end
       @page.rebuild_paths
       flash[:notice] = 'Page was successfully saved.'
@@ -112,12 +102,11 @@ class Admin::PagesController < AdminController
 
   def destroy
     @page = Page.find(params[:id])
-    @siblings = @page.siblings
-    if @siblings.empty?
-      expand @page.parent_id, :remove
-      leaves @page.parent_id, :save
-    end
+    parent_id = @page.parent_id
     @page.destroy
+
+    @parent = Page.find parent_id
+    expand @page.parent_id, :remove if @parent.leaf?
 
     respond_to do |format|
       format.html { redirect_to admin_pages_url }
@@ -128,25 +117,17 @@ class Admin::PagesController < AdminController
   private
 
   def expand id = nil, action = nil
-    storage :expanded, id, action
-  end
-
-  def leaves id = nil, action = nil
-    storage :leaves, id, action
-  end
-
-  def storage key, id = nil, action = nil
     id = id.to_i
-    session[key] = [] unless session.has_key?(key)
+    session[:expanded] = [] unless session.has_key?(:expanded)
     case action
     when :save then
-      session[key] << id
+      session[:expanded] << id
     when :remove then
-      session[key].delete(id)
+      session[:expanded].delete(id)
     else
-      return session[key]
+      return session[:expanded]
     end
-    session[key].uniq!
+    session[:expanded].uniq!
   end
 
 end

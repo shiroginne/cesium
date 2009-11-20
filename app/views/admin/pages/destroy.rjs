@@ -5,9 +5,9 @@ page << <<-SCRIPT
     $('additional_navigation').innerHTML += '#{link_to('New page', new_admin_page_path)}';
   }
 SCRIPT
-if @siblings.empty?
+if @parent.leaf?
   page << <<-SCRIPT
-    var ec = $$('#page_#{@page.parent_id} .expand_collapse');
+    var ec = $$('#page_#{@parent.id} .expand_collapse');
     if (ec[0]) {
       ec[0].update('');
     }

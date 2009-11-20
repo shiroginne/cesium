@@ -13,9 +13,9 @@ if params[:mode] == 'child'
   SCRIPT
 end
 
-if @siblings_from.empty?
+if @parent.leaf?
   page << <<-SCRIPT
-    $$('#page_#{@parent_id} .expand_collapse')[0].update('');
+    $$('#page_#{@parent.id} .expand_collapse')[0].update('');
   SCRIPT
 end
 
