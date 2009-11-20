@@ -14,12 +14,10 @@ class Admin::PagePartsController < AdminController
   end
 
   def new
-    store_referer
     @page_part = @page.page_parts.new
   end
 
   def edit
-    store_referer
     @page_part = PagePart.find params[:id]
   end
 
@@ -28,7 +26,7 @@ class Admin::PagePartsController < AdminController
     if @page_part.save
       flash[:notice] = 'Page part was successfully created.'
       if params[:commit] == 'Save and exit'
-        redirect_stored_or edit_admin_page_url @page
+        redirect_to edit_admin_page_url @page
       else
         redirect_to edit_admin_page_page_part_url @page, @page_part
       end
@@ -42,7 +40,7 @@ class Admin::PagePartsController < AdminController
     if @page_part.update_attributes params[:page_part]
       flash[:notice] = 'Page part was successfully updated.'
       if params[:commit] == 'Save and exit'
-        redirect_stored_or edit_admin_page_url @page
+        redirect_to edit_admin_page_url @page
       else
         redirect_to edit_admin_page_page_part_url @page, @page_part
       end
