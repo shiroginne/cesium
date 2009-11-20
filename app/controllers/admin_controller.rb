@@ -8,7 +8,7 @@ class AdminController < ApplicationController
 
   def index
     if model.respond_to? :paginate
-      @records = model.paginate(:page => params[:page]).scoped(session[:filters][model_name.to_sym])
+      @records = model.scoped(session[:filters][model_name.to_sym]).paginate(:page => params[:page])
     else
       @records = model.find(:all, session[:filters][model_name.to_sym])
     end
