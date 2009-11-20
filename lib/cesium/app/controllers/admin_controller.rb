@@ -71,10 +71,21 @@ module Cesium
         module ClassMethods
 
           [:index, :show, :form].each do |sym|
-            define_method(sym) do |&block|
-              @terbium_option = sym
-              block.call if block
-            end
+            #define_method(sym) do |&block|
+              #@terbium_option = sym
+              #block.call if block
+            #end
+            #define_method("__#{sym}".to_sym, &block)
+            #define_method(sym) do
+              #@terbium_option = sym
+              #self.send("__#{sym}".to_sym)
+            #end
+            class_eval <<-EOS
+              def #{sym}
+                @terbium_option = :#{sym}
+                yield if block_given?
+              end
+            EOS
           end
 
           def menu_position value = nil

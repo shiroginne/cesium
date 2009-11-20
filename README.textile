@@ -47,13 +47,9 @@ h2. Then add at the end of your routes.rb:
 
 Then:
 
-@rake cesium:sync@
+@rake cesium:db:migrate@
 
-it'll copy migrations into your rails app directory.
-
-And:
-
-@rake db:migrate@
+to create cesium tables.
 
 Next step - "http://localhost:3000/admin":http://localhost:3000/admin
 Use admin:admin to login.
