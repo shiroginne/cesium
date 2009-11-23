@@ -1,6 +1,6 @@
 class Admin::AdminSessionsController < ApplicationController
   layout 'admin'
-  
+
   before_filter :require_cesium_no_admin, :only => [:new, :create]
   before_filter :require_cesium_admin, :only => :destroy
 

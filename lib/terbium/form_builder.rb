@@ -14,6 +14,7 @@ module Terbium
         when :boolean                then terbium_check_box field
         when :binary                 then ''
         when :file                   then terbium_file_field field
+        when :password               then terbium_password_field field
         else                         terbium_text_field field
       end
     end
@@ -46,6 +47,11 @@ module Terbium
 
     def terbium_file_field field
       input = file_field(field)
+      terbium_html field, input
+    end
+
+    def terbium_password_field field
+      input = password_field(field)
       terbium_html field, input
     end
 

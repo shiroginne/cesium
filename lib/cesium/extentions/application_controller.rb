@@ -26,28 +26,9 @@ module Cesium
 
       def require_cesium_no_admin
         if cesium_admin
-          redirect_to '/'
+          redirect_to admin_root_url
           return false
         end
-      end
-
-      def store_referer
-        session[:return_to] = request.referer
-      end
-
-      def redirect_stored_or default
-        redirect_to(session[:return_to] || default)
-        session[:return_to] = nil
-      end
-
-      def stored_path_or default
-        session[:return_to] || default
-      end
-
-      def redirect_back_or path
-        redirect_to :back
-        rescue ActionController::RedirectBackError
-        redirect_to path
       end
 
     end
