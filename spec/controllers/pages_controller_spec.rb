@@ -7,7 +7,7 @@ describe PagesController do
     before do
       @url = ['contacts', 'info']
       @content = 'some content'
-      @page = mock_model Post
+      @page = mock_model Page
       @page.stub(:draft?).and_return(false)
       @page.stub(:build_page).and_return(@content)
     end
