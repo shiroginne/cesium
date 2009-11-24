@@ -105,8 +105,10 @@ class Admin::PagesController < AdminController
     parent_id = @page.parent_id
     @page.destroy
 
-    @parent = Page.find parent_id
-    expand @page.parent_id, :remove if @parent.leaf?
+    unless parent_id.nil?
+      @parent = Page.find parent_id
+      expand @page.parent_id, :remove if @parent.leaf?
+    end
 
     respond_to do |format|
       format.html { redirect_to admin_pages_url }

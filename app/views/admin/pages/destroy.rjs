@@ -2,10 +2,10 @@ page["page_#{@page.id}"].remove
 page << <<-SCRIPT
   clearEmptyContainers();
   if ($('pages_tree').empty()) {
-    $('additional_navigation').innerHTML += '#{link_to('New page', new_admin_page_path)}';
+    $('additional_navigation').update('<ul class="buttons"><li>#{link_to('New page', new_admin_page_path)}</li></ul>');
   }
 SCRIPT
-if @parent.leaf?
+if @parent && @parent.leaf?
   page << <<-SCRIPT
     var ec = $$('#page_#{@parent.id} .expand_collapse');
     if (ec[0]) {
