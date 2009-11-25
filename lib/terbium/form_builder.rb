@@ -56,8 +56,14 @@ module Terbium
     end
 
     def terbium_text_field field
-      if @object.class.respond_to?("#{field}_select")
-        input = select(field, @object.class.send("#{field}_select"))
+      if field[:select]
+        case field[:select]
+        when Proc then
+          field[:select].bind(@object)
+          input = select(field, field[:select].call)
+        else
+          input = select(field, @object.send(field[:select].to_sym))
+        end
       else
         input = text_field(field)
       end

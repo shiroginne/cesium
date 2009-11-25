@@ -9,7 +9,7 @@ module Terbium
     end
 
     def order
-      @order ||= table_column options[:order] || @name
+      @order ||= options[:order] || table_column(@name)
     end
 
     def label
