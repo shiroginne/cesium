@@ -1,4 +1,4 @@
-class Admin::AdminsController < AdminController
+class Admin::AdminsController < CesiumController::Base
 
   menu_position 4
 

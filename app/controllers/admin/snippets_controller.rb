@@ -1,4 +1,4 @@
-class Admin::SnippetsController < AdminController
+class Admin::SnippetsController < CesiumController::Base
 
   menu_position 3
 

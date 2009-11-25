@@ -1,4 +1,4 @@
-class Admin::LayoutsController < AdminController
+class Admin::LayoutsController < CesiumController::Base
 
   menu_position 2
 

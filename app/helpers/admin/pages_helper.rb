@@ -46,7 +46,7 @@ module Admin::PagesHelper
   def layouts_for_select
     layouts = Layout.find(:all, :select => "id, name").collect { |l| [l.name, l.id] }
     @parent_id || @page.parent_id ?
-      [["<inherited (#{Page.find(@parent_id || @page.parent_id).self_and_ancestors.scoped(:select => 'layouts.name', :joins => :layout).last.name})>", nil]] + layouts : layouts
+      [["<#{t(:inherited)} (#{Page.find(@parent_id || @page.parent_id).self_and_ancestors.scoped(:select => 'layouts.name', :joins => :layout).last.name})>", nil]] + layouts : layouts
   end
 
   def link_to_collapse id
