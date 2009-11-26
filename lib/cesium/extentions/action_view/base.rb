@@ -10,7 +10,7 @@ module Cesium
         def admined_controllers &block
           admined_controllers_list.map! { |c| c.constantize }.reject { |c| c.menu_position == 0}.sort! { |a,b| a.menu_position <=> b.menu_position }.each do |c|
             c = c.controller_name
-            block.call(c.humanize, polymorphic_path([:admin, c.classify.constantize.new]))
+            block.call(c.humanize, polymorphic_path([:admin, c.classify.constantize.new])) if respond_to?("admin_#{c}_path".to_sym)
           end
         end
 
