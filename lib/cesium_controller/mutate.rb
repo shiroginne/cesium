@@ -5,7 +5,7 @@ module CesiumController
 
       def mutate_to_cesuim_admin_controller
         before_filter :require_cesium_admin, :process_filters
-        layout 'admin'
+        layout 'cesium_admin'
         class_inheritable_accessor :menu_pos
         include InstanceMethods
         extend ClassMethods
