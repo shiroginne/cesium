@@ -9,7 +9,8 @@ class Page < ActiveRecord::Base
 
   attr_accessor :child_pages
 
-  default_scope :order => :lft, :include => :page_parts
+  default_scope :order => :lft
+  named_scope :with_parts, :include => :page_parts
 
   has_many :page_parts, :dependent => :destroy
   belongs_to :layout
@@ -75,6 +76,10 @@ class Page < ActiveRecord::Base
 
   def all_parts
     (page_parts + additional_parts).sort { |a, b| a.name <=> b.name }
+  end
+
+  def layout?
+    self.path.include?('*')
   end
 
   def get_layout

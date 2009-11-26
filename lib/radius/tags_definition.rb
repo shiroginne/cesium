@@ -50,7 +50,11 @@ module Radius
       context.define_tag 'render' do |tag|
         case
         when tag.attr.key?('part') then
-          part = tag.locals.page.all_parts.detect{ |p| p.name == tag.attr['part'] }
+          if tag.nesting.include?('navigation') || tag.nesting.include?('breadcrumbs')
+            part = tag.locals.nav_page.page_parts.detect{ |p| p.name == tag.attr['part'] }
+          else
+            part = tag.locals.page.all_parts.detect{ |p| p.name == tag.attr['part'] }
+          end
           if part
             tag.locals.page.parse part.body
           else
@@ -108,16 +112,16 @@ module Radius
           for_level = tag.attr.has_key?('level') && tag.attr['level'].to_i >= 0 ? tag.attr['level'] : nil
 
           if for_page
-            pages = Page.find(for_page.to_i).self_and_descendants
+            pages = Page.find(for_page.to_i).self_and_descendants.scoped(:include => :page_parts)
           elsif for_level
             case for_level.to_i
             when 0
-              pages = Page.root.self_and_descendants
+              pages = Page.root.self_and_descendants.scoped(:include => :page_parts)
             else
-              pages = tag.locals.page.self_and_ancestors[for_level.to_i].self_and_descendants
+              pages = tag.locals.page.self_and_ancestors[for_level.to_i].self_and_descendants.scoped(:include => :page_parts)
             end
           elsif tag.attr.blank?
-            pages = tag.locals.page.self_and_descendants
+            pages = tag.locals.page.self_and_descendants.scoped(:include => :page_parts)
           else
 
           end
@@ -126,7 +130,9 @@ module Radius
 
         result = []
         tree.child_pages.each do |page|
-          unless page.hidden? || page.draft?
+          unless page.hidden? || page.draft? || page.layout?
+            tag.locals.nav_page = page
+
             navigation[:title] = tag.locals.page.parse page.title
             navigation[:path] = page.path
             navigation[:url] = tag.locals.tag_tracker.wrap "<%= cesium_path #{page.path.to_string_path_params} %>"
@@ -176,7 +182,7 @@ module Radius
 
         tag.expand
 
-        pages = tag.locals.page.self_and_ancestors
+        pages = tag.locals.page.self_and_ancestors.scoped(:include => :page_parts)
 
         if tag.attr.has_key?('mode')
           pages[-1] = nil if tag.attr['mode'].include?('noleaf')
@@ -186,6 +192,7 @@ module Radius
         result = []
         pages.each do |page|
           if page
+            tag.locals.nav_page = page
             breadcrumbs[:title] = tag.locals.page.parse page.title
             url = page.path.include?('*') ? "<%= request.path_info.scan(/^(#{page.path.gsub(/\//, '\/').gsub(/\*/, '[\w-]+')})/)[0] %>" : "<%= cesium_path #{page.path.to_string_path_params} %>"
             breadcrumbs[:path] = page.path
@@ -226,16 +233,6 @@ module Radius
         end
       end
 
-      [:navigation, :breadcrumbs].each do |symbol|
-        context.define_tag "#{symbol}:include" do |tag|
-          if tag.attr['name']
-            part = tag.locals.current.page_parts.detect{ |p| p.name == tag.attr['name'] }
-            part.body if part
-          end
-        end
-      end
-
     end
-
   end
 end

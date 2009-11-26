@@ -1,6 +1,6 @@
 if params[:mode] == 'child'
-  unless @siblings_to.empty?
-    result = recursive_tree_output @siblings_to, :partial => 'page', :without_root => true
+  unless @siblings.empty?
+    result = recursive_tree_output @siblings, :partial => 'page', :without_root => true
     page << <<-SCRIPT
       var li = $$('#page_#{params[:where]} ul li')[0];
       $$('#page_#{params[:where]} ul')[0].remove();

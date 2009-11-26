@@ -5,7 +5,7 @@ class Admin::PagesController < CesiumController::Base
   helper_method :expand, :leaves
 
   def index
-    @pages = Page.find :all, :conditions => "level_cache in (0, 1)#{ "or parent_id in (#{expand.join(',')})" unless expand.empty?}"
+    @pages = Page.with_parts.find :all, :conditions => "level_cache in (0, 1)#{ "or parent_id in (#{expand.join(',')})" unless expand.empty?}"
   end
 
   def collapse
@@ -14,8 +14,8 @@ class Admin::PagesController < CesiumController::Base
   end
 
   def show
-    @page = Page.find params[:id]
-    @pages = @page.descendants.scoped(:conditions => { :parent_id => [params[:id]] + expand })
+    page = Page.find params[:id]
+    @pages = page.descendants.scoped(:include => :page_parts, :conditions => { :parent_id => [params[:id]] + expand })
     expand params[:id], :save unless @pages.empty?
   end
 
@@ -28,7 +28,6 @@ class Admin::PagesController < CesiumController::Base
     parent_id = @page.parent_id
 
     params[:mode] = 'child' unless ['left', 'right'].include? params[:mode]
-
     @page.send "move_to_#{params[:mode]}_of".to_sym, params[:where]
 
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
@@ -37,7 +36,7 @@ class Admin::PagesController < CesiumController::Base
     expand @parent.id, :remove if @parent.leaf?
 
     if params[:mode] == 'child' && !expand.include?(params[:where])
-      @siblings_to = @page.siblings
+      @siblings = @page.siblings.scoped(:include => :page_parts)
       expand params[:where], :save
     end
   end
