@@ -5,7 +5,7 @@ module CesiumController
 
       def mutate_to_cesuim_admin_controller
         before_filter :require_cesium_admin, :process_filters
-        layout 'cesium_admin'
+        layout 'cesium'
         class_inheritable_accessor :menu_pos
         include InstanceMethods
         extend ClassMethods
@@ -32,7 +32,7 @@ module CesiumController
       end
 
       def render_action action
-        result = "admin_views/#{action}.html.erb"
+        result = "cesium/#{action}.html.erb"
         view_paths.each do |path|
           result = File.join('admin', controller_name, "#{action}.html.erb") if File.exists?(File.join(path, 'admin', controller_name, "#{action}.html.erb"))
         end
