@@ -5,14 +5,14 @@ class Page < ActiveRecord::Base
 
   include Cesium::Layout
 
+  acts_as_nested_set
+
   attr_accessor :child_pages
 
   default_scope :order => :lft, :include => :page_parts
 
   has_many :page_parts, :dependent => :destroy
   belongs_to :layout
-
-  acts_as_nested_set
 
   validates_presence_of :title
   validates_uniqueness_of :name, :scope => :parent_id
@@ -22,36 +22,39 @@ class Page < ActiveRecord::Base
     :unless => Proc.new { |page| page.name == '/' }
   validates_inclusion_of :status, :in => 0..2
 
-  after_move :rebuild_level_cache, :clear_cesium_pages_cache
-
   attr_protected :path
 
-  after_update :clear_cesium_pages_cache
+  after_create :move_page
+  after_move :clear_cesium_pages_cache, :update_level_cache, :update_paths
+  after_update :clear_cesium_pages_cache, :update_paths
   after_destroy :clear_cesium_pages_cache
 
-  def rebuild_paths
-    if self.parent_id.nil?
-      self.update_attribute :name, '/'
-      self.update_attribute :path, '/'
+  def move_page
+    if self.parent_id
+      self.move_to_child_of self.parent_id
     else
-      saved_path = self.path
-      parent_path = self.parent.parent_id ? self.parent.path : ''
-      new_path = parent_path + '/' + self.name
-      Page.update_all "path = REPLACE(path, '#{saved_path}', '#{new_path}')", ["path like ?", saved_path + '%'] if saved_path
-      self.update_attribute :path, new_path unless self.path
+      self.update_paths
     end
   end
 
-  def rebuild_level_cache
-    level_cache = self.level_cache
-    self.update_attribute(:level_cache, self.level)
-    descendants = self.descendants
-    Page.update_all "level_cache = level_cache + #{self.level_cache - level_cache}",
-      "id in (#{descendants.map(&:id).join(',')})" unless level_cache == 0 || descendants.empty?
+  def update_paths
+    if self.parent_id
+      saved_path = self.path
+      parent_path = self.parent.parent_id ? self.parent.path : ''
+      new_path = parent_path + '/' + self.name
+      Page.update_all "path = REPLACE(path, '#{saved_path}', '#{new_path}')", ["path like ?", saved_path + '%'] if saved_path unless saved_path == new_path
+      Page.update_all "path = '#{new_path}'", ["id = ?", self.id] unless self.path
+    else
+      Page.update_all "path = '/', name = '/'", "parent_id is null"
+    end
   end
 
-  def self.find_page path
-    find_by_path path
+  def update_level_cache
+    level_cache = self.level_cache
+    descendants = self.descendants
+    Page.update_all "level_cache = '#{self.level}'", ["id = ?", self.id]
+    Page.update_all "level_cache = level_cache + #{self.level_cache - level_cache}",
+      "id in (#{descendants.map(&:id).join(',')})" unless level_cache == 0 || descendants.empty?
   end
 
   def additional_parts

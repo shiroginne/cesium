@@ -31,7 +31,6 @@ class Admin::PagesController < CesiumController::Base
 
     @page.send "move_to_#{params[:mode]}_of".to_sym, params[:where]
 
-    @page.rebuild_paths
     @pages = @page.self_and_descendants.scoped(:select => "id, path")
 
     @parent = Page.find parent_id
@@ -65,11 +64,7 @@ class Admin::PagesController < CesiumController::Base
     @page = Page.new(params[:page])
     @parent_id = params[:page][:parent_id]
     if @page.save
-      if @parent_id
-        @page.move_to_child_of @parent_id
-        expand @parent_id, :save
-      end
-      @page.rebuild_paths
+      expand @parent_id, :save if @parent_id
       flash[:notice] = 'Page was successfully saved.'
       if params[:commit] == 'Save and exit'
         redirect_to admin_pages_url
@@ -88,7 +83,6 @@ class Admin::PagesController < CesiumController::Base
   def update
     @page = Page.find(params[:id])
     if @page.update_attributes(params[:page])
-      @page.rebuild_paths
       flash[:notice] = 'Page was successfully updated.'
       if params[:commit] == 'Save and exit'
         redirect_to admin_pages_url

@@ -26,7 +26,7 @@ module Cesium
     module ClassMethods
 
       def cesium_layout_path path
-        (find_page(path) || fuzzy_find(path)).cesium_layout_path
+        (find_by_path(path) || fuzzy_find(path)).cesium_layout_path
       end
 
       def fuzzy_find path

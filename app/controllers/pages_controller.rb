@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   def show
     path = "/#{params[:url].join('/')}"
-    page = Page.find_page(path)
+    page = Page.find_by_path(path)
     if page && !page.draft?
       render :inline => page.build_page, :locals => { :page => page }, :layout => false, :content_type => page.content_type
     else

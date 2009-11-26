@@ -51,19 +51,10 @@ namespace :cesium do
           model_hash = yaml_obj[model.class_name.tableize.to_sym].values
           if model == Page
             model_hash.sort! { |a, b| a['lft'] <=> b['lft'] }
-            model_hash.each do |m|
-              model.create(m) do |r|
-                r.id = m['id']
-                r.save!
-                r.move_to_child_of m['parent_id'] if m['parent_id']
-                r.rebuild_paths
-              end
-            end
-          else
-            model_hash.each do |m|
-              model.create(m) do |r|
-                r.id = m['id']
-              end
+          end
+          model_hash.each do |m|
+            model.create(m) do |r|
+              r.id = m['id']
             end
           end
         end
