@@ -1,5 +1,5 @@
 module Cesium
-  module Extentions
+  module Extensions
     module ActionController
       module Layout
 

@@ -6,16 +6,17 @@ end
 ActionController::Dispatcher.middleware.use Cesium::Rack::StaticOverlay, File.join(File.dirname(__FILE__), '../public')
 
 ActionController::Base.class_eval do
-  include Cesium::Extentions::ApplicationController
-  include Cesium::Extentions::ActionController::Layout
+  include Cesium::Extensions::ActionController::Base
+  include Cesium::Extensions::ActionController::Layout
+  extend CesiumController::Mutate::SingletoneMethods
 end
 
 ActiveRecord::Base.class_eval do
-  include Cesium::Extentions::ActiveRecord
+  include Cesium::Extensions::ActiveRecord::Base
 end
 
 ActionView::Base.class_eval do
-  include Cesium::Extentions::ActionView::Base
+  include Cesium::Extensions::ActionView::Base
 end
 
 ActionView::Helpers::FormBuilder.class_eval do

@@ -4,8 +4,7 @@ module CesiumController
 
     include Dsl
 
-    layout 'admin'
-    before_filter :require_cesium_admin, :process_filters
+    mutate_to_cesuim_admin_controller
 
     def index
       if model.respond_to? :paginate

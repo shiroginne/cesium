@@ -1,5 +1,5 @@
 module Cesium
-  module Extentions
+  module Extensions
     module ActionView
       module Base
 
@@ -21,7 +21,7 @@ module Cesium
             Dir.glob(File.join(path, 'admin', '*_controller.rb')).each do |f|
               file = File.basename(f).gsub( /^(.+)\.rb/, '\1')
               controller_name = "admin/#{file}".camelize
-              controllers << controller_name if controller_name.constantize.superclass.controller_name == 'base'
+              controllers << controller_name if controller_name.constantize.cesium_admin?
             end
           end
           controllers
