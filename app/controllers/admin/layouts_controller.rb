@@ -1,6 +1,8 @@
-class Admin::LayoutsController < CesiumController::Base
+class Admin::LayoutsController < ApplicationController
 
-  menu_position 2
+  cesium_admin_controller do |c|
+    c.position = 2
+  end
 
   def index
     @layouts = Layout.find :all

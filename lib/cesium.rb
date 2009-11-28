@@ -8,7 +8,7 @@ ActionController::Dispatcher.middleware.use Cesium::Rack::StaticOverlay, File.jo
 ActionController::Base.class_eval do
   include Cesium::Extensions::ActionController::Base
   include Cesium::Extensions::ActionController::Layout
-  extend CesiumController::Mutate::SingletoneMethods
+  include CesiumController::Mutate
 end
 
 ActiveRecord::Base.class_eval do

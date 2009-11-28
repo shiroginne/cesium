@@ -1,8 +1,10 @@
-class Admin::PagesController < CesiumController::Base
+class Admin::PagesController < ApplicationController
 
-  menu_position 1
+  helper_method :expand
 
-  helper_method :expand, :leaves
+  cesium_admin_controller do |c|
+    c.position = 1
+  end
 
   def index
     @pages = Page.with_parts.find :all, :conditions => "level_cache in (0, 1)#{ "or parent_id in (#{expand.join(',')})" unless expand.empty?}"

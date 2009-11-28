@@ -1,8 +1,6 @@
-class Admin::PagePartsController < CesiumController::Base
+class Admin::PagePartsController < ApplicationController
 
   helper Admin::PagesHelper
-
-  menu_position 0
 
   before_filter :find_page
 

@@ -1,12 +1,29 @@
 module CesiumController
   module Mutate
 
+    def self.included base
+      base.class_eval do
+        extend SingletoneMethods
+      end
+    end
+
     module SingletoneMethods
 
-      def mutate_to_cesuim_admin_controller
-        before_filter :require_cesium_admin, :process_filters
+      def cesium_admin_controller &block
+        class_inheritable_accessor :cesium_config
+        cattr_accessor :configured
+
+        self.cesium_config = CesiumController::Config.new unless self.configured
+        if block
+          block.call self.cesium_config
+          self.configured = true
+        end
+
+        before_filter :require_cesium_admin unless Cesium::Config.own_auth
+        before_filter :process_filters
+
         layout 'cesium'
-        class_inheritable_accessor :menu_pos
+
         include InstanceMethods
         extend ClassMethods
       end
@@ -58,10 +75,6 @@ module CesiumController
     end
 
     module ClassMethods
-
-      def menu_position value = nil
-        value ? write_inheritable_attribute(:menu_pos, value) : (read_inheritable_attribute(:menu_pos) || 1000)
-      end
 
       def cesium_admin?
         true

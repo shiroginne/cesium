@@ -4,7 +4,7 @@ module CesiumController
 
     include Dsl
 
-    mutate_to_cesuim_admin_controller
+    cesium_admin_controller
 
     def index
       if model.respond_to? :paginate

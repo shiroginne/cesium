@@ -1,6 +1,8 @@
-class Admin::SnippetsController < CesiumController::Base
+class Admin::SnippetsController < ApplicationController
 
-  menu_position 3
+  cesium_admin_controller do |c|
+    c.position = 3
+  end
 
   def index
     @snippets = Snippet.find :all
