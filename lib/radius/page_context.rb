@@ -1,5 +1,4 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+require File.join(File.dirname(__FILE__), 'error.rb')
 
 module Radius
   class PageContext < Radius::Context
@@ -14,6 +13,7 @@ module Radius
       end
       globals.page = @page = page
       globals.tag_tracker = @tag_tracker = Cesium::TagTracker.new
+      globals.where = {:type => 'page', :name => "#{page.title}"}
     end
 
   end

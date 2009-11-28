@@ -56,6 +56,8 @@ Use admin:admin to login.
 
 Wellcome!
 
+All questions and answers in "cesium@conference.jabber.ru":cesium@conference.jabber.ru
+
 
 Special thanx to nahy, ADie and SSDany
 
