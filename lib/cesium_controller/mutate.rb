@@ -13,8 +13,9 @@ module CesiumController
         class_inheritable_accessor :cesium_config
         cattr_accessor :configured
 
-        self.cesium_config = CesiumController::Config.new unless self.configured
+        self.cesium_config = self.superclass.respond_to?(:cesium_config) ? self.superclass.cesium_config : CesiumController::Config.new
         if block
+          self.cesium_config = CesiumController::Config.new
           block.call self.cesium_config
           self.configured = true
         end

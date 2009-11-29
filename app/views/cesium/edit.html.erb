@@ -2,7 +2,7 @@
 <% form_for @record, :url => [:admin, @record], :html => {:multipart => true} do |f| %>
   <%= hidden_field_tag :edit_locale, params[:edit_locale] if params[:edit_locale] %>
 
-  <%= render :partial => 'admin_views/form', :locals => { :f => f } %>
+  <%= render :partial => 'cesium/form', :locals => { :f => f } %>
 <% end %>
 <% content_for :additional_navigation do %>
   <ul class="buttons">

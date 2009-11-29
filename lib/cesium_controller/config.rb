@@ -10,7 +10,7 @@ module CesiumController
     end
 
     attr_accessor_default :position, 1000
-    attr_accessor_default :condition, Cesium::Config.own_auth ? true : proc { !!cesium_admin }
+    attr_accessor_default :condition, proc { Cesium::Config.own_auth ? true : !!cesium_admin }
 
   end
 end
