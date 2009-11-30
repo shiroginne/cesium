@@ -1,4 +1,5 @@
-class Admin::PagePartsController < ApplicationController
+class Admin::PagePartsController < CesiumController::Base
+  unloadable
 
   helper Admin::PagesHelper
 

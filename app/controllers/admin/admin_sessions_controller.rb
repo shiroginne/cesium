@@ -1,7 +1,7 @@
 unless Cesium::Config.own_auth
 
   class Admin::AdminSessionsController < ApplicationController
-
+    unloadable
     layout 'cesium'
 
     before_filter :require_cesium_no_admin, :only => [:new, :create]

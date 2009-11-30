@@ -1,6 +1,7 @@
 unless Cesium::Config.own_auth
 
-  class Admin::AdminsController < ApplicationController
+  class Admin::AdminsController < CesiumController::Base
+    unloadable
 
     cesium_admin_controller do |c|
       c.position = 4

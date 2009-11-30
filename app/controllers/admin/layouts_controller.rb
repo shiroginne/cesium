@@ -1,4 +1,5 @@
-class Admin::LayoutsController < ApplicationController
+class Admin::LayoutsController < CesiumController::Base
+  unloadable
 
   cesium_admin_controller do |c|
     c.position = 2

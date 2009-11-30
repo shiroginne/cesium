@@ -27,6 +27,7 @@ module Cesium
               else
                 if c.cesium_admin?
                   condition = c.cesium_config.condition
+                  p c
                   p c.cesium_config
                   condition = case condition
                               when Proc then condition.bind(controller).call

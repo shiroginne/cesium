@@ -1,4 +1,5 @@
-class Admin::PagesController < ApplicationController
+class Admin::PagesController < CesiumController::Base
+  unloadable
 
   helper_method :expand
 

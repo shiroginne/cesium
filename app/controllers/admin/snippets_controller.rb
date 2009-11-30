@@ -1,4 +1,5 @@
-class Admin::SnippetsController < ApplicationController
+class Admin::SnippetsController < CesiumController::Base
+  unloadable
 
   cesium_admin_controller do |c|
     c.position = 3
