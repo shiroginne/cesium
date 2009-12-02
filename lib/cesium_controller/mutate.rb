@@ -4,6 +4,7 @@ module CesiumController
     def self.included base
       base.class_eval do
         class_inheritable_accessor :cesium_config
+        self.cesium_config = CesiumController::Config.new
         extend SingletoneMethods
       end
     end
@@ -12,11 +13,7 @@ module CesiumController
 
       def cesium_admin_controller &block
 
-        self.cesium_config = self.superclass.respond_to?(:cesium_config) && !self.superclass.cesium_config.nil? ? self.superclass.cesium_config : CesiumController::Config.new
-        if block
-          self.cesium_config = self.cesium_config.dup
-          block.call self.cesium_config
-        end
+        block.call self.cesium_config if block
 
         before_filter :require_cesium_admin unless Cesium::Config.own_auth
         before_filter :process_filters
