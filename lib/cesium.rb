@@ -12,8 +12,11 @@ module Cesium
   })
 
   def self.config
-    config_file = File.join(RAILS_ROOT, 'config/cesium.yml')
-    @options ||= @@config.update(File.exists?(config_file) ? YAML.load_file(config_file) : {})
+    unless @options
+      config_file = File.join(RAILS_ROOT, 'config/cesium.yml')
+      yaml = YAML.load_file(config_file) if File.exists?(config_file)
+    end
+    @options ||= @@config.update(yaml ? yaml : {})
   end
 
 end
