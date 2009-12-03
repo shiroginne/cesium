@@ -4,7 +4,7 @@ module Cesium
       attr_accessor :path
 
       def initialize
-        @path = Cesium::Config.cache_path
+        @path = Cesium.config[:cache_path]
 
         FileUtils.mkdir_p(@path)
       end
@@ -42,7 +42,7 @@ module Cesium
       end
 
       def exists? path
-        Cesium::Config.cache_on && File.file?(file_path(path))
+        Cesium.config[:allow_cache] && File.file?(file_path(path))
       end
 
       def file_path path

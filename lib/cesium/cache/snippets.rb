@@ -3,7 +3,7 @@ module Cesium
     class Snippets < Cesium::Cache::Abstract
 
       def initialize
-        @path = Cesium::Config.snippets_cache_path
+        @path = File.join(Cesium.config[:cache_path], 'snippets')
 
         FileUtils.mkdir_p(@path)
       end

@@ -1,4 +1,4 @@
-unless Cesium::Config.own_auth
+unless Cesium.config[:own_auth]
 
   class Admin::AdminsController < CesiumController::Base
     unloadable

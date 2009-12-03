@@ -3,7 +3,7 @@ module Cesium
     class Pages < Cesium::Cache::Abstract
 
       def initialize
-        @path = Cesium::Config.pages_cache_path
+        @path = File.join(Cesium.config[:cache_path], 'pages')
 
         FileUtils.mkdir_p(@path)
       end

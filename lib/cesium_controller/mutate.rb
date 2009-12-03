@@ -15,7 +15,7 @@ module CesiumController
 
         block.call self.cesium_config if block
 
-        before_filter :require_cesium_admin unless Cesium::Config.own_auth
+        before_filter :require_cesium_admin unless Cesium.config[:own_auth]
         before_filter :process_filters
 
         layout 'cesium'

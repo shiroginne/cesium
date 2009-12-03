@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin.resources :layouts, :except => :show
     admin.resources :snippets, :except => :show
-    unless Cesium::Config.own_auth
+    unless Cesium.config[:own_auth]
       admin.resources :admins, :except => :show
       admin.resource :admin_session, :as => :session
       admin.login 'login', :controller => 'admin_sessions', :action => 'new'

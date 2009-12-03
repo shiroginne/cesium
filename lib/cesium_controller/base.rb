@@ -56,7 +56,5 @@ module CesiumController
       redirect_to :action => 'index'
     end
 
-    class_eval File.new(File.join(RAILS_ROOT, "lib/cesium/#{self.controller_name}.rb")).read if File.exists?(File.join(RAILS_ROOT, "lib/cesium/#{self.controller_name}.rb"))
-
   end
 end
